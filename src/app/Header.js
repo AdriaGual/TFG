@@ -34,8 +34,7 @@ export default class Header extends React.Component {
 		var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://private-dd8e8a-adriagual.apiary-mock.com/questions",
-  "method": "GET",
+  "url": "/php/return.php",
   "headers": {
     "Cache-Control": "no-cache"
   }
