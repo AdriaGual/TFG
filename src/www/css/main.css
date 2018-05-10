@@ -195,7 +195,7 @@ hr.vr {
 .black { color: rgb(0,0,0) !important; }
 .lightGrey { color: rgb(20,20,20) !important; }
 .grey { color: rgb(130,130,130) !important; }
-.white { color: rgb(255,255,255) !important; }
+.white { color: white !important; }
 .red { color: rgb(255,0,0) !important; }
 .green { color: rgb(0,255,0) !important; }
 .blue { color: rgb(0,0,255) !important; }
@@ -241,6 +241,26 @@ hr.vr {
 .bg_hard_red { background-color: rgba(255,0,0,0.9) !important; }
 .bg_hard_green { background-color: rgba(0,255,0,0.9) !important; }
 .bg_hard_blue { background-color: rgba(0,0,255,0.9) !important; }
+
+.btn {
+	transition: 0.3s;
+	background-size: 200% auto;
+	box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .30);
+	border-radius: 3;
+}
+
+.btn:hover {
+	background-position: right center; /* change the direction of the change here */
+}
+
+.btn-1 {
+	background-image: linear-gradient(
+		to right,
+		#fbc2eb 0%,
+		#a6c1ee 51%,
+		#fbc2eb 100%
+	);
+}
 
 /*************/
 /** Classes **/

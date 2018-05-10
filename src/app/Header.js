@@ -14,7 +14,7 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
-
+import Button from "material-ui/Button";
 
 /**
  * Header of the app.
@@ -30,15 +30,18 @@ export default class Header extends React.Component {
 		this.state = {};
 	}
 	
+	
 	click = () => {
 		var settings = {
-		"async": true,
-		"url": '/php/return.php',
+			"async": true,
+			"method":"GET",
+			"url": '/php/return.php',
 		}
 		$.ajax(settings).done(function (response) {
 		  console.log(response);
 		});
 	}
+
 
 	/**
 	 * Renders the Header app.
@@ -46,29 +49,32 @@ export default class Header extends React.Component {
 	render(){
 		
 		return (
-			<AppBar color="inherit">
-				<Toolbar className="toolbar">
-					<Grid container spacing={24}>
-						<Grid item xs={4}>
+			<AppBar color="inherit" >
+				<Toolbar className="toolbar" >
+					<Grid container spacing={24} >
+						<Grid item xs={7}>
 						</Grid>
-						<Grid item xs={3}>
-							<Grid container>
-								<Grid item xs={12} className="centerVertical">
-									<TextField
-										id="name"
-										label="Name"
-										margin="normal"
-									/>
-								</Grid>
-								<Grid item xs={12} >
-									<p>Enter as Guest</p>
-								</Grid>
-							</Grid>
-						</Grid>
-						<Grid item xs={3} >
+						<Grid item xs={2}>
 							<Grid container >
 								<Grid item xs={12} className="centerVertical">
 									<TextField
+										className="white"
+										id="name"
+										label="Name"
+										margin="normal"
+										
+									/>
+								</Grid>
+								<Grid item xs={12} >
+									<p className="white">Enter as Guest</p>
+								</Grid>
+							</Grid>
+						</Grid>
+						<Grid item xs={2} >
+							<Grid container >
+								<Grid item xs={12} className="centerVertical">
+									<TextField
+									className="white"
 										id="password-input"
 										label="Password"
 										type="password"
@@ -77,12 +83,12 @@ export default class Header extends React.Component {
 									/>
 								</Grid>
 								<Grid item xs={12}>
-									<p>Forgot Password?</p>
+									<p className="white">Forgot Password?</p>
 								</Grid>
 							</Grid>
 						</Grid>
-						<Grid item xs={2} className="centerVertical">
-							<button onClick={() => this.click()}>test2</button>
+						<Grid item className="centerVertical">
+							<Button onClick={() => this.click()} className="btn btn-1">Login</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>
