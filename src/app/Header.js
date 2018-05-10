@@ -33,11 +33,8 @@ export default class Header extends React.Component {
 	click = () => {
 		var settings = {
   "async": true,
-  "crossDomain": true,
-  "url": "/php/return.php",
-  "headers": {
-    "Cache-Control": "no-cache"
-  }
+  "type":'POST',
+  "url": 'return.php',
 }
 
 $.ajax(settings).done(function (response) {
