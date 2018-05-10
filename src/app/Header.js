@@ -29,6 +29,22 @@ export default class Header extends React.Component {
 		super(props);
 		this.state = {};
 	}
+	
+	click = () => {
+		var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://private-dd8e8a-adriagual.apiary-mock.com/questions",
+  "method": "GET",
+  "headers": {
+    "Cache-Control": "no-cache"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+	}
 
 	/**
 	 * Renders the Header app.
@@ -36,7 +52,7 @@ export default class Header extends React.Component {
 	render(){
 		
 		return (
-			<AppBar>
+			<AppBar color="inherit">
 				<Toolbar className="toolbar">
 					<Grid container spacing={24}>
 						<Grid item xs={4}>
@@ -72,7 +88,7 @@ export default class Header extends React.Component {
 							</Grid>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Link to='/test2'><button>test2</button></Link>
+							<button onClick={() => this.click()}>test2</button>
 						</Grid>
 					</Grid>
 				</Toolbar>
