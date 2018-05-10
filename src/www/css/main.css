@@ -656,14 +656,19 @@ hr.vr {
 }
 
 .left_15{
-	margin-top: 0px;
 	margin-left: 15px;
-	color: white;
-	font-size: 13px;
+}
+
+.left_30{
+	margin-left: 30px;
 }
 
 .up_10{
 	margin-top: -5px;
+}
+
+.down_20{
+	margin-top: 10px;
 }
 
 .particles {
@@ -673,6 +678,15 @@ hr.vr {
 	height: 90%;
 	z-index: -1;
 }
+
+.register_form {
+	text-align: center;
+	margin-top: 25%;
+	height: 450px;
+	width: 350px;
+	padding-top: 20px;
+}
+
 
 /*************/
 /** Classes **/

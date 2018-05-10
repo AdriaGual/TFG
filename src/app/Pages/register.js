@@ -5,7 +5,10 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import Particles from "react-particles-js";
-
+import Grid from "material-ui/Grid";
+import TextField from "material-ui/TextField";
+import Button from "material-ui/Button";
+import Card, { CardActions, CardContent } from 'material-ui/Card';
 /** 
  * Register Page
  * @extends React.Component
@@ -52,7 +55,70 @@ class Register extends React.Component {
 					}
 				}}
 			/>
-				
+			<Grid container spacing={24}  >
+				<Grid item xs={2}>
+				</Grid>
+				<Grid item xs={4} className="margin2">
+					<Grid container>	
+						<Card className="register_form">
+							<CardContent>
+								Register
+							</CardContent>
+							<Grid container className="left_30 ">	
+								<TextField
+									id="newusername"
+									label="Enter your Username"
+									className="text_field "
+									onChange={(event, newValue) =>
+										this.setState({
+											newusername: newValue
+										})
+									}
+								/>
+								<TextField
+									id="newemail"
+									label="Enter your E-mail"
+									className="text_field "
+									onChange={(event, newValue) =>
+										this.setState({
+											newemail: newValue
+										})
+									}
+								/>
+								<TextField
+									id="newpassword"
+									label="Enter your Password"
+									className="text_field"
+									type="password"
+									onChange={(event, newValue) =>
+										this.setState({
+											newpassword: newValue
+										})
+									}
+								/>
+								<TextField
+									id="newrepeatpassword"
+									label="Repear your Password"
+									className="text_field"
+									type="password"
+									onChange={(event, newValue) =>
+										this.setState({
+											newrepeatpassword: newValue
+										})
+									}
+								/>
+							</Grid>
+							<Button className="btn btn-1">Login</Button>
+						</Card>
+					</Grid>
+				</Grid>
+				<Grid item xs={4}>
+					
+				</Grid>
+				<Grid item xs={2}>
+					
+				</Grid>
+			</Grid>
 		</div>
 		);
 	}
