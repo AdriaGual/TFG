@@ -488,8 +488,13 @@ hr.vr {
 	color: rgb(130, 130, 130) !important;
 }
 
-.test > div:before {
+.text_field > div:before {
 	background-color: white;
+	color:white;
+}
+.text_field > div:after {
+	background-color: white;
+	color:white;
 }
 .white {
 	color: rgb(255, 255, 255) !important;
@@ -647,6 +652,17 @@ hr.vr {
 		#a6c1ee 51%,
 		#fbc2eb 100%
 	);
+}
+
+.left_15{
+	margin-top: 0px;
+	margin-left: 15px;
+	color: white;
+	font-size: 13px;
+}
+
+.up_10{
+	margin-top: -5px;
 }
 
 /*************/

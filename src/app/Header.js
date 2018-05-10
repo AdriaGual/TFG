@@ -54,18 +54,20 @@ export default class Header extends React.Component {
 			<AppBar className="toolbarStyle">
 				<Toolbar>
 					<Grid container spacing={24}>
-						<Grid item xs={6} />
+						<Grid item xs={6}>
+						</Grid>
 						<Grid item xs={2}>
-							<Grid container>
-								<Grid
-									item
-									xs={12}
-									className="centerVertical margin2"
-								>
+							<Grid container className="up_10">
+								<Grid item xs={12} className="centerVertical margin2">
 									<TextField
-										className="test"
+										id="username"
+										label="Enter your Username"
+										className="text_field"
 										hintText="Enter your Username"
 										inputProps={{ className: "white" }}
+										InputLabelProps={{
+										 className: "white" 
+										}}
 										floatingLabelText="Username"
 										onChange={(event, newValue) =>
 											this.setState({
@@ -74,23 +76,26 @@ export default class Header extends React.Component {
 										}
 									/>
 								</Grid>
-								<Grid item xs={12}>
-									<p className="white size12">
+								<Grid item>
+									<p className="white size12 left_15">
 										Enter as Guest
 									</p>
 								</Grid>
 							</Grid>
 						</Grid>
 						<Grid item xs={2}>
-							<Grid container>
-								<Grid
-									item
-									xs={12}
-									className="centerVertical  margin2"
-								>
+							<Grid container className="up_10">
+								<Grid item xs={12} className="centerVertical  margin2">
 									<TextField
+										id="password"
+										label="Enter your Password"
+										className="text_field"
 										type="password"
 										hintText="Enter your Password"
+										inputProps={{ className: "white" }}
+										InputLabelProps={{
+										 className: "white" 
+										}}
 										floatingLabelText="Password"
 										onChange={(event, newValue) =>
 											this.setState({
@@ -99,8 +104,8 @@ export default class Header extends React.Component {
 										}
 									/>
 								</Grid>
-								<Grid item xs={12}>
-									<p className="white size12">
+								<Grid item>
+									<p className="white size12 left_15">
 										Forgot Password?
 									</p>
 								</Grid>
