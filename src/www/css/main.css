@@ -265,6 +265,7 @@ hr.vr {
 header .toolbar {
 	padding: 0 5px !important; margin: 0 !important;
 	min-height: 56px !important; max-height: 56px !important;
+	background: #022140;
 }
 header .toolbar .nav { flex: 1 !important; }
 header .toolbar .title { height: 50px; }

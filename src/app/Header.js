@@ -15,6 +15,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 
+
 /**
  * Header of the app.
  * @extends React.Component
@@ -35,34 +36,34 @@ export default class Header extends React.Component {
 	render(){
 		
 		return (
-			<AppBar color="inherit">
+			<AppBar>
 				<Toolbar className="toolbar">
 					<Grid container spacing={24}>
 						<Grid item xs={4}>
 						</Grid>
-						<Grid item xs={2}>
+						<Grid item xs={3}>
 							<Grid container>
-								<Grid item xs={6}>
+								<Grid item xs={12} className="centerVertical">
 									<TextField
-									  id="name"
-									  label="Name"
-									  margin="normal"
+										id="name"
+										label="Name"
+										margin="normal"
 									/>
 								</Grid>
-								<Grid item xs={6}>
-									<Link to='/test'><button>test</button></Link>
+								<Grid item xs={12} >
+									<p>Enter as Guest</p>
 								</Grid>
 							</Grid>
 						</Grid>
-						<Grid item xs={2}>
-							<Grid container>
-								<Grid item xs={12}>
+						<Grid item xs={3} >
+							<Grid container >
+								<Grid item xs={12} className="centerVertical">
 									<TextField
-									  id="password-input"
-									  label="Password"
-									  type="password"
-									  autoComplete="current-password"
-									  margin="normal"
+										id="password-input"
+										label="Password"
+										type="password"
+										autoComplete="current-password"
+										margin="normal"
 									/>
 								</Grid>
 								<Grid item xs={12}>
@@ -70,7 +71,7 @@ export default class Header extends React.Component {
 								</Grid>
 							</Grid>
 						</Grid>
-						<Grid item xs={4}>
+						<Grid item xs={2} className="centerVertical">
 							<Link to='/test2'><button>test2</button></Link>
 						</Grid>
 					</Grid>
