@@ -63,12 +63,10 @@ export default class Header extends React.Component {
 										id="username"
 										label="Enter your Username"
 										className="text_field"
-										hintText="Enter your Username"
 										inputProps={{ className: "white" }}
 										InputLabelProps={{
 										 className: "white" 
 										}}
-										floatingLabelText="Username"
 										onChange={(event, newValue) =>
 											this.setState({
 												username: newValue
@@ -91,12 +89,10 @@ export default class Header extends React.Component {
 										label="Enter your Password"
 										className="text_field"
 										type="password"
-										hintText="Enter your Password"
 										inputProps={{ className: "white" }}
 										InputLabelProps={{
 										 className: "white" 
 										}}
-										floatingLabelText="Password"
 										onChange={(event, newValue) =>
 											this.setState({
 												password: newValue
@@ -112,12 +108,7 @@ export default class Header extends React.Component {
 							</Grid>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Button
-								onClick={() => this.click()}
-								className="btn btn-1"
-							>
-								Login
-							</Button>
+							<Button onClick={() => this.click()} className="btn btn-1">Login</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>
