@@ -32,14 +32,12 @@ export default class Header extends React.Component {
 	
 	click = () => {
 		var settings = {
-  "async": true,
-  "type":'POST',
-  "url": 'return.php',
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
+		"async": true,
+		"url": '/php/return.php',
+		}
+		$.ajax(settings).done(function (response) {
+		  console.log(response);
+		});
 	}
 
 	/**
