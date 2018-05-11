@@ -9,6 +9,7 @@ import Grid from "material-ui/Grid";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
+
 /** 
  * Register Page
  * @extends React.Component
@@ -64,7 +65,7 @@ class Register extends React.Component {
 							<CardContent>
 								Register
 							</CardContent>
-							<Grid container className="left_30 ">	
+							<Grid container className="left_20pc  ">	
 								<TextField
 									id="newusername"
 									label="Enter your Username"
@@ -108,12 +109,11 @@ class Register extends React.Component {
 									}
 								/>
 							</Grid>
-							<Button className="btn btn-1">Login</Button>
+							<Button className="btn btn-1 down_30">Login</Button>
 						</Card>
 					</Grid>
 				</Grid>
 				<Grid item xs={4}>
-					
 				</Grid>
 				<Grid item xs={2}>
 					

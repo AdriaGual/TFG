@@ -633,7 +633,6 @@ hr.vr {
 .btn {
 	transition: 0.3s;
 	background-size: 200% auto;
-	box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3);
 	border-radius: 3;
 }
 
@@ -663,12 +662,16 @@ hr.vr {
 	margin-left: 30px;
 }
 
-.up_10{
-	margin-top: -5px;
+.left_20pc{
+	margin-left: 20%;
 }
 
-.down_20{
-	margin-top: 10px;
+.up_10{
+	margin-top: -10px;
+}
+
+.down_30{
+	margin-top: 30px!important;
 }
 
 .particles {
@@ -682,7 +685,7 @@ hr.vr {
 .register_form {
 	text-align: center;
 	margin-top: 25%;
-	height: 450px;
+	height: 350px;
 	width: 350px;
 	padding-top: 20px;
 }

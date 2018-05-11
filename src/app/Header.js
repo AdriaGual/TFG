@@ -57,8 +57,8 @@ export default class Header extends React.Component {
 						<Grid item xs={6}>
 						</Grid>
 						<Grid item xs={2}>
-							<Grid container className="up_10">
-								<Grid item xs={12} className="centerVertical margin2">
+							<Grid container>
+								<Grid item xs={12} className="centerVertical">
 									<TextField
 										id="username"
 										label="Enter your Username"
@@ -75,15 +75,15 @@ export default class Header extends React.Component {
 									/>
 								</Grid>
 								<Grid item>
-									<p className="white size12 left_15">
+									<p className="white size12">
 										Enter as Guest
 									</p>
 								</Grid>
 							</Grid>
 						</Grid>
 						<Grid item xs={2}>
-							<Grid container className="up_10">
-								<Grid item xs={12} className="centerVertical  margin2">
+							<Grid container>
+								<Grid item xs={12} className="centerVertical">
 									<TextField
 										id="password"
 										label="Enter your Password"
@@ -101,7 +101,7 @@ export default class Header extends React.Component {
 									/>
 								</Grid>
 								<Grid item>
-									<p className="white size12 left_15">
+									<p className="white size12">
 										Forgot Password?
 									</p>
 								</Grid>
