@@ -9,7 +9,7 @@ import Grid from "material-ui/Grid";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
-
+import Icon from 'material-ui/Icon';
 /** 
  * Register Page
  * @extends React.Component
@@ -56,16 +56,16 @@ class Register extends React.Component {
 					}
 				}}
 			/>
-			<Grid container spacing={24}  >
-				<Grid item xs={2}>
+			<Grid container >
+				<Grid item xs={3}>
 				</Grid>
-				<Grid item xs={4} className="margin2">
+				<Grid item xs={3}>
 					<Grid container>	
 						<Card className="register_form">
 							<CardContent>
 								Register
 							</CardContent>
-							<Grid container className="left_20pc  ">	
+							<Grid container className="left_30pc">	
 								<TextField
 									id="newusername"
 									label="Enter your Username"
@@ -99,7 +99,7 @@ class Register extends React.Component {
 								/>
 								<TextField
 									id="newrepeatpassword"
-									label="Repear your Password"
+									label="Repeat your Password"
 									className="text_field"
 									type="password"
 									onChange={(event, newValue) =>
@@ -109,13 +109,26 @@ class Register extends React.Component {
 									}
 								/>
 							</Grid>
-							<Button className="btn btn-1 down_30">Login</Button>
+							<Grid item>
+								<Button className="btn btn-1 down_30 white ">Register Now</Button>
+							</Grid>
 						</Card>
 					</Grid>
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={3}  className="margin2">
+					<h1  className="register_title white ">E-Learning Platform</h1>
+					<hr/>
+					<p  className="register_text white">
+						This is a platform made with the purpouse of
+						teaching topics as Radiology, CPR and anatomy
+						among others. GILAB, is a research group of the
+						University of Girona (with code GRCT0081) and
+						all researchers of the GIlab are from the
+						Computer Science, Applied Mathematics and
+						Statistics Department at the same university.
+					</p>
 				</Grid>
-				<Grid item xs={2}>
+				<Grid item xs={3}>
 					
 				</Grid>
 			</Grid>

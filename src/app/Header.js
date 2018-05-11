@@ -15,6 +15,7 @@ import Toolbar from "material-ui/Toolbar";
 import Grid from "material-ui/Grid";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
+import Icon from 'material-ui/Icon';
 
 /**
  * Header of the app.
@@ -75,7 +76,8 @@ export default class Header extends React.Component {
 									/>
 								</Grid>
 								<Grid item>
-									<p className="white size12">
+									<p className="white size12 linkhover">
+										<Icon className="fa fa-eye" style={{ fontSize: 15 }}></Icon>
 										Enter as Guest
 									</p>
 								</Grid>
@@ -101,14 +103,15 @@ export default class Header extends React.Component {
 									/>
 								</Grid>
 								<Grid item>
-									<p className="white size12">
+									<p className="white size12 linkhover">
+									<Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon>
 										Forgot Password?
 									</p>
 								</Grid>
 							</Grid>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Button onClick={() => this.click()} className="btn btn-1">Login</Button>
+							<Button onClick={() => this.click()} className="btn btn-1 white">Login</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>

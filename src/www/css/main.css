@@ -634,6 +634,7 @@ hr.vr {
 	transition: 0.3s;
 	background-size: 200% auto;
 	border-radius: 3;
+	color:white;
 }
 
 .toolbarStyle {
@@ -641,16 +642,19 @@ hr.vr {
 	height: 80px !important;
 }
 
-.btn:hover {
-	background-position: right center; /* change the direction of the change here */
+.btn-1:hover {
+	background-image: linear-gradient(
+		to right,
+		 #1478E4 0%,
+		 #02BCE6 100%
+	);
 }
 
 .btn-1 {
 	background-image: linear-gradient(
 		to right,
-		#fbc2eb 0%,
-		#a6c1ee 51%,
-		#fbc2eb 100%
+		#02BCE6 0%,
+		#1478E4 100%
 	);
 }
 
@@ -662,8 +666,8 @@ hr.vr {
 	margin-left: 30px;
 }
 
-.left_20pc{
-	margin-left: 20%;
+.left_30pc{
+	margin-left: 30%;
 }
 
 .up_10{
@@ -690,6 +694,20 @@ hr.vr {
 	padding-top: 20px;
 }
 
+.register_title{
+	text-align: center;
+	margin-top: 25%;
+}
+
+.register_text{
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+.linkhover:hover{
+	color: #1478E4!important;
+	
+}
 
 /*************/
 /** Classes **/
