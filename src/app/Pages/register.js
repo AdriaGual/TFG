@@ -10,7 +10,7 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
-import Select from 'material-ui/Select';
+
 /** 
  * Register Page
  * @extends React.Component
@@ -113,7 +113,7 @@ class Register extends React.Component {
 								/>
 							</Grid>
 							<Grid item>
-								<Button className="btn btn-1 down_30 white ">Register Now</Button>
+								<Link to="/test"><Button className="btn btn-1 down_30 white ">Register Now</Button></Link>
 							</Grid>
 						</Card>
 					</Grid>
@@ -132,27 +132,6 @@ class Register extends React.Component {
 					</p>
 				</Grid>
 				<Grid item xs={3}>
-				</Grid>
-			</Grid>
-			<Grid container className="down_19">
-				<Grid item xs={1}>
-				</Grid>
-				<Grid item xs={2}>
-					<img src="/img/udg_logo.png" />
-				</Grid>
-				<Grid item xs={1}>
-				</Grid>
-				<Grid item xs={6}>
-				</Grid>
-				<Grid item xs={1} className="down_20">
-					  <Select
-						native
-						value={this.state.age}
-					  >
-						<option value={"English"}>English</option>
-						<option value={"Catala"}>Català</option>
-						<option value={"Castellano"}>Castellano</option>
-					  </Select>
 				</Grid>
 			</Grid>
 		</div>
