@@ -10,6 +10,7 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
+import Select from 'material-ui/Select';
 /** 
  * Register Page
  * @extends React.Component
@@ -23,7 +24,9 @@ class Register extends React.Component {
 		super(props);
 		this.state = {};
 	}
-	
+	state = {
+		Language: 'English',
+	};
 	appState = this.props.appState;
 	
 	/**
@@ -56,7 +59,7 @@ class Register extends React.Component {
 					}
 				}}
 			/>
-			<Grid container >
+			<Grid container>
 				<Grid item xs={3}>
 				</Grid>
 				<Grid item xs={3}>
@@ -129,7 +132,27 @@ class Register extends React.Component {
 					</p>
 				</Grid>
 				<Grid item xs={3}>
+				</Grid>
+			</Grid>
+			<Grid container className="down_19 ">
+				<Grid item xs={2}>
+				<p>AA</p>
+				</Grid>
+				<Grid item xs={2}>
+				<p>AA</p>
+				</Grid>
+				<Grid item xs={7}>
+				</Grid>
+				<Grid item xs={1}>
 					
+					  <Select
+						native
+						value={this.state.age}
+					  >
+						<option value={"English"}>English</option>
+						<option value={"Catala"}>Catala</option>
+						<option value={"Castellano"}>Castellano</option>
+					  </Select>
 				</Grid>
 			</Grid>
 		</div>

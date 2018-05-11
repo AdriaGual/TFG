@@ -35,7 +35,7 @@ export default class Main extends React.Component {
 	render(){		
 		return (
 		<main className="padding0"><Switch>
-			<Route exact path='/' render={() => (<Register></Register>)} />
+			<Route exact path='/' render={() => (<div><Register></Register></div>)} />
 			<Route path='/test' render={() => (<div>test</div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>

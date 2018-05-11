@@ -64,7 +64,6 @@ export default class Header extends React.Component {
 										id="username"
 										label="Enter your Username"
 										className="text_field"
-										inputProps={{ className: "white" }}
 										InputLabelProps={{
 										 className: "white" 
 										}}
@@ -91,7 +90,6 @@ export default class Header extends React.Component {
 										label="Enter your Password"
 										className="text_field"
 										type="password"
-										inputProps={{ className: "white" }}
 										InputLabelProps={{
 										 className: "white" 
 										}}
