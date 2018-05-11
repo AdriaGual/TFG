@@ -134,23 +134,23 @@ class Register extends React.Component {
 				<Grid item xs={3}>
 				</Grid>
 			</Grid>
-			<Grid container className="down_19 ">
-				<Grid item xs={2}>
-				<p>AA</p>
+			<Grid container className="down_19">
+				<Grid item xs={1}>
 				</Grid>
 				<Grid item xs={2}>
-				<p>AA</p>
-				</Grid>
-				<Grid item xs={7}>
+					<img src="/img/udg_logo.png" />
 				</Grid>
 				<Grid item xs={1}>
-					
+				</Grid>
+				<Grid item xs={6}>
+				</Grid>
+				<Grid item xs={1} className="down_20">
 					  <Select
 						native
 						value={this.state.age}
 					  >
 						<option value={"English"}>English</option>
-						<option value={"Catala"}>Catala</option>
+						<option value={"Catala"}>Català</option>
 						<option value={"Castellano"}>Castellano</option>
 					  </Select>
 				</Grid>
