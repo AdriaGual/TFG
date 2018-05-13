@@ -34,14 +34,12 @@ export default class Header extends React.Component {
 	click = (LoginText) => {
 		var settings = {
 			async: true,
-			method: "GET",
-			 data: {
-				'logintext': LoginText,
-		  },
-			url: "/php/return.php"
+			type:"GET",
+			dataType: "text",
+			url: "./php/return.php"
 		};
 		$.ajax(settings).done(function(response) {
-			alert(response);
+			$("#accept").text(response);   
 		});
 	};
 
@@ -113,7 +111,7 @@ export default class Header extends React.Component {
 							</Grid>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Button onClick={() => this.click(LoginText)} className="btn btn-1 white"> {LoginText}</Button>
+							<Button onClick={() => this.click(LoginText)} className="btn btn-1 white" id="accept"> {LoginText}</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>
