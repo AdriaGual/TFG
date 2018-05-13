@@ -34,13 +34,22 @@ export default class Header extends React.Component {
 	click = (LoginText) => {
 		var settings = {
 			async: true,
-			type:"GET",
-			dataType: "text",
-			url: "./php/return.php"
+			type: 'GET',
+			dataType: 'text',
+			contentType: "application/json",
+			cache: false,
+			url: './php/return.php',
+			error: function(xml, error) {
+				console.log(error);
+			}
 		};
 		$.ajax(settings).done(function(response) {
-			$("#accept").text(response);   
+			var a = JSON.parse(JSON.stringify(response));
+			console.log(JSON.parse(JSON.stringify(response)));
+			$("#accept").html(a);   
 		});
+		
+		
 	};
 
 	/**
