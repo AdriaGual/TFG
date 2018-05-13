@@ -64,7 +64,7 @@ class Register extends React.Component {
 				</Grid>
 				<Grid item xs={3}>
 					<Grid container>	
-						<Card className="register_form">
+						<Card className="register_form ">
 							<CardContent>
 								Register
 							</CardContent>

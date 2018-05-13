@@ -31,14 +31,14 @@ export default class Header extends React.Component {
 		this.state = {};
 	}
 
-	click = () => {
+	click = (LoginText) => {
 		var settings = {
 			async: true,
 			method: "GET",
 			url: "/php/return.php"
 		};
 		$.ajax(settings).done(function(response) {
-			console.log(response);
+			LoginText=response;
 		});
 	};
 
@@ -46,13 +46,14 @@ export default class Header extends React.Component {
 	 * Renders the Header app.
 	 */
 	render() {
+		var LoginText = "Login2";
 		const toolbarStyle = {
 			backgroundColor: "#022140",
 			height: "80px"
 		};
 
 		return (
-			<AppBar className="toolbarStyle">
+			<AppBar className="toolbarStyle ">
 				<Toolbar>
 					<Grid container spacing={24}>
 						<Grid item xs={6}>
@@ -109,7 +110,7 @@ export default class Header extends React.Component {
 							</Grid>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Button onClick={() => this.click()} className="btn btn-1 white">Login</Button>
+							<Button onClick={() => this.click(LoginText)} className="btn btn-1 white"> {LoginText}</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>
