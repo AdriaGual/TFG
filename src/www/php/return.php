@@ -1,3 +1,3 @@
 <?php 
-	echo "hola caracola";
+echo 10;
 ?>

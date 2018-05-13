@@ -35,10 +35,13 @@ export default class Header extends React.Component {
 		var settings = {
 			async: true,
 			method: "GET",
+			 data: {
+				'logintext': LoginText,
+		  },
 			url: "/php/return.php"
 		};
 		$.ajax(settings).done(function(response) {
-			LoginText=response;
+			alert(response);
 		});
 	};
 
@@ -46,7 +49,7 @@ export default class Header extends React.Component {
 	 * Renders the Header app.
 	 */
 	render() {
-		var LoginText = "Login2";
+		var LoginText = "Login";
 		const toolbarStyle = {
 			backgroundColor: "#022140",
 			height: "80px"
