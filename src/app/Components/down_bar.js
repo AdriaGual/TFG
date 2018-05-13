@@ -38,7 +38,7 @@ export default class Authentication extends React.Component {
 					<Grid item xs={1}>
 					</Grid>
 					<Grid item xs={2}>
-						<img src="/img/udg_logo.png" />
+						<img src="./img/udg_logo.png" />
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
