@@ -34,7 +34,8 @@ export default class Authentication extends React.Component {
 	render(){
 		return (
 			<div>
-				<Grid container className="down_19">
+				<Grid container className="bottom padding0">
+					<hr/>
 					<Grid item xs={1}>
 					</Grid>
 					<Grid item xs={2}>

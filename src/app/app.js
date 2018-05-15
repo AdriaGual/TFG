@@ -13,6 +13,7 @@ import { HashRouter as Router } from 'react-router-dom';
 // Components imports
 import Header from './Header.js';
 import Main from './Main.js';
+import DownBar from './Components/down_bar.js';
 
 /**
  * App component. It handles all the application.
@@ -25,7 +26,9 @@ class App extends React.Component {
 	 */
 	constructor(props){
 		super(props);
-		this.state = {};
+		this.state = {
+			logged: false
+		};
 	}
 
 	/**
@@ -45,6 +48,7 @@ class App extends React.Component {
 			<div>
 				<Header appState={this.appState} />
 				<Main appState={this.appState} />
+				<DownBar appState={this.appState} />
 			</div>
 		);
 	}

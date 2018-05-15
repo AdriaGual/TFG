@@ -55,10 +55,9 @@ class UserCourses extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
-		
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30">Actual Courses</div>
+				<div className="left_30 down_20 orange size_30">Current Courses</div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={5}> 
@@ -71,7 +70,7 @@ class UserCourses extends React.Component {
 						/>
 						</div>
 					</Grid>
-					<Grid Item xs={3}>
+					<Grid item xs={3}>
 						<label htmlFor="find-box">Search: 
 							<input
 								id="find-box"

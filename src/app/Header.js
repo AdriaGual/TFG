@@ -16,6 +16,7 @@ import Grid from "material-ui/Grid";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Icon from 'material-ui/Icon';
+import LoginHeader from "./Components/login_header.js"
 
 /**
  * Header of the app.
@@ -31,98 +32,23 @@ export default class Header extends React.Component {
 		this.state = {};
 	}
 
-	click = (LoginText) => {
-		var settings = {
-			async: true,
-			type: 'GET',
-			dataType: 'text',
-			cache: false,
-			url: './php/return.php',
-			error: function(xml, error) {
-				console.log(error);
-			}
-		};
-		$.ajax(settings).done(function(response) {
-			var a = JSON.parse(JSON.stringify(response));
-			$("#accept").html(a);   
-		});
-		
-		
-	};
-
+	appState = this.props.appState;
+	
 	/**
 	 * Renders the Header app.
 	 */
 	render() {
-		var LoginText = "Login ";
+		var LoginText = "Login"
 		const toolbarStyle = {
 			backgroundColor: "#022140",
 			height: "80px"
 		};
 
 		return (
-			<AppBar className="toolbarStyle ">
-				<Toolbar>
-					<Grid container spacing={24}>
-						<Grid item xs={6}>
-						</Grid>
-						<Grid item xs={2}>
-							<Grid container>
-								<Grid item xs={12} className="centerVertical">
-									<TextField
-										id="username"
-										label="Enter your Username"
-										className="text_field"
-										InputLabelProps={{
-										 className: "white" 
-										}}
-										onChange={(event, newValue) =>
-											this.setState({
-												username: newValue
-											})
-										}
-									/>
-								</Grid>
-								<Grid item>
-									<p className="white size12 linkhover">
-										<Icon className="fa fa-eye" style={{ fontSize: 15 }}></Icon>
-										Enter as Guest
-									</p>
-								</Grid>
-							</Grid>
-						</Grid>
-						<Grid item xs={2}>
-							<Grid container>
-								<Grid item xs={12} className="centerVertical">
-									<TextField
-										id="password"
-										label="Enter your Password"
-										className="text_field"
-										type="password"
-										InputLabelProps={{
-										 className: "white" 
-										}}
-										onChange={(event, newValue) =>
-											this.setState({
-												password: newValue
-											})
-										}
-									/>
-								</Grid>
-								<Grid item>
-									<p className="white size12 linkhover">
-									<Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon>
-										Forgot Password?
-									</p>
-								</Grid>
-							</Grid>
-						</Grid>
-						<Grid item xs={2} className="centerVertical">
-							<Button onClick={() => this.click(LoginText)} className="btn btn-1 white" id="accept"> {LoginText}</Button>
-						</Grid>
-					</Grid>
-				</Toolbar>
-			</AppBar>
+			<div>
+				if (this.appState("logged")){ <LoginHeader appState={this.appState} ></LoginHeader>}
+				else{ <p>ggg</p>}
+			</div>
 		);
 	}
 }
