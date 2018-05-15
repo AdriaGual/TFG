@@ -48,7 +48,6 @@ export default class Authentication extends React.Component {
 					<Grid item xs={1} className="down_20">
 						  <Select
 							native
-							value={this.state.age}
 						  >
 							<option value={"English"}>English</option>
 							<option value={"Catala"}>Català</option>

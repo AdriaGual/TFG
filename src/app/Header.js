@@ -17,6 +17,7 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Icon from 'material-ui/Icon';
 import LoginHeader from "./Components/login_header.js"
+import LoggedHeader from "./Components/logged_header.js"
 
 /**
  * Header of the app.
@@ -43,11 +44,17 @@ export default class Header extends React.Component {
 			backgroundColor: "#022140",
 			height: "80px"
 		};
+		
+		var loginheader;
+		if (this.appState("logged")) {
+		  loginheader = <LoginHeader appState={this.appState} ></LoginHeader>;
+		} else {
+		  loginheader = <LoggedHeader appState={this.appState} ></LoggedHeader>;
+		}
 
 		return (
 			<div>
-				if (this.appState("logged")){ <LoginHeader appState={this.appState} ></LoginHeader>}
-				else{ <p>ggg</p>}
+			{loginheader}
 			</div>
 		);
 	}
