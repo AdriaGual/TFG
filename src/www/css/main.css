@@ -509,6 +509,9 @@ hr.vr {
 .blue {
 	color: rgb(0, 0, 255) !important;
 }
+.orange{
+	color: #fc4a1a !important;
+}
 .transparent {
 	color: rgba(0, 0, 0, 0) !important;
 }
@@ -630,6 +633,10 @@ hr.vr {
 	font-size: 12px;
 }
 
+.size_30 {
+	font-size: 30px;
+}
+
 .btn {
 	transition: 0.3s;
 	background-size: 200% auto;
@@ -662,6 +669,10 @@ hr.vr {
 	margin-left: 15px;
 }
 
+.right_15{
+	margin-right: 15px;
+}
+
 .left_30{
 	margin-left: 30px;
 }
@@ -679,7 +690,7 @@ hr.vr {
 }
 
 .down_19{
-	margin-top: 17.5%!important;
+	margin-top: 16%!important;
 }
 
 .down_20{

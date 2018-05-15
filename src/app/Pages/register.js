@@ -113,7 +113,7 @@ class Register extends React.Component {
 								/>
 							</Grid>
 							<Grid item>
-								<Link to="/test"><Button className="btn btn-1 down_30 white ">Register Now</Button></Link>
+								<Link to="/user_courses"><Button className="btn btn-1 down_30 white ">Register Now</Button></Link>
 							</Grid>
 						</Card>
 					</Grid>

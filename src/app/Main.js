@@ -10,6 +10,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Register from './Pages/register.js';
+import UserCourses from './Pages/user_courses.js';
 import DownBar from './Components/down_bar.js';
 // Pages imports
 
@@ -37,7 +38,7 @@ export default class Main extends React.Component {
 		return (
 		<main className="padding0"><Switch>
 			<Route exact path='/' render={() => (<div><Register></Register><DownBar></DownBar></div>)} />
-			<Route path='/test' render={() => (<div>test</div>)} />
+			<Route path='/user_courses' render={() => (<div><UserCourses></UserCourses></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

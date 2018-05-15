@@ -1,1 +1,3 @@
-﻿<?php$arr = array();$arr['tex']='po';echo json_encode($arr);?>
+﻿<?php
+	echo "ho";
+?>
