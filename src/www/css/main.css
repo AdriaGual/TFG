@@ -633,9 +633,11 @@ hr.vr {
 	font-size: 12px;
 }
 
-.size20 {
+.size_20 {
 	font-size: 20px;
 }
+
+
 
 .size_30 {
 	font-size: 30px;
@@ -693,12 +695,16 @@ hr.vr {
 	margin-top: 30px!important;
 }
 
+.down_30{
+	margin-top: 30px!important;
+}
+
 .down_19{
 	margin-top: 16%!important;
 }
 
-.down_20{
-	margin-top: 20px!important;
+.down_15{
+	margin-top: 15px!important;
 }
 
 .bold{

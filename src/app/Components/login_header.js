@@ -47,7 +47,6 @@ export default class LoginHeader extends React.Component {
 		};
 		$.ajax(settings).done(function(response) {
 			var a = JSON.parse(JSON.stringify(response));
-
 			$("#accept").html(a);   
 		});
 	};
@@ -85,11 +84,11 @@ export default class LoginHeader extends React.Component {
 										}
 									/>
 								</Grid>
-								<Grid item>
-									<p className="white size12 linkhover">
+								<Grid item className="down_15"> 
+									<a className="white size12 linkhover">
 										<Icon className="fa fa-eye" style={{ fontSize: 15 }}></Icon>
 										Enter as Guest
-									</p>
+									</a>
 								</Grid>
 							</Grid>
 						</Grid>
@@ -111,11 +110,11 @@ export default class LoginHeader extends React.Component {
 										}
 									/>
 								</Grid>
-								<Grid item>
-									<p className="white size12 linkhover">
+								<Grid item className="down_15">
+									<a className="white size12 linkhover">
 									<Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon>
 										Forgot Password?
-									</p>
+									</a>
 								</Grid>
 							</Grid>
 						</Grid>

@@ -11,6 +11,8 @@ import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
+import Table,{TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import Paper from 'material-ui/Paper';
 
 /** 
  * Register Page
@@ -24,6 +26,8 @@ class UserQualifications extends React.Component {
 	}
 	appState = this.props.appState;
 
+
+	
 	
 	/**
 	 * Renders the register page.
@@ -34,26 +38,119 @@ class UserQualifications extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
+	let id = 0;
+	function createData(name, tries, puntuation, avg_tries, avg_puntuation) {
+	  id += 1;
+	  return { id, name, tries, puntuation, avg_tries, avg_puntuation };
+	}
+
+	const data = [
+	  createData('Exercice 1', "1/3", 6.0, "1.33/3", 4.0),
+	  createData('Exercice 2',"2/3", 9.0, "2.47/3", 7.3),
+	  createData('Exercice 3',"3/3", 10.0, "1.24/3", 8.0),
+	  createData('Exercice 4', "1/3", 3.7, "1.57/3", 2.3),
+	  createData('Exercice 5', "1/3", 5.5, "2.67/3", 6.9),
+	];
+
+	var tablemode=true;
+	var showresults;
+	if (tablemode){
+	
+	}
+
 		return (
-			<div>
-				<div className="left_30 down_20 orange size_30">Course 1: Topic 1</div>
+			<div style={{height:1500}}>
+				<div className="left_30 down_20 orange size_30">Course 1</div>
 				<hr/>
-				<Grid container>
-					<Grid item xs={5}  className="padding2"> 
-						<p className="left_30 down_20 black size_20">Data Cleansing Exercice</p>
-						<hr/>
-						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">Description of the exercice</p>
-						</Card>
-						<p className="left_30 down_20 black size_20">Question</p>
-						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">Help Text.</p>
-						</Card>
-					</Grid>
-					<Grid item xs={5}  className="padding2"> 
-					
-					</Grid>
-				</Grid>
+				<div className="left_30 down_20 orange size_20 ">Topic 1</div>
+				<Paper>
+			      <Table >
+			        <TableHead>
+			          <TableRow>
+			            <TableCell>Exercices</TableCell>
+			            <TableCell numeric>Tries</TableCell>
+			            <TableCell numeric>Puntuation</TableCell>
+			            <TableCell numeric>Average Tries</TableCell>
+			            <TableCell numeric>Average Puntuation</TableCell>
+			          </TableRow>
+			        </TableHead>
+			        <TableBody>
+			          {data.map(n => {
+			            return (
+			              <TableRow key={n.id}>
+			                <TableCell component="th" scope="row">
+			                  {n.name}
+			                </TableCell>
+			                <TableCell numeric>{n.tries}</TableCell>
+			                <TableCell numeric>{n.puntuation}</TableCell>
+			                <TableCell numeric>{n.avg_tries}</TableCell>
+			                <TableCell numeric>{n.avg_puntuation}</TableCell>
+			              </TableRow>
+			            );
+			          })}
+			        </TableBody>
+			      </Table>
+			    </Paper>
+			    <hr />
+			    <div className="left_30 down_20 orange size_20 ">Topic 2</div>
+				<Paper>
+			      <Table >
+			        <TableHead>
+			          <TableRow>
+			            <TableCell>Exercices</TableCell>
+			            <TableCell numeric>Tries</TableCell>
+			            <TableCell numeric>Puntuation</TableCell>
+			            <TableCell numeric>Average Tries</TableCell>
+			            <TableCell numeric>Average Puntuation</TableCell>
+			          </TableRow>
+			        </TableHead>
+			        <TableBody>
+			          {data.map(n => {
+			            return (
+			              <TableRow key={n.id}>
+			                <TableCell component="th" scope="row">
+			                  {n.name}
+			                </TableCell>
+			                <TableCell numeric>{n.tries}</TableCell>
+			                <TableCell numeric>{n.puntuation}</TableCell>
+			                <TableCell numeric>{n.avg_tries}</TableCell>
+			                <TableCell numeric>{n.avg_puntuation}</TableCell>
+			              </TableRow>
+			            );
+			          })}
+			        </TableBody>
+			      </Table>
+			    </Paper>
+			     <hr />
+			    <div className="left_30 down_20 orange size_20 ">Topic 3</div>
+				<Paper>
+			      <Table >
+			        <TableHead>
+			          <TableRow>
+			            <TableCell>Exercices</TableCell>
+			            <TableCell numeric>Tries</TableCell>
+			            <TableCell numeric>Puntuation</TableCell>
+			            <TableCell numeric>Average Tries</TableCell>
+			            <TableCell numeric>Average Puntuation</TableCell>
+			          </TableRow>
+			        </TableHead>
+			        <TableBody>
+			          {data.map(n => {
+			            return (
+			              <TableRow key={n.id}>
+			                <TableCell component="th" scope="row">
+			                  {n.name}
+			                </TableCell>
+			                <TableCell numeric>{n.tries}</TableCell>
+			                <TableCell numeric>{n.puntuation}</TableCell>
+			                <TableCell numeric>{n.avg_tries}</TableCell>
+			                <TableCell numeric>{n.avg_puntuation}</TableCell>
+			              </TableRow>
+			            );
+			          })}
+			        </TableBody>
+			      </Table>
+			    </Paper>
 
 			</div>
 		

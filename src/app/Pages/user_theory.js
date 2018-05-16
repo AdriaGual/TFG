@@ -36,7 +36,7 @@ class Theory extends React.Component {
         } = this.state;
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30">Course 1: Topic 1</div>
+				<div className="left_30 down_20 orange size_30"><p>Course 1: Topic 1</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
@@ -45,7 +45,7 @@ class Theory extends React.Component {
 						<p className="left_30 down_20 black size_12">Parsing, Correcting, Standardizing, Matching and Consolidating Data.</p>
 						<a className="left_30 down_20 blue size_12" href="https://en.wikipedia.org/wiki/Data_cleansing">URL: More Information</a>
 						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">It's recommended to have a brief knowledge about EDA and PLP to be able to succeed in this course.</p>
+								<p className="margin1">Main theory content goes here.</p>
 						</Card>
 					</Grid>
 					<Grid item xs={5}  className="padding2"> 

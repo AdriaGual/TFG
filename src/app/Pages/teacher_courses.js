@@ -15,7 +15,7 @@ import SortableTree from 'react-sortable-tree';
  * Register Page
  * @extends React.Component
  */
-class UserCourses extends React.Component {
+class TeacherCourses extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -77,7 +77,6 @@ class UserCourses extends React.Component {
 						<SortableTree
 						  treeData={this.state.treeData}
 						  onChange={treeData => this.setState({ treeData })}
-						  canDrag={false}
 						  searchQuery={searchString}
 						/>
 						</div>
@@ -91,6 +90,6 @@ class UserCourses extends React.Component {
 }
 
 
-UserCourses = withRouter(UserCourses);
+TeacherCourses = withRouter(TeacherCourses);
 
-export default UserCourses;
+export default TeacherCourses;

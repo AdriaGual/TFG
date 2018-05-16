@@ -15,6 +15,7 @@ import UserCourse from './Pages/user_course.js';
 import UserTheory from './Pages/user_theory.js';
 import UserExercice from './Pages/user_exercice.js';
 import UserQualifications from './Pages/user_qualifications.js';
+import TeacherCourses from './Pages/teacher_courses.js';
 // Pages imports
 
 
@@ -46,6 +47,7 @@ export default class Main extends React.Component {
 			<Route path='/user_theory' render={() => (<div><UserTheory></UserTheory></div>)} />
 			<Route path='/user_exercice' render={() => (<div><UserExercice></UserExercice></div>)} />
 			<Route path='/user_qualifications' render={() => (<div><UserQualifications></UserQualifications></div>)} />
+			<Route path='/teacher_courses' render={() => (<div><TeacherCourses></TeacherCourses></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

@@ -36,7 +36,7 @@ class UserExercice extends React.Component {
         } = this.state;
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30">Course 1: Topic 1</div>
+				<div className="left_30 down_20 orange size_30"><p>Course 1: Topic 1</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
