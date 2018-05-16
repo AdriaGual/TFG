@@ -39,14 +39,14 @@ export default class Header extends React.Component {
 	 * Renders the Header app.
 	 */
 	render() {
-		var LoginText = "Login"
+		var LoginText = "Login "
 		const toolbarStyle = {
 			backgroundColor: "#022140",
 			height: "80px"
 		};
 		
 		var loginheader;
-		if (this.appState("logged")) {
+		if (!this.appState("logged")) {
 		  loginheader = <LoginHeader appState={this.appState} ></LoginHeader>;
 		} else {
 		  loginheader = <LoggedHeader appState={this.appState} ></LoggedHeader>;

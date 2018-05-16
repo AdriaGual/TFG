@@ -11,7 +11,10 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Register from './Pages/register.js';
 import UserCourses from './Pages/user_courses.js';
-
+import UserCourse from './Pages/user_course.js';
+import UserTheory from './Pages/user_theory.js';
+import UserExercice from './Pages/user_exercice.js';
+import UserQualifications from './Pages/user_qualifications.js';
 // Pages imports
 
 
@@ -39,6 +42,10 @@ export default class Main extends React.Component {
 		<main className="padding0"><Switch>
 			<Route exact path='/' render={() => (<div><Register></Register></div>)} />
 			<Route path='/user_courses' render={() => (<div><UserCourses></UserCourses></div>)} />
+			<Route path='/user_course' render={() => (<div><UserCourse></UserCourse></div>)} />
+			<Route path='/user_theory' render={() => (<div><UserTheory></UserTheory></div>)} />
+			<Route path='/user_exercice' render={() => (<div><UserExercice></UserExercice></div>)} />
+			<Route path='/user_qualifications' render={() => (<div><UserQualifications></UserQualifications></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

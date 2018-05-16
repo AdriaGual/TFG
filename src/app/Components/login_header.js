@@ -34,6 +34,7 @@ export default class LoginHeader extends React.Component {
 	appState = this.props.appState;
 	
 	click = () => {
+		this.appState({logged: true});
 		var settings = {
 			async: true,
 			type: 'GET',
@@ -119,7 +120,7 @@ export default class LoginHeader extends React.Component {
 							</Grid>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {LoginText}</Button>
+							<Link to="/user_courses"><Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {LoginText}</Button></Link>
 						</Grid>
 					</Grid>
 				</Toolbar>

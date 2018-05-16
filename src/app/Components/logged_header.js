@@ -36,15 +36,30 @@ export default class LoggedHeader extends React.Component {
 		};
 	}
 	
-	handleClick = event => {
-	this.setState({ anchorEl: event.currentTarget });
-	};
-
-	handleClose = () => {
-	this.setState({ anchorEl: null });
-	};
-
 	appState = this.props.appState;
+	
+	handleClick = event => {
+		this.setState({ anchorEl: event.currentTarget });
+	};
+
+	handleCourses = () => {
+		this.setState({ anchorEl: null });
+	};
+	
+	handleAccount = () => {
+		this.setState({ anchorEl: null });
+	};
+	
+	handleClose = () => {
+		this.setState({ anchorEl: null });
+		this.appState({logged: false});
+	};
+	
+	handleCloseMenu = () => {
+		this.setState({ anchorEl: null });
+	};
+
+
 	
 	click = () => {
 		var settings = {
@@ -82,38 +97,34 @@ export default class LoggedHeader extends React.Component {
 					<Grid container spacing={24}>
 						<Grid item xs={6}>
 						</Grid>
-						<Grid item xs={2}>
-							<Grid container>
-								<Grid item xs={12} className="centerVertical">
-								</Grid>
-								
-							</Grid>
+						<Grid item xs={4}>
 						</Grid>
 						<Grid item xs={2}>
 							<Grid container>
 								<Grid item xs={12} className="centerVertical">
-								<Button
-          aria-owns={anchorEl ? 'simple-menu' : null}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          Open Menu
-        </Button>
+								<a
+								  aria-owns={anchorEl ? 'simple-menu' : null}
+								  aria-haspopup="true"
+								  className="white down_20"
+								  
+								  onClick={this.handleClick}
+								>
+								<Icon className="fa fa-user" style={{ fontSize: 15 }}></Icon>
+								  Adrià Gual
+								<Icon className="fa fa-chevron-down" style={{ fontSize: 15 }}></Icon>
+								</a>
 									<Menu
 									  id="simple-menu"
 									  anchorEl={anchorEl}
 									  open={Boolean(anchorEl)}
-									  onClose={this.handleClose}
+									  onClose={this.handleCloseMenu}
 									>
-									  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-									  <MenuItem onClick={this.handleClose}>My account</MenuItem>
-									  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+									  <MenuItem onClick={this.handleAccount}>Profile</MenuItem>
+									  <Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>
+									  <Link to="/"><MenuItem onClick={this.handleClose}>Logout</MenuItem></Link>
 									</Menu>
 								</Grid>
 							</Grid>
-						</Grid>
-						<Grid item xs={2} className="centerVertical">
-							<Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {LoginText}</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>

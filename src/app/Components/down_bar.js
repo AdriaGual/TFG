@@ -33,8 +33,8 @@ export default class Authentication extends React.Component {
 	 */
 	render(){
 		return (
-			<div>
-				<Grid container className="bottom padding0">
+			<div className="bg_white">
+				<Grid container className="bottom padding0 bg_white">
 					<hr/>
 					<Grid item xs={1}>
 					</Grid>
