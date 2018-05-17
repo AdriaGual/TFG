@@ -60,7 +60,7 @@ class UserQualifications extends React.Component {
 
 		return (
 			<div style={{height:1500}}>
-				<div className="left_30 down_20 orange size_30">Course 1</div>
+				<div className="left_30 down_20 orange size_30"><p>Course 1</p></div>
 				<hr/>
 				<div className="left_30 down_20 orange size_20 ">Topic 1</div>
 				<Paper>
