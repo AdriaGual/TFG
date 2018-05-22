@@ -10,6 +10,7 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
+import language from "../Utils/language.js"
 
 /** 
  * Register Page
@@ -22,10 +23,10 @@ class Register extends React.Component {
 	 */
 	constructor(props){
 		super(props);
-		this.state = {};
+		this.state = {
+		};
 	}
 	state = {
-		Language: 'English',
 	};
 	appState = this.props.appState;
 	
@@ -33,6 +34,7 @@ class Register extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = this.appState("currentLanguage");
 		return (
 		<div>
 			<Particles
@@ -66,7 +68,7 @@ class Register extends React.Component {
 					<Grid container>	
 						<Card className="register_form ">
 							<CardContent>
-								Register
+							{language[lng].register}
 							</CardContent>
 							<Grid container className="left_30pc">	
 								<TextField

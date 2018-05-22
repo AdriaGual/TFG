@@ -60,8 +60,8 @@ class TeacherCourses extends React.Component {
 				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>
 				<hr/>
 				<Grid container>
-					<Grid item xs={12}  className="margin3"> 
-					<label htmlFor="find-box">
+					<Grid item xs={3}  className="margin3"> 
+						<label htmlFor="find-box">
 							<TextField
 								id="find-box"
 								type="text"
@@ -70,7 +70,9 @@ class TeacherCourses extends React.Component {
 								label="Search"
 							/>
 						</label>
-						
+					</Grid>
+					<Grid item xs={3}> 
+						<Button className="btn btn-2 down_30 white">Create New Course</Button>
 					</Grid>
 					<Grid item xs={12}>
 						<div style={{ height: 1500}}>

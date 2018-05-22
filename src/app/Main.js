@@ -41,13 +41,13 @@ export default class Main extends React.Component {
 	render(){		
 		return (
 		<main className="padding0"><Switch>
-			<Route exact path='/' render={() => (<div><Register></Register></div>)} />
-			<Route path='/user_courses' render={() => (<div><UserCourses></UserCourses></div>)} />
-			<Route path='/user_course' render={() => (<div><UserCourse></UserCourse></div>)} />
-			<Route path='/user_theory' render={() => (<div><UserTheory></UserTheory></div>)} />
-			<Route path='/user_exercice' render={() => (<div><UserExercice></UserExercice></div>)} />
-			<Route path='/user_qualifications' render={() => (<div><UserQualifications></UserQualifications></div>)} />
-			<Route path='/teacher_courses' render={() => (<div><TeacherCourses></TeacherCourses></div>)} />
+			<Route exact path='/' render={() => (<div><Register appState={this.appState}></Register></div>)} />
+			<Route path='/user_courses' render={() => (<div><UserCourses appState={this.appState}></UserCourses></div>)} />
+			<Route path='/user_course' render={() => (<div><UserCourse appState={this.appState}></UserCourse></div>)} />
+			<Route path='/user_theory' render={() => (<div><UserTheory appState={this.appState}></UserTheory></div>)} />
+			<Route path='/user_exercice' render={() => (<div><UserExercice appState={this.appState}></UserExercice></div>)} />
+			<Route path='/user_qualifications' render={() => (<div><UserQualifications appState={this.appState}></UserQualifications></div>)} />
+			<Route path='/teacher_courses' render={() => (<div><TeacherCourses appState={this.appState}></TeacherCourses></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

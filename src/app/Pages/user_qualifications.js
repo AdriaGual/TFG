@@ -13,6 +13,7 @@ import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
 import Table,{TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
+import {BarChart} from 'react-easy-chart';
 
 /** 
  * Register Page
@@ -34,22 +35,22 @@ class UserQualifications extends React.Component {
 	 */
 	render(){
 		const {
-            treeData,
+            treedades,
             searchString,
             searchFoundCount,
         } = this.state;
 	let id = 0;
-	function createData(name, tries, puntuation, avg_tries, avg_puntuation) {
+	function createdades(name, tries, puntuation, avg_tries, avg_puntuation) {
 	  id += 1;
 	  return { id, name, tries, puntuation, avg_tries, avg_puntuation };
 	}
 
-	const data = [
-	  createData('Exercice 1', "1/3", 6.0, "1.33/3", 4.0),
-	  createData('Exercice 2',"2/3", 9.0, "2.47/3", 7.3),
-	  createData('Exercice 3',"3/3", 10.0, "1.24/3", 8.0),
-	  createData('Exercice 4', "1/3", 3.7, "1.57/3", 2.3),
-	  createData('Exercice 5', "1/3", 5.5, "2.67/3", 6.9),
+	const dades = [
+	  createdades('Exercice 1', "1/3", 6.0, "1.33/3", 4.0),
+	  createdades('Exercice 2',"2/3", 9.0, "2.47/3", 7.3),
+	  createdades('Exercice 3',"3/3", 10.0, "1.24/3", 8.0),
+	  createdades('Exercice 4', "1/3", 3.7, "1.57/3", 2.3),
+	  createdades('Exercice 5', "1/3", 5.5, "2.67/3", 6.9),
 	];
 
 	var tablemode=true;
@@ -75,7 +76,7 @@ class UserQualifications extends React.Component {
 			          </TableRow>
 			        </TableHead>
 			        <TableBody>
-			          {data.map(n => {
+			          {dades.map(n => {
 			            return (
 			              <TableRow key={n.id}>
 			                <TableCell component="th" scope="row">
@@ -105,7 +106,7 @@ class UserQualifications extends React.Component {
 			          </TableRow>
 			        </TableHead>
 			        <TableBody>
-			          {data.map(n => {
+			          {dades.map(n => {
 			            return (
 			              <TableRow key={n.id}>
 			                <TableCell component="th" scope="row">
@@ -135,7 +136,7 @@ class UserQualifications extends React.Component {
 			          </TableRow>
 			        </TableHead>
 			        <TableBody>
-			          {data.map(n => {
+			          {dades.map(n => {
 			            return (
 			              <TableRow key={n.id}>
 			                <TableCell component="th" scope="row">
@@ -151,7 +152,18 @@ class UserQualifications extends React.Component {
 			        </TableBody>
 			      </Table>
 			    </Paper>
-
+				<BarChart
+					axes
+					height={300}
+					width={500}
+					data={[
+						  {x: 'Topic 1: Exercici 1', y: 6},
+						  {x: 'Topic 1: Exercici 2', y: 9},
+						  {x: 'Topic 1: Exercici 3', y: 10},
+						  {x: 'Topic 1: Exercici 4', y: 3.7},
+						  {x: 'Topic 1: Exercici 5', y: 5.5}
+						]}
+				  />
 			</div>
 		
 		);

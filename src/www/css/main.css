@@ -659,7 +659,7 @@ hr.vr {
 	background-image: linear-gradient(
 		to right,
 		 #1478E4 0%,
-		 #02BCE6 100%
+		 #1478E4 100%
 	);
 }
 
@@ -668,6 +668,22 @@ hr.vr {
 		to right,
 		#02BCE6 0%,
 		#1478E4 100%
+	);
+}
+
+.btn-2 {
+	background-image: linear-gradient(
+		to right,
+		#FFB75E 0%,
+		#F37335 100%
+	);
+}
+
+.btn-2:hover {
+	background-image: linear-gradient(
+		to right,
+		#F37335 0%,
+		#F37335 100%
 	);
 }
 

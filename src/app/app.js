@@ -27,7 +27,8 @@ class App extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			logged: false
+			logged: false,
+			currentLanguage: 0
 		};
 	}
 

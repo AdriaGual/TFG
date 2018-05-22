@@ -8,6 +8,7 @@ import { Redirect, Link } from 'react-router-dom';
 // Material-UI imports
 import Grid from "material-ui/Grid";
 import Select from 'material-ui/Select';
+import Button from 'material-ui/Button';
 // Components imports
 // Utils imports
 
@@ -23,10 +24,27 @@ export default class Authentication extends React.Component {
 	 */
 	constructor(props){
 		super(props);
-		this.state = { redirect: false, };
+		this.state = { };
 	}
 	
+	state = {
+		lang: 0,
+	};
+
+	
 	appState = this.props.appState;
+	
+	handleEnglish = () => {
+		this.appState({currentLanguage:0});
+	};
+	
+	handleCatala = () => {
+		this.appState({currentLanguage:1});
+	};
+	
+	handleLanguage = name => event => {
+		this.appState({currentLanguage:event.target.value});
+	};
 	
 	/**
 	 * Renders the page.
@@ -46,10 +64,13 @@ export default class Authentication extends React.Component {
 					<Grid item xs={6}>
 					</Grid>
 					<Grid item xs={1} className="down_15">
-						  <Select native>
-							<option value={"English"}>English</option>
-							<option value={"Catala"}>Català</option>
-							<option value={"Castellano"}>Castellano</option>
+						  <Select native  
+						  onChange={this.handleLanguage('value')}
+						  value={this.state.lang}
+						  > 
+							<option value={0}>English</option>
+							<option value={1}>Català</option>
+							<option value={2}>Castellano</option>
 						  </Select>
 					</Grid>
 				</Grid>

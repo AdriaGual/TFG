@@ -15,7 +15,7 @@ const config = {
 		// Define production build to allow React to strip out unnecessary checks
 		new webpack.DefinePlugin({'process.env':{'NODE_ENV': JSON.stringify('production')}}),
 		// Minify the bundle
-		new webpack.optimize.UglifyJsPlugin({sourceMap: true,}),
+		
 		// Copy modified www files into build
 		new CopyWebpackPlugin([{from:'src/www'},], { ignore: [], copyUnmodified: false })
 	],
