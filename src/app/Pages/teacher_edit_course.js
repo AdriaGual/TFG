@@ -116,21 +116,21 @@ class TeacherCourses extends React.Component {
 								  buttons: [
 									<Button
 										className="btn btn-1 white"
-									  onClick={() =>
-										this.setState(state => ({
-										  treeData: addNodeUnderParent({
-											treeData: state.treeData,
-											parentKey: path[path.length - 1],
-											expandParent: true,
-											getNodeKey,
-											newNode: {
-											  title: <p>g</p>,
-											},
-										  }).treeData,
-										}))
-									  }
+										onClick={() =>
+											this.setState(state => ({
+											  treeData: addNodeUnderParent({
+												treeData: state.treeData,
+												parentKey: path[path.length - 1],
+												expandParent: true,
+												getNodeKey,
+												newNode: {
+												  title: <p>g</p>,
+												},
+											  }).treeData,
+											}))
+										}
 									>
-									  Add Child
+									 <Icon className="fa fa-plus" style={{ fontSize: 15 }}></Icon>
 									</Button>,
 									<Button
 										className="btn btn-3 white  left_15 "
@@ -144,7 +144,7 @@ class TeacherCourses extends React.Component {
 										}))
 									  }
 									>
-									  Remove
+									 	<Icon className="fa fa-trash" style={{ fontSize: 15 }}></Icon>
 									</Button>,
 								  ],
 
