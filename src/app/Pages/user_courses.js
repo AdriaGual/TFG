@@ -70,7 +70,6 @@ class UserCourses extends React.Component {
 								label="Search"
 							/>
 						</label>
-						
 					</Grid>
 					<Grid item xs={12}>
 						<div style={{ height: 1500}}>
