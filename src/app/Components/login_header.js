@@ -36,19 +36,22 @@ export default class LoginHeader extends React.Component {
 	click = () => {
 		this.appState({logged: true});
 		var settings = {
-			async: true,
-			type: 'GET',
-			dataType: 'text',
-			cache: false,
-			url: './php/return.php',
-			error: function(xml, error) {
-				console.log(error);
+			type: 'POST',
+			data: { 
+				'username': $("#username").val(), 
+				'password': $("#password").val(), 
+			},
+			url: 'php/register.php',
+			success: function(response) {
+				if (response == "OK"){
+					
+				}
+				else{
+					
+				}
 			}
 		};
-		$.ajax(settings).done(function(response) {
-			var a = JSON.parse(JSON.stringify(response));
-			$("#accept").html(a);   
-		});
+		$.ajax(settings);
 	};
 
 	/**
@@ -65,7 +68,10 @@ export default class LoginHeader extends React.Component {
 			<AppBar className="toolbarStyle ">
 				<Toolbar>
 					<Grid container spacing={24}>
-						<Grid item xs={6}>
+						<Grid item xs={1}>
+						</Grid>
+						<Grid item xs={5}>
+						<Icon className="fa fa-heartbeat down_15" style={{ fontSize: 50 }}></Icon>
 						</Grid>
 						<Grid item xs={2}>
 							<Grid container>
@@ -119,7 +125,7 @@ export default class LoginHeader extends React.Component {
 							</Grid>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Link to="/user_courses"><Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {LoginText}</Button></Link>
+							<Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {LoginText}</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>

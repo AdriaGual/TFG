@@ -72,7 +72,7 @@ class TeacherCourses extends React.Component {
 						</label>
 					</Grid>
 					<Grid item xs={3}> 
-						<Button className="btn btn-2 down_30 white">Create New Course</Button>
+						<Link to="/teacher_edit_course"><Button className="btn btn-2 down_30 white">Create New Course</Button></Link>
 					</Grid>
 					<Grid item xs={12}>
 						<div style={{ height: 1500}}>

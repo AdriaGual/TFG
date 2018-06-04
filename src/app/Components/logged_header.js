@@ -95,24 +95,27 @@ export default class LoggedHeader extends React.Component {
 			<AppBar className="toolbarStyle ">
 				<Toolbar>
 					<Grid container spacing={24}>
-						<Grid item xs={6}>
+						<Grid item xs={1}>
+						</Grid>
+						<Grid item xs={5}>
+							<Icon className="fa fa-heartbeat down_15" style={{ fontSize: 50 }}></Icon>
 						</Grid>
 						<Grid item xs={4}>
 						</Grid>
 						<Grid item xs={2}>
 							<Grid container>
-								<Grid item xs={12} className="centerVertical">
-								<a
-								  aria-owns={anchorEl ? 'simple-menu' : null}
-								  aria-haspopup="true"
-								  className="white down_20"
-								  
-								  onClick={this.handleClick}
-								>
-								<Icon className="fa fa-user" style={{ fontSize: 15 }}></Icon>
-								  Adrià Gual
-								<Icon className="fa fa-chevron-down" style={{ fontSize: 15 }}></Icon>
-								</a>
+								<Grid item xs={12} className="down_30">
+									<a
+									  aria-owns={anchorEl ? 'simple-menu' : null}
+									  aria-haspopup="true"
+									  className="white down_20"
+									  
+									  onClick={this.handleClick}
+									>
+									<Icon className="fa fa-user" style={{ fontSize: 15 }}></Icon>
+									  Adrià Gual
+									<Icon className="fa fa-chevron-down" style={{ fontSize: 15 }}></Icon>
+									</a>
 									<Menu
 									  id="simple-menu"
 									  anchorEl={anchorEl}

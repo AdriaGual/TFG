@@ -90,7 +90,9 @@ class TeacherCourses extends React.Component {
 								label="Search"
 							/>
 						</label>
+						<div style={{height:'150%'}}>
 							<SortableTree
+
 							  treeData={this.state.treeData}
 							  onChange={treeData => this.setState({ treeData })}
 							  searchQuery={searchString}
@@ -150,7 +152,7 @@ class TeacherCourses extends React.Component {
 
 								})}
 							/>
-
+						</div>
 					</Grid>
 					<Grid item xs={3}> 
 						<a className="orange size_30 left_30">Categories</a>
@@ -204,6 +206,9 @@ class TeacherCourses extends React.Component {
 					</Grid>
 				</Grid>
 				<Grid container>
+					<Grid item>
+						<a>kjgghk</a>
+					</Grid>
 				</Grid>
 			</div>
 		
