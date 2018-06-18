@@ -65,6 +65,12 @@ class UserCourses extends React.Component {
 		$.ajax(settings);
 	}
 	
+	click = () => {
+		
+
+	};
+	
+	
 	
 	/**
 	 * Renders the register page.
@@ -99,6 +105,18 @@ class UserCourses extends React.Component {
 						  onChange={treeData => this.setState({ treeData })}
 						  canDrag={false}
 						  searchQuery={searchString}
+						        generateNodeProps={({ node, path }) => ({
+								buttons: [
+									<Button
+										className="btn btn-1 white"
+										onClick={() => this.click()}
+											
+										}
+									>
+									 <Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
+									</Button>,
+								  ],
+								})}
 						/>
 						</div>
 					</Grid>
