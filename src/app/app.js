@@ -9,7 +9,7 @@
 // React imports
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router, Redirect } from 'react-router-dom';
 // Components imports
 import Header from './Header.js';
 import Main from './Main.js';
@@ -28,8 +28,25 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			logged: false,
-			currentLanguage: 0
+			currentLanguage: 0,
+			username: "",
 		};
+		
+		var that = this;
+		
+		//PHP check
+		$.ajax({
+			type: 'GET',
+			url: 'php/checksession.php',
+			success: function(response) {
+				if (response == "NO_SESSION"){
+					
+				}
+				else{
+					that.setState({ logged: true ,username: response});
+				}
+			}
+		});
 	}
 
 	/**

@@ -497,6 +497,7 @@ hr.vr {
 	background-color: white;
 	color:white;
 }
+
 .white {
 	color: rgb(255, 255, 255) !important;
 }
@@ -709,6 +710,7 @@ hr.vr {
 	margin-right: 15px!important;
 }
 
+
 .left_30{
 	margin-left: 30px!important;
 }
@@ -731,6 +733,14 @@ hr.vr {
 
 .down_15{
 	margin-top: 15px!important;
+}
+
+.down_10{
+	margin-top: 10px!important;
+}
+
+.down_7{
+	margin-top: 7px!important;
 }
 
 .bold{

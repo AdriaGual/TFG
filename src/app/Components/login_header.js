@@ -16,6 +16,10 @@ import Grid from "material-ui/Grid";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Icon from 'material-ui/Icon';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
 
 /**
  * Header of the app.
@@ -28,31 +32,75 @@ export default class LoginHeader extends React.Component {
 	 */
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			showsnack: false,
+			showforgotpassword: false,
+			snacktext: "",
+		};
 	}
 
 	appState = this.props.appState;
 	
 	click = () => {
-		this.appState({logged: true});
+		
+		var that = this;
 		var settings = {
 			type: 'POST',
 			data: { 
 				'username': $("#username").val(), 
 				'password': $("#password").val(), 
 			},
-			url: 'php/register.php',
+			url: 'php/login.php',
 			success: function(response) {
 				if (response == "OK"){
-					
+					that.appState({logged: true,username:$("#username").val()});
 				}
-				else{
-					
+				else if(response == "bad_login"){
+					that.setState({ showsnack: true ,snacktext: "Username or Password invalid!"});
+				}
+				else if(response == "empty_inputfields"){
+					that.setState({ showsnack: true ,snacktext: "Empty input fields in login!"});
 				}
 			}
 		};
 		$.ajax(settings);
 	};
+	
+	click_forgot_pass = () => {
+		
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'email': $("#forgot_email").val(), 
+			},
+			url: 'php/forgot_password.php',
+			success: function(response) {
+				if (response == "OK"){
+					that.appState({logged: true,username:$("#username").val()});
+				}
+				else if(response == "empty_inputfields"){
+					that.setState({ showsnack: true ,snacktext: "Empty input fields in password recovery!"});
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	
+	handleCloseSnack = () => {
+		this.setState({ showsnack: false });
+	};
+	handleCloseFPassword = () => {
+		this.setState({ showforgotpassword: false });
+	};
+	
+	handleClickOpenFPassword = () => {
+		this.setState({
+			showforgotpassword: true,
+		});
+	};
+
 
 	/**
 	 * Renders the Header app.
@@ -83,6 +131,9 @@ export default class LoginHeader extends React.Component {
 										InputLabelProps={{
 										 className: "white" 
 										}}
+										InputProps={{
+										 className: "white" 
+										}}
 										onChange={(event, newValue) =>
 											this.setState({
 												username: newValue
@@ -109,6 +160,9 @@ export default class LoginHeader extends React.Component {
 										InputLabelProps={{
 										 className: "white" 
 										}}
+										InputProps={{
+										 className: "white" 
+										}}
 										onChange={(event, newValue) =>
 											this.setState({
 												password: newValue
@@ -117,12 +171,56 @@ export default class LoginHeader extends React.Component {
 									/>
 								</Grid>
 								<Grid item className="down_15">
-									<a className="white size12 linkhover">
+									<a className="white size12 linkhover" onClick={this.handleClickOpenFPassword}>
 									<Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon>
 										Forgot Password?
 									</a>
 								</Grid>
 							</Grid>
+								<Snackbar
+									  anchorOrigin={{
+										vertical: 'bottom',
+										horizontal: 'left',
+									  }}
+									  open={this.state.showsnack}
+									  autoHideDuration={4000}
+									  onClose={this.handleCloseSnack}
+									  message={<span id="message-id">{this.state.snacktext}</span>}
+									  action={[
+										<IconButton
+										  key="close"
+										  aria-label="Close"
+										  color="inherit"
+										  onClick={this.handleClose}
+										>
+										<CloseIcon />
+										</IconButton>,
+									  ]}
+								/>
+								<Dialog
+									open={this.state.showforgotpassword}
+									onClose={this.handleCloseFPassword}
+								>
+								<DialogTitle className="down_15">{"Forgot Password?"}</DialogTitle>
+								 <DialogContent>
+									<DialogContentText>
+									 If you have forgotten your password, just enter your e-mail adress and we will send you a token for you.
+									</DialogContentText>
+									<TextField
+										autoFocus
+										id="forgot_email"
+										label="Enter your E-mail"
+										className="text_field "
+										onChange={(event, newValue) =>
+											this.setState({
+												forgotemail: newValue
+											})
+										}
+									/>
+								  </DialogContent>
+								
+								<Button className="btn btn-1 white" onClick={() => this.click_forgot_pass()}>Submit</Button>
+							</Dialog>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
 							<Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {LoginText}</Button>

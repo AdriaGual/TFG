@@ -8,7 +8,7 @@
 
 // React imports
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 // Material-UI imports
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
@@ -49,7 +49,7 @@ export default class Header extends React.Component {
 		if (!this.appState("logged")) {
 		  loginheader = <LoginHeader appState={this.appState} ></LoginHeader>;
 		} else {
-		  loginheader = <LoggedHeader appState={this.appState} ></LoggedHeader>;
+		  loginheader = <div><Redirect to='/user_courses'/><LoggedHeader appState={this.appState} ></LoggedHeader></div>;
 		}
 
 		return (

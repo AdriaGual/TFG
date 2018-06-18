@@ -10,51 +10,72 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
-import SortableTree from 'react-sortable-tree';
+import SortableTree, {
+  getFlatDataFromTree,
+  getTreeFromFlatData,
+} from 'react-sortable-tree';
 /** 
  * Register Page
  * @extends React.Component
  */
+ 
+ 	var initialData = [
+  { id: '1', name: 'N1', parent: null },
+];
 class UserCourses extends React.Component {
+
 	constructor(props){
 		super(props);
 		this.state = {
-		searchString: '',
-		searchFocusIndex: 0,
-		searchFoundCount: null,
-		treeData: [
-				{ title: <Link to="/user_course" className="black">Course 1</Link>,
-					expanded:true, 
-					children: [{ title: 'Topic 1', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] }] 
-			
-				},
-				{ title: 'Course 2',
-					expanded:true, 
-					children: [{ title: 'Topic 1', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] },
-					{ title: 'Topic 2', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] },
-					{ title: 'Topic 3', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] }
-					]
-				}
-			],
+			searchString: '',
+			searchFocusIndex: 0,
+			searchFoundCount: null,
+			treeData: getTreeFromFlatData({
+				flatData: initialData.map(node => ({ ...node, title: node.name })),
+				getKey: node => node.id, // resolve a node's key
+				getParentKey: node => node.parent, // resolve a node's parent's key
+				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+			}),
 				
 		};
 	}
 	appState = this.props.appState;
 
+	componentDidMount() {
+		var that = this;
+
+		var settings = {
+			type: 'GET',
+			url: 'php/load_courses.php',
+			success: function(response) {
+
+				var jsonData = JSON.parse(response);
+				
+				var a = jsonData.map(node => ({ ...node, title: node.name }));
+				that.setState({treeData: getTreeFromFlatData({
+					flatData: a,
+					getKey: node => node.id, // resolve a node's key
+					getParentKey: node => node.parent, // resolve a node's parent's key
+					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+				})});
+				console.log(initialData);
+				console.log(jsonData);
+			}
+		};
+		$.ajax(settings);
+	}
+	
 	
 	/**
 	 * Renders the register page.
 	 */
 	render(){
-		const {
-            treeData,
+
+		var {
             searchString,
             searchFoundCount,
         } = this.state;
+		
 		return (
 			<div>
 				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>

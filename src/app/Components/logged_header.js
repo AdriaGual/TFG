@@ -53,31 +53,16 @@ export default class LoggedHeader extends React.Component {
 	handleClose = () => {
 		this.setState({ anchorEl: null });
 		this.appState({logged: false});
+		//PHP destroy
+		$.ajax({
+			type: 'GET',
+			url: 'php/logout.php'
+		});
 	};
 	
 	handleCloseMenu = () => {
 		this.setState({ anchorEl: null });
 	};
-
-
-	
-	click = () => {
-		var settings = {
-			async: true,
-			type: 'GET',
-			dataType: 'text',
-			cache: false,
-			url: './php/return.php',
-			error: function(xml, error) {
-				console.log(error);
-			}
-		};
-		$.ajax(settings).done(function(response) {
-			var a = JSON.parse(JSON.stringify(response));
-			$("#accept").html(a);   
-		});
-	};
-	
 	
 
 	/**
@@ -113,7 +98,7 @@ export default class LoggedHeader extends React.Component {
 									  onClick={this.handleClick}
 									>
 									<Icon className="fa fa-user" style={{ fontSize: 15 }}></Icon>
-									  Adrià Gual
+									  {this.appState("username")}
 									<Icon className="fa fa-chevron-down" style={{ fontSize: 15 }}></Icon>
 									</a>
 									<Menu

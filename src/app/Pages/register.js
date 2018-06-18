@@ -11,7 +11,9 @@ import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import language from "../Utils/language.js"
-
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 /** 
  * Register Page
  * @extends React.Component
@@ -24,11 +26,54 @@ class Register extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			showsnack: false,
+			snacktext: "",
 		};
 	}
 	state = {
 	};
 	appState = this.props.appState;
+	
+	click = () => {
+		
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'register_username': $("#register_username").val(), 
+				'register_password': $("#register_password").val(), 
+				'register_repeatpassword': $("#register_repeatpassword").val(), 
+				'register_email': $("#register_email").val(), 
+			},
+			url: 'php/register.php',
+			success: function(response) {
+				if(response == "empty_inputfields"){
+					that.setState({ showsnack: true ,snacktext: "Empty input fields in register!"});
+				}
+				else if(response == "user_already_exists"){
+					that.setState({ showsnack: true ,snacktext: "User already exists!"});
+				}
+				else if(response == "password_not_equal"){
+					that.setState({ showsnack: true ,snacktext: "Password not equal!"});
+				}
+				else if(response == "email_already_exists"){
+					that.setState({ showsnack: true ,snacktext: "E-mail already exists!"});
+				}
+				else if(response == "OK"){
+					that.setState({ showsnack: true ,snacktext: "Thank you for registering with our website!"});
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		  return;
+		}
+		this.setState({ showsnack: false });
+	};
+	
 	
 	/**
 	 * Renders the register page.
@@ -37,6 +82,7 @@ class Register extends React.Component {
 		var lng = this.appState("currentLanguage");
 		return (
 		<div>
+			<div>
 			<Particles
 				className="particles"
 				params={{
@@ -61,6 +107,7 @@ class Register extends React.Component {
 					}
 				}}
 			/>
+			</div>
 			<Grid container>
 				<Grid item xs={3}>
 				</Grid>
@@ -72,7 +119,7 @@ class Register extends React.Component {
 							</CardContent>
 							<Grid container className="left_30pc">	
 								<TextField
-									id="newusername"
+									id="register_username"
 									label="Enter your Username"
 									className="text_field "
 									onChange={(event, newValue) =>
@@ -82,7 +129,7 @@ class Register extends React.Component {
 									}
 								/>
 								<TextField
-									id="newemail"
+									id="register_email"
 									label="Enter your E-mail"
 									className="text_field "
 									onChange={(event, newValue) =>
@@ -92,7 +139,7 @@ class Register extends React.Component {
 									}
 								/>
 								<TextField
-									id="newpassword"
+									id="register_password"
 									label="Enter your Password"
 									className="text_field"
 									type="password"
@@ -103,7 +150,7 @@ class Register extends React.Component {
 									}
 								/>
 								<TextField
-									id="newrepeatpassword"
+									id="register_repeatpassword"
 									label="Repeat your Password"
 									className="text_field"
 									type="password"
@@ -113,9 +160,29 @@ class Register extends React.Component {
 										})
 									}
 								/>
+								<Snackbar
+								  anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'left',
+								  }}
+								  open={this.state.showsnack}
+								  autoHideDuration={4000}
+								  onClose={this.handleClose}
+								  message={<span id="message-id">{this.state.snacktext}</span>}
+								  action={[
+									<IconButton
+									  key="close"
+									  aria-label="Close"
+									  color="inherit"
+									  onClick={this.handleClose}
+									>
+									<CloseIcon />
+									</IconButton>,
+								  ]}
+								/>
 							</Grid>
 							<Grid item>
-								<Link to="/register"><Button className="btn btn-1 down_30 white " id="accept">Register Now</Button></Link>
+								<Button onClick={() => this.click()} className="btn btn-1 down_30 white " id="accept">Register Now</Button>
 							</Grid>
 						</Card>
 					</Grid>
