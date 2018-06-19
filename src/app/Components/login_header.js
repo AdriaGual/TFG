@@ -42,7 +42,6 @@ export default class LoginHeader extends React.Component {
 	appState = this.props.appState;
 	
 	click = () => {
-		
 		var that = this;
 		var settings = {
 			type: 'POST',
@@ -67,7 +66,6 @@ export default class LoginHeader extends React.Component {
 	};
 	
 	click_forgot_pass = () => {
-		
 		var that = this;
 		var settings = {
 			type: 'POST',
@@ -87,8 +85,10 @@ export default class LoginHeader extends React.Component {
 		$.ajax(settings);
 	};
 	
-	
 	handleCloseSnack = () => {
+		this.setState({ showsnack: false });
+	};
+	handleClose = () => {
 		this.setState({ showsnack: false });
 	};
 	handleCloseFPassword = () => {
@@ -100,7 +100,6 @@ export default class LoginHeader extends React.Component {
 			showforgotpassword: true,
 		});
 	};
-
 
 	/**
 	 * Renders the Header app.

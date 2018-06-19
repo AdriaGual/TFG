@@ -3,7 +3,7 @@
 // React imports
 import React from 'react';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Particles from "react-particles-js";
 import Grid from "material-ui/Grid";
 import TextField from "material-ui/TextField";
@@ -20,7 +20,6 @@ import SortableTree, {
  */
  
  	var initialData = [
-  { id: '1', name: 'N1', parent: null },
 ];
 class UserCourses extends React.Component {
 
@@ -36,7 +35,10 @@ class UserCourses extends React.Component {
 				getParentKey: node => node.parent, // resolve a node's parent's key
 				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
 			}),
-				
+			redirect_course: false,
+			redirect_topic: false,
+			redirect_theory: false,
+			redirect_exercice: false,
 		};
 	}
 	appState = this.props.appState;
@@ -65,12 +67,33 @@ class UserCourses extends React.Component {
 		$.ajax(settings);
 	}
 	
-	click = () => {
-		
-
+	click = (name) => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			url: 'php/is_course_topic.php',
+			success: function(response) {
+				if (response == "course"){
+					that.appState({course_name: name});
+					that.setState({ redirect_course: true});
+					
+				}
+				else if(response == "topic"){
+						that.setState({ redirect_topic: true});
+				}
+				else if(response == "theory"){
+					that.setState({ redirect_theory: true});
+				}
+				else if(response == "exercice"){
+					that.setState({ redirect_exercice: true});
+				}
+			}
+		};
+		$.ajax(settings);
 	};
-	
-	
 	
 	/**
 	 * Renders the register page.
@@ -81,7 +104,15 @@ class UserCourses extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
-		
+		const { redirect_course, redirect_topic } = this.state;
+
+		if (redirect_course) {
+			return <Redirect to='/user_course'/>;
+		}
+		else if (redirect_topic){
+			return <Redirect to='/user_theory'/>;
+		}
+
 		return (
 			<div>
 				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>
@@ -109,11 +140,8 @@ class UserCourses extends React.Component {
 								buttons: [
 									<Button
 										className="btn btn-1 white"
-										onClick={() => this.click()}
-											
-										}
-									>
-									 <Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
+										onClick={() => 	this.click(node.name)}>
+										<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 									</Button>,
 								  ],
 								})}

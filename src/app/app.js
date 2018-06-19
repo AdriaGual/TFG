@@ -30,6 +30,7 @@ class App extends React.Component {
 			logged: false,
 			currentLanguage: 0,
 			username: "",
+			course_name:"",
 		};
 		
 		var that = this;

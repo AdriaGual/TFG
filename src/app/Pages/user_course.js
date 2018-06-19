@@ -30,11 +30,31 @@ class UserCourse extends React.Component {
 			
 				}
 			],
+		course_description:"",
+		course_prerequisits:"",
 				
 		};
 	}
 	appState = this.props.appState;
 
+	componentDidMount() {
+		var that = this;
+
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': that.appState("course_name"), 
+			},
+			url: 'php/load_course_information.php',
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				that.setState({course_description: jsonData.description});
+				that.setState({course_prerequisits: jsonData.prerequisits});
+			}
+		};
+		$.ajax(settings);
+		
+	}
 	
 	/**
 	 * Renders the register page.
@@ -44,10 +64,13 @@ class UserCourse extends React.Component {
             treeData,
             searchString,
             searchFoundCount,
+			course_description,
+			course_prerequisits,
         } = this.state;
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30"><p>Course 1</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{this.appState("course_name")}
+				</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={10}  className="padding2"> 
@@ -82,13 +105,13 @@ class UserCourse extends React.Component {
 							<CardContent className="bold">
 								Course Description
 							</CardContent>
-								<p className="margin1">The course aims to introduce students to basic concepts in Business Intelligence in order to empower them in the design and development of Business Intelligence and Data Mining applications in enterprise environments .</p>
+								<p id="description_text" className="margin1">{this.state.course_description}</p>
 						</Card>
 						<Card className="course_description_form margin2 ">
 							<CardContent className="bold">
 								Pre-Requirements
 							</CardContent>
-								<p className="margin1">It's recommended to have a brief knowledge about EDA and PLP to be able to succeed in this course.</p>
+								<p className="margin1">{this.state.course_prerequisits}</p>
 						</Card>
 					</Grid>
 					<Grid item xs={1}>

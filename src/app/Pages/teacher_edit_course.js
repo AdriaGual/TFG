@@ -190,6 +190,15 @@ class TeacherCourses extends React.Component {
 							/>
 						</Card>
 						<Grid item xs={12}> 
+							<a className="orange size_30">Pre-Requisits</a>
+						</Grid>
+						<Card className="course_description_form down_30">
+							<TextField
+								id="prerequisists"
+								className="text_field"
+							/>
+						</Card>
+						<Grid item xs={12}> 
 							<Select native className="down_30 "> 
 								<option value="">Course Type</option>
 								<option value={0}>Tòrax</option>
