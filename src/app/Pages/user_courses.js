@@ -74,7 +74,7 @@ class UserCourses extends React.Component {
 			success: function(response) {
 				if (response == "course"){
 					that.appState({course_name: name});
-					that.setState({ redirect_course: true});
+					that.props.history.push('/user_course');
 				}
 				if(response == "topic"){
 					that.appState({topic_name: name});
