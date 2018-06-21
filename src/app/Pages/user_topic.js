@@ -34,9 +34,6 @@ class UserTopic extends React.Component {
 				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
 			}),
 		topic_description:"",
-		redirect_topic: false,
-		redirect_theory: false,
-		redirect_exercice: false,		
 		};
 	}
 	appState = this.props.appState;
@@ -104,11 +101,11 @@ class UserTopic extends React.Component {
 				}
 				if(response == "theory"){
 					that.appState({theory_name:name});
-					that.setState({ redirect_theory: true});
+					that.props.history.push('/user_topic');
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
-					that.setState({ redirect_exercice: true});
+					that.props.history.push('/user_exercice');
 				}
 			}
 		};

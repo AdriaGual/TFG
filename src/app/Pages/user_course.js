@@ -35,9 +35,6 @@ class UserCourse extends React.Component {
 				}),
 			course_description:"",
 			course_prerequisits:"",
-			redirect_topic: false,
-			redirect_theory: false,
-			redirect_exercice: false,	
 		};
 	}
 	appState = this.props.appState;
@@ -90,15 +87,15 @@ class UserCourse extends React.Component {
 			success: function(response) {
 				if(response == "topic"){
 					that.appState({topic_name: name});
-					that.setState({ redirect_topic: true});
+					that.props.history.push('/user_topic');
 				}
 				if(response == "theory"){
 					that.appState({theory_name:name});
-					that.setState({ redirect_theory: true});
+					that.props.history.push('/user_theory');
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
-					that.setState({ redirect_exercice: true});
+					that.props.history.push('/user_exercice');
 				}
 			}
 		};
@@ -118,18 +115,6 @@ class UserCourse extends React.Component {
 			course_prerequisits,
         } = this.state;
 
-		const { redirect_course, redirect_topic,redirect_theory,redirect_exercice} = this.state;
-		
-		if (redirect_topic){
-			return <Redirect from='user_course' to='/user_topic'/>;
-		}
-		if (redirect_theory){
-			return <Redirect from='user_course' to='/user_theory'/>;
-		}
-		if (redirect_exercice){
-			return <Redirect from='user_course' to='/user_exercice'/>;
-		}
-		
 		return (
 			<div>
 				<div className="left_30 down_20 orange size_30"><p>{this.appState("course_name")}

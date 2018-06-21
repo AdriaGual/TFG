@@ -34,10 +34,6 @@ class UserCourses extends React.Component {
 				getParentKey: node => node.parent, // resolve a node's parent's key
 				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
 			}),
-			redirect_course: false,
-			redirect_topic: false,
-			redirect_theory: false,
-			redirect_exercice: false,
 		};
 	}
 	appState = this.props.appState;
@@ -78,15 +74,15 @@ class UserCourses extends React.Component {
 				}
 				if(response == "topic"){
 					that.appState({topic_name: name});
-					that.setState({ redirect_topic: true});
+					that.props.history.push('/user_topic');
 				}
 				if(response == "theory"){
 					that.appState({theory_name:name});
-					that.setState({ redirect_theory: true});
+					that.props.history.push('/user_theory');
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
-					that.setState({ redirect_exercice: true});
+					that.props.history.push('/user_exercice');
 				}
 			}
 		};
@@ -101,20 +97,6 @@ class UserCourses extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
-		const { redirect_course, redirect_topic,redirect_theory,redirect_exercice} = this.state;
-
-		if (redirect_course) {
-			return <Redirect from='user_courses 'to='/user_course'/>;
-		}
-		if (redirect_topic){
-			return <Redirect from='user_courses' to='/user_topic'/>;
-		}
-		if (redirect_theory){
-			return <Redirect from='user_courses'  to='/user_theory'/>;
-		}
-		if (redirect_exercice){
-			return <Redirect from='user_courses' to='/user_exercice'/>;
-		}
 
 		return (
 			<div>
