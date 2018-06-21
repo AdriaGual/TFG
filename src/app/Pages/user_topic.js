@@ -20,24 +20,23 @@ import SortableTree, {
  * @extends React.Component
  */
  var initialData = [];
-class UserCourse extends React.Component {
+class UserTopic extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			searchString: '',
-			searchFocusIndex: 0,
-			searchFoundCount: null,
-			treeData: getTreeFromFlatData({
-					flatData: initialData.map(node => ({ ...node, title: node.name })),
-					getKey: node => node.id, // resolve a node's key
-					getParentKey: node => node.parent, // resolve a node's parent's key
-					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
-				}),
-			course_description:"",
-			course_prerequisits:"",
-			redirect_topic: false,
-			redirect_theory: false,
-			redirect_exercice: false,	
+		searchString: '',
+		searchFocusIndex: 0,
+		searchFoundCount: null,
+		treeData: getTreeFromFlatData({
+				flatData: initialData.map(node => ({ ...node, title: node.name })),
+				getKey: node => node.id, // resolve a node's key
+				getParentKey: node => node.parent, // resolve a node's parent's key
+				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+			}),
+		topic_description:"",
+		redirect_topic: false,
+		redirect_theory: false,
+		redirect_exercice: false,		
 		};
 	}
 	appState = this.props.appState;
@@ -47,23 +46,32 @@ class UserCourse extends React.Component {
 		var settings = {
 			type: 'POST',
 			data: { 
-				'name': that.appState("course_name"), 
+				'name': that.appState("topic_name"), 
 			},
-			url: 'php/load_course_information.php',
+			url: 'php/load_topic.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
-				that.setState({course_description: jsonData.description});
-				that.setState({course_prerequisits: jsonData.prerequisits});
+				var a = jsonData.map(node => ({ ...node, title: node.name }));
+				that.setState({treeData: getTreeFromFlatData({
+					flatData: a,
+					getKey: node => node.id, // resolve a node's key
+					getParentKey: node => node.parent, // resolve a node's parent's key
+					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+				})});
+				console.log(jsonData);
 			}
 		};
 		$.ajax(settings);
-		
+	}
+	
+	load_topic() {
+		var that = this;
 		var settings = {
 			type: 'POST',
 			data: { 
-				'name': that.appState("course_name"), 
+				'name': that.appState("topic_name"), 
 			},
-			url: 'php/load_course.php',
+			url: 'php/load_topic.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
 				var a = jsonData.map(node => ({ ...node, title: node.name }));
@@ -90,7 +98,9 @@ class UserCourse extends React.Component {
 			success: function(response) {
 				if(response == "topic"){
 					that.appState({topic_name: name});
-					that.setState({ redirect_topic: true});
+					console.log(that.appState("topic_name"));
+					that.forceUpdate();
+					that.load_topic();
 				}
 				if(response == "theory"){
 					that.appState({theory_name:name});
@@ -105,7 +115,6 @@ class UserCourse extends React.Component {
 		$.ajax(settings);
 	};
 	
-	
 	/**
 	 * Renders the register page.
 	 */
@@ -117,22 +126,19 @@ class UserCourse extends React.Component {
 			course_description,
 			course_prerequisits,
         } = this.state;
-
-		const { redirect_course, redirect_topic,redirect_theory,redirect_exercice} = this.state;
 		
-		if (redirect_topic){
-			return <Redirect from='user_course' to='/user_topic'/>;
-		}
+		const {redirect_topic, redirect_theory, redirect_exercice } = this.state;
 		if (redirect_theory){
-			return <Redirect from='user_course' to='/user_theory'/>;
+			return <Redirect from='user_topic' to='/user_theory'/>;
 		}
 		if (redirect_exercice){
-			return <Redirect from='user_course' to='/user_exercice'/>;
+			return <Redirect from='user_topic' to='/user_exercice'/>;
 		}
+		
 		
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30"><p>{this.appState("course_name")}
+				<div className="left_30 down_20 orange size_30"><p>{this.appState("topic_name")}
 				</p></div>
 				<hr/>
 				<Grid container>
@@ -160,38 +166,23 @@ class UserCourse extends React.Component {
 						canDrag={false}
 						searchQuery={searchString}
 						generateNodeProps={({ node, path }) => {
-								return {
-									style: {
-										color: path.length===1 ? "black" : path.length===2 ? "green" : "blue",
-									},
+							return {
+								style: {
+									color: path.length===1 ? "black" : path.length===2 ? "green" : "blue",
+								},
 
-								buttons: [
-									<Button
+								buttons: [<Button
 										className="btn btn-1 white"
-										onClick={() => 	this.click(node.name)}
-									>
+										onClick={() => 	this.click(node.name)}>
 										<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 									</Button>,
 								],
 							};
-						}}
-								
+						}}	
 						/>
 						</div>
 					</Grid>
 					<Grid item xs={3}>
-						<Card className="course_description_form margin2 ">
-							<CardContent className="bold">
-								Course Description
-							</CardContent>
-								<p id="description_text" className="margin1">{this.state.course_description}</p>
-						</Card>
-						<Card className="course_description_form margin2 ">
-							<CardContent className="bold">
-								Pre-Requirements
-							</CardContent>
-								<p className="margin1">{this.state.course_prerequisits}</p>
-						</Card>
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
@@ -204,6 +195,6 @@ class UserCourse extends React.Component {
 }
 
 
-UserCourse = withRouter(UserCourse);
+UserTopic = withRouter(UserTopic);
 
-export default UserCourse;
+export default UserTopic;

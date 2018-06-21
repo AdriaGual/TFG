@@ -14,7 +14,7 @@
 		   echo "empty_name";
 		}
 		else{
-			$stmt = $conn->prepare("SELECT * FROM course WHERE name = :name");
+			$stmt = $conn->prepare("SELECT * FROM exercice_content WHERE statement = :name");
 			$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 			$stmt->execute();
 			
@@ -22,8 +22,11 @@
 			if ($total > 0){
 				$miscursos = array();
 				$row = $stmt->fetchObject();
+				$miscursos['statement']=$row->statement;
 				$miscursos['description']=$row->description;
-				$miscursos['prerequisits']=$row->prerequisits;
+				$miscursos['question']=$row->question;
+				$miscursos['help']=$row->help;
+				$miscursos['tries']=$row->n_tries;
 				echo json_encode($miscursos);
 			}
 			else{

@@ -19,8 +19,7 @@ import SortableTree, {
  * @extends React.Component
  */
  
- 	var initialData = [
-];
+ 	var initialData = [];
 class UserCourses extends React.Component {
 
 	constructor(props){
@@ -50,9 +49,7 @@ class UserCourses extends React.Component {
 			type: 'GET',
 			url: 'php/load_courses.php',
 			success: function(response) {
-
 				var jsonData = JSON.parse(response);
-				
 				var a = jsonData.map(node => ({ ...node, title: node.name }));
 				that.setState({treeData: getTreeFromFlatData({
 					flatData: a,
@@ -60,7 +57,6 @@ class UserCourses extends React.Component {
 					getParentKey: node => node.parent, // resolve a node's parent's key
 					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
 				})});
-				console.log(initialData);
 				console.log(jsonData);
 			}
 		};
@@ -79,15 +75,17 @@ class UserCourses extends React.Component {
 				if (response == "course"){
 					that.appState({course_name: name});
 					that.setState({ redirect_course: true});
-					
 				}
-				else if(response == "topic"){
-						that.setState({ redirect_topic: true});
+				if(response == "topic"){
+					that.appState({topic_name: name});
+					that.setState({ redirect_topic: true});
 				}
-				else if(response == "theory"){
+				if(response == "theory"){
+					that.appState({theory_name:name});
 					that.setState({ redirect_theory: true});
 				}
-				else if(response == "exercice"){
+				if(response == "exercice"){
+					that.appState({exercice_name:name});
 					that.setState({ redirect_exercice: true});
 				}
 			}
@@ -99,18 +97,23 @@ class UserCourses extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
-
 		var {
             searchString,
             searchFoundCount,
         } = this.state;
-		const { redirect_course, redirect_topic } = this.state;
+		const { redirect_course, redirect_topic,redirect_theory,redirect_exercice} = this.state;
 
 		if (redirect_course) {
-			return <Redirect to='/user_course'/>;
+			return <Redirect from='user_courses 'to='/user_course'/>;
 		}
-		else if (redirect_topic){
-			return <Redirect to='/user_theory'/>;
+		if (redirect_topic){
+			return <Redirect from='user_courses' to='/user_topic'/>;
+		}
+		if (redirect_theory){
+			return <Redirect from='user_courses'  to='/user_theory'/>;
+		}
+		if (redirect_exercice){
+			return <Redirect from='user_courses' to='/user_exercice'/>;
 		}
 
 		return (
@@ -132,19 +135,26 @@ class UserCourses extends React.Component {
 					<Grid item xs={12}>
 						<div style={{ height: 1500}}>
 						<SortableTree
-						  treeData={this.state.treeData}
-						  onChange={treeData => this.setState({ treeData })}
-						  canDrag={false}
-						  searchQuery={searchString}
-						        generateNodeProps={({ node, path }) => ({
+						treeData={this.state.treeData}
+						onChange={treeData => this.setState({ treeData })}
+						canDrag={false}
+						searchQuery={searchString}
+						generateNodeProps={({ node, path }) => {
+								return {
+									style: {
+										color: path.length===1 ? "black" : path.length===2 ? "green" : "blue",
+									},
+
 								buttons: [
 									<Button
-										className="btn btn-1 white"
+										className={path.length===1 ? "btn btn-1 white":"btn btn-2 white"}
 										onClick={() => 	this.click(node.name)}>
 										<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 									</Button>,
-								  ],
-								})}
+								],
+							};
+						}}
+								
 						/>
 						</div>
 					</Grid>

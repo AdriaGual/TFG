@@ -28,13 +28,35 @@
 				$stmt2->bindParam('name', $name, PDO::PARAM_STR);
 				$stmt2->execute();
 			
-				$total = $stmt->rowCount();
+				$total = $stmt2->rowCount();
 				if ($total > 0){
 					$row = $stmt2->fetchObject();
 					echo "topic";
 				}
 				else{
-					echo "bad_login";
+					$stmt2 = $conn->prepare("SELECT * FROM theory_content WHERE title = :name");
+					$stmt2->bindParam('name', $name, PDO::PARAM_STR);
+					$stmt2->execute();
+				
+					$total = $stmt2->rowCount();
+					if ($total > 0){
+						$row = $stmt2->fetchObject();
+						echo "theory";
+					}
+					else{
+						$stmt2 = $conn->prepare("SELECT * FROM exercice_content WHERE statement = :name");
+						$stmt2->bindParam('name', $name, PDO::PARAM_STR);
+						$stmt2->execute();
+					
+						$total = $stmt2->rowCount();
+						if ($total > 0){
+							$row = $stmt2->fetchObject();
+							echo "exercice";
+						}
+						else{
+							echo "bad_login";
+						}
+					}
 				}
 			}
 		}

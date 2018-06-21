@@ -20,10 +20,36 @@ class UserExercice extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			exercice_statement:"",
+			exercice_description:"",
+			exercice_question:"",
+			exercice_help:"",
+			exercice_tries:"",
 		}
 	}
 	appState = this.props.appState;
 
+	
+	componentDidMount() {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': that.appState("exercice_name"), 
+			},
+			url: 'php/load_exercice.php',
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				that.setState({exercice_statement: jsonData.statement});
+				that.setState({exercice_description: jsonData.description});
+				that.setState({exercice_question: jsonData.question});
+				that.setState({exercice_help: jsonData.help});
+				that.setState({exercice_ntries: jsonData.tries});
+			}
+		};
+		$.ajax(settings);
+	}
+	
 	
 	/**
 	 * Renders the register page.
@@ -34,21 +60,22 @@ class UserExercice extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
+		
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30"><p>Course 1: Topic 1</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
-						<p className="left_30 down_20 black size_20">Data Cleansing Exercice</p>
-						<hr/>
 						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">Description of the exercice</p>
+								<p className="margin1">{this.state.exercice_description}</p>
 						</Card>
-						<p className="left_30 down_20 black size_20">Question</p>
+						<p className="left_30 down_20 black size_20">{this.state.exercice_question}</p>
 						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">Help Text.</p>
+								<p className="margin1">{this.state.exercice_help}</p>
 						</Card>
+						<p className="left_30 down_20 black size_20">Tries: {this.state.exercice_ntries}</p>
+
 					</Grid>
 					<Grid item xs={5}  className="padding2"> 
 					

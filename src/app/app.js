@@ -9,7 +9,7 @@
 // React imports
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter as Router, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Redirect,Route } from 'react-router-dom';
 // Components imports
 import Header from './Header.js';
 import Main from './Main.js';
@@ -31,6 +31,9 @@ class App extends React.Component {
 			currentLanguage: 0,
 			username: "",
 			course_name:"",
+			topic_name:"",
+			theory_name:"",
+			exercice_name:"",
 		};
 		
 		var that = this;

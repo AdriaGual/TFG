@@ -20,10 +20,32 @@ class Theory extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			theory_content:"",
+			theory_url:"",
+			theory_title:"",
+			theory_subtitle:"",
 		}
 	}
 	appState = this.props.appState;
 
+	componentDidMount() {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': that.appState("theory_name"), 
+			},
+			url: 'php/load_theory.php',
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				that.setState({theory_content: jsonData.content});
+				that.setState({theory_url: jsonData.url});
+				that.setState({theory_title: jsonData.title});
+				that.setState({theory_subtitle: jsonData.subtitle});
+			}
+		};
+		$.ajax(settings);
+	}
 	
 	/**
 	 * Renders the register page.
@@ -36,16 +58,14 @@ class Theory extends React.Component {
         } = this.state;
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30"><p>Course 1: Topic 1</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{this.state.theory_title}</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
-						<p className="left_30 down_20 black size_20">Data Cleansing</p>
-						<hr/>
-						<p className="left_30 down_20 black size_12">Parsing, Correcting, Standardizing, Matching and Consolidating Data.</p>
-						<a className="left_30 down_20 blue size_12" href="https://en.wikipedia.org/wiki/Data_cleansing">URL: More Information</a>
+						<p className="left_30 down_20 black size_12">{this.state.theory_subtitle}</p>
+						<a className="left_30 down_20 blue size_12" href={this.state.theory_url}>URL: {this.state.theory_url}</a>
 						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">Main theory content goes here.</p>
+								<p className="margin1">{this.state.theory_content}</p>
 						</Card>
 					</Grid>
 					<Grid item xs={5}  className="padding2"> 

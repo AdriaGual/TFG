@@ -13,6 +13,7 @@ import Register from './Pages/register.js';
 import UserCourses from './Pages/user_courses.js';
 import UserCourse from './Pages/user_course.js';
 import UserTheory from './Pages/user_theory.js';
+import UserTopic from './Pages/user_topic.js';
 import UserExercice from './Pages/user_exercice.js';
 import UserQualifications from './Pages/user_qualifications.js';
 import TeacherCourses from './Pages/teacher_courses.js';
@@ -46,6 +47,7 @@ export default class Main extends React.Component {
 			<Route path='/user_courses' render={() => (<div><UserCourses appState={this.appState}></UserCourses></div>)} />
 			<Route path='/user_course' render={() => (<div><UserCourse appState={this.appState}></UserCourse></div>)} />
 			<Route path='/user_theory' render={() => (<div><UserTheory appState={this.appState}></UserTheory></div>)} />
+			<Route path='/user_topic' render={() => (<div><UserTopic appState={this.appState}></UserTopic></div>)} />
 			<Route path='/user_exercice' render={() => (<div><UserExercice appState={this.appState}></UserExercice></div>)} />
 			<Route path='/user_qualifications' render={() => (<div><UserQualifications appState={this.appState}></UserQualifications></div>)} />
 			<Route path='/teacher_courses' render={() => (<div><TeacherCourses appState={this.appState}></TeacherCourses></div>)} />
