@@ -644,7 +644,7 @@ hr.vr {
 
 .btn {
 	transition: 0.3s;
-	background-size: 200% auto;
+	background-size: 100% auto;
 	border-radius: 3;
 	color:white;
 }

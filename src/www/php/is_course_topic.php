@@ -21,6 +21,7 @@
 			$total = $stmt->rowCount();
 			if ($total > 0){
 				$row = $stmt->fetchObject();
+				$_SESSION['course'] = $row->name;
 				echo "course";
 			}
 			else{

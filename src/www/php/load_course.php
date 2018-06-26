@@ -1,10 +1,28 @@
 ﻿<?php
 	session_start(); 
 
-	$name = $_POST["name"];
+	$name = $_SESSION["course"];
 	
 	$username = "root";
 	$password = "";
+	
+	function buscarsubtopics($conn,$idtopic,$punter,$id,$miscursos){
+		$stmt3 = $conn->prepare("SELECT id,name FROM topic WHERE subtopic = :idtopic");			
+		$stmt3->bindParam(':idtopic', $idtopic, PDO::PARAM_STR);
+		$stmt3->execute();
+		$total3 = $stmt3->rowCount();
+		if ($total3 > 0){
+			while ($row3 = $stmt3->fetchObject()) {
+				$miscursos[$punter]['id'] = $id;
+				$miscursos[$punter]['name'] = $row3->name;
+				$miscursos[$punter]['parent'] = $idtopic;
+				$punter++;//4
+				$idtopic2 = $id;//2
+				$id++;//5
+				buscarsubtopics($conn,$idtopic2,$punter,$id,$miscursos);
+			}
+		}
+	}
 
 	try {
 		$conn = new PDO("mysql:host=localhost;dbname=elearning", $username, $password);
@@ -44,6 +62,7 @@
 					$idtopic = $id;//2
 					$idtopicSQL = $row2->id;//1
 					$id++;//3	
+					
 					/*//Buscar les teories d'un topic
 					$stmt4 = $conn->prepare("SELECT tc.title FROM theory_content AS tc INNER JOIN theory_topic AS t ON tc.id = t.id_theory_content WHERE t.id_topic = :idtopic");
 					$stmt4->bindParam(':idtopic', $row2->id, PDO::PARAM_STR);
@@ -85,7 +104,7 @@
 							$punter++;//4
 							$idtopic2 = $id;//2
 							$id++;//5
-							$stmt4 = $conn->prepare("SELECT tc.title FROM theory_content AS tc INNER JOIN theory_topic AS t ON tc.id = t.id_theory_content WHERE t.id_topic = :idtopic");
+							/*$stmt4 = $conn->prepare("SELECT tc.title FROM theory_content AS tc INNER JOIN theory_topic AS t ON tc.id = t.id_theory_content WHERE t.id_topic = :idtopic");
 							$stmt4->bindParam(':idtopic', $row3->id, PDO::PARAM_STR);
 							$stmt4->execute();
 							$total4 = $stmt4->rowCount();
@@ -97,10 +116,25 @@
 									$punter++;//3
 									$id++;//4
 								}
+							}*/
+							$stmt4 = $conn->prepare("SELECT id,name FROM topic WHERE subtopic = :idtopic");			
+							$stmt4->bindParam(':idtopic', $row3->id, PDO::PARAM_STR);
+							$stmt4->execute();
+							$total4= $stmt4->rowCount();
+							if ($total4 > 0){
+								while ($row4 = $stmt4->fetchObject()) {
+									$miscursos[$punter]['id'] = $id;
+									$miscursos[$punter]['name'] = $row4->name;
+									$miscursos[$punter]['parent'] = $idtopic2;
+									$punter++;//4
+									$idtopic2 = $id;//2
+									$id++;//5
+								}
 							}
-							
 						}
 					}
+					
+					
 				}
 				echo json_encode($miscursos); 
 			}
