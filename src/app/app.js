@@ -33,6 +33,7 @@ class App extends React.Component {
 			course_name:"",
 			topic_name:"",
 			theory_name:"",
+			is_student:false,
 			exercice_name:"",
 		};
 		

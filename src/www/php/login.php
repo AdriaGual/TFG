@@ -26,7 +26,7 @@
 				$row = $stmt->fetchObject();
 				$_SESSION['user'] = $myuser;
 				$_SESSION['userid'] = $row->id;
-				echo "OK";
+				echo $row->user_type;
 			}
 			else{
 				echo "bad_login";

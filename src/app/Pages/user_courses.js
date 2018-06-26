@@ -19,7 +19,7 @@ import SortableTree, {
  * @extends React.Component
  */
  
- 	var initialData = [];
+var initialData = [];
 class UserCourses extends React.Component {
 
 	constructor(props){

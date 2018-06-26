@@ -44,7 +44,7 @@
 					$idtopic = $id;//2
 					$idtopicSQL = $row2->id;//1
 					$id++;//3	
-					//Buscar les teories d'un topic
+					/*//Buscar les teories d'un topic
 					$stmt4 = $conn->prepare("SELECT tc.title FROM theory_content AS tc INNER JOIN theory_topic AS t ON tc.id = t.id_theory_content WHERE t.id_topic = :idtopic");
 					$stmt4->bindParam(':idtopic', $row2->id, PDO::PARAM_STR);
 					$stmt4->execute();
@@ -71,7 +71,7 @@
 							$punter++;//3
 							$id++;//4
 						}
-					}
+					}*/
 					//Mirar si hi ha algun subtopic que tingui aquest topic de pare
 					$stmt3 = $conn->prepare("SELECT id,name FROM topic WHERE subtopic = :idtopic");			
 					$stmt3->bindParam(':idtopic', $row2->id, PDO::PARAM_STR);

@@ -49,7 +49,13 @@ export default class Header extends React.Component {
 		if (!this.appState("logged")) {
 		  loginheader = <LoginHeader appState={this.appState} ></LoginHeader>;
 		} else {
-		  loginheader = <div><Redirect to='/user_courses'/><LoggedHeader appState={this.appState} ></LoggedHeader></div>;
+			if (this.appState("is_student")){
+				loginheader = <div><LoggedHeader appState={this.appState} ></LoggedHeader></div>;
+			}
+			else{
+				loginheader = <div><LoggedHeader appState={this.appState} ></LoggedHeader></div>;
+			}
+		  
 		}
 
 		return (

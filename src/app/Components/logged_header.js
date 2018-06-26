@@ -83,7 +83,6 @@ export default class LoggedHeader extends React.Component {
 						<Grid item xs={1}>
 						</Grid>
 						<Grid item xs={5}>
-							<Icon className="fa fa-heartbeat down_15" style={{ fontSize: 50 }}></Icon>
 						</Grid>
 						<Grid item xs={4}>
 						</Grid>

@@ -9,6 +9,7 @@
 // React imports
 import React from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from 'react-router';
 // Material-UI imports
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
@@ -25,7 +26,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
  * Header of the app.
  * @extends React.Component
  */
-export default class LoginHeader extends React.Component {
+ class LoginHeader extends React.Component {
 	/**
 	 * Creates the Header component of the app.
 	 * @param {object} props - React.Component props
@@ -51,7 +52,12 @@ export default class LoginHeader extends React.Component {
 			},
 			url: 'php/login.php',
 			success: function(response) {
-				if (response == "OK"){
+				if (response == "0"){
+					that.props.history.push('/user_courses');
+					that.appState({logged: true,is_student:true,username:$("#username").val()});
+				}
+				else if (response == "1"){
+					that.props.history.push('/teacher_courses');
 					that.appState({logged: true,username:$("#username").val()});
 				}
 				else if(response == "bad_login"){
@@ -75,6 +81,7 @@ export default class LoginHeader extends React.Component {
 			url: 'php/forgot_password.php',
 			success: function(response) {
 				if (response == "OK"){
+					
 					that.appState({logged: true,username:$("#username").val()});
 				}
 				else if(response == "empty_inputfields"){
@@ -118,7 +125,7 @@ export default class LoginHeader extends React.Component {
 						<Grid item xs={1}>
 						</Grid>
 						<Grid item xs={5}>
-						<Icon className="fa fa-heartbeat down_15" style={{ fontSize: 50 }}></Icon>
+					
 						</Grid>
 						<Grid item xs={2}>
 							<Grid container>
@@ -230,3 +237,8 @@ export default class LoginHeader extends React.Component {
 		);
 	}
 }
+
+
+LoginHeader = withRouter(LoginHeader);
+
+export default LoginHeader;

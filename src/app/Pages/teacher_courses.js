@@ -10,40 +10,60 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
-import SortableTree from 'react-sortable-tree';
+import SortableTree, {
+  getFlatDataFromTree,
+  getTreeFromFlatData,
+} from 'react-sortable-tree';
 /** 
  * Register Page
  * @extends React.Component
  */
+ var initialData = [];
 class TeacherCourses extends React.Component {
-	constructor(props){
+		constructor(props){
 		super(props);
 		this.state = {
-		searchString: '',
-		searchFocusIndex: 0,
-		searchFoundCount: null,
-		treeData: [
-				{ title: <Link to="/user_course" className="black">Course 1</Link>,
-					expanded:true, 
-					children: [{ title: 'Topic 1', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] }] 
-			
-				},
-				{ title: 'Course 2',
-					expanded:true, 
-					children: [{ title: 'Topic 1', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] },
-					{ title: 'Topic 2', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] },
-					{ title: 'Topic 3', 
-					children: [{ title: <Link to="/user_theory" className="blue">Theory</Link> },{ title: <Link to="/user_exercice" className="red">Exercices</Link> }] }
-					]
-				}
-			],
-				
+			searchString: '',
+			searchFocusIndex: 0,
+			searchFoundCount: null,
+			treeData: getTreeFromFlatData({
+				flatData: initialData.map(node => ({ ...node, title: node.name })),
+				getKey: node => node.id, // resolve a node's key
+				getParentKey: node => node.parent, // resolve a node's parent's key
+				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+			}),
 		};
 	}
 	appState = this.props.appState;
+	
+	componentDidMount() {
+		var that = this;
+
+		var settings = {
+			type: 'GET',
+			url: 'php/load_courses.php',
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				var a = jsonData.map(node => ({ ...node, title: node.name }));
+				that.setState({treeData: getTreeFromFlatData({
+					flatData: a,
+					getKey: node => node.id, // resolve a node's key
+					getParentKey: node => node.parent, // resolve a node's parent's key
+					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+				})});
+				console.log(jsonData);
+			}
+		};
+		$.ajax(settings);
+	}
+	
+	treeChange = (treeData,flatData) => {
+		this.setState({ treeData });
+		{flatData.map(({ id, name, parent }) => (
+            console.log({id,name,parent})
+          ))}
+		
+	}
 
 	
 	/**
@@ -55,6 +75,20 @@ class TeacherCourses extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
+		
+		const flatData = getFlatDataFromTree({
+		treeData: this.state.treeData,
+		getNodeKey: ({ node }) => node.id, // This ensures your "id" properties are exported in the path
+		ignoreCollapsed: false, // Makes sure you traverse every node in the tree, not just the visible ones
+		}).map(({ node, path }) => ({
+		id: node.id,
+		name: node.name,
+
+		// The last entry in the path is this node's key
+		// The second to last entry (accessed here) is the parent node's key
+		parent: path.length > 1 ? path[path.length - 2] : null,
+		}));
+
 		return (
 			<div>
 				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>
@@ -78,7 +112,7 @@ class TeacherCourses extends React.Component {
 						<div style={{ height: 1500}}>
 						<SortableTree
 						  treeData={this.state.treeData}
-						  onChange={treeData => this.setState({ treeData })}
+						  onChange={treeData => 	this.treeChange(treeData,flatData)}
 						  searchQuery={searchString}
 						/>
 						</div>

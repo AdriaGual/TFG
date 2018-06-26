@@ -35,7 +35,6 @@ class Register extends React.Component {
 	appState = this.props.appState;
 	
 	click = () => {
-		
 		var that = this;
 		var settings = {
 			type: 'POST',
