@@ -58,25 +58,28 @@
 					$miscursos[$punter]['name'] = $row2->name;
 					$miscursos[$punter]['parent'] = null;
 					$miscursos[$punter]['expanded'] = true;
-					$punter++;//2
 					$idtopic = $id;//2
 					$idtopicSQL = $row2->id;//1
-					$id++;//3	
 					
-					/*//Buscar les teories d'un topic
+					//Buscar les teories d'un topic
 					$stmt4 = $conn->prepare("SELECT tc.title FROM theory_content AS tc INNER JOIN theory_topic AS t ON tc.id = t.id_theory_content WHERE t.id_topic = :idtopic");
 					$stmt4->bindParam(':idtopic', $row2->id, PDO::PARAM_STR);
 					$stmt4->execute();
 					$total4 = $stmt4->rowCount();
 					if ($total4 > 0){
-						while ($row4 = $stmt4->fetchObject()) {
-							$miscursos[$punter]['id'] = $id;
-							$miscursos[$punter]['name'] = $row4->title;
-							$miscursos[$punter]['parent'] = $idtopic;
-							$punter++;//3
-							$id++;//4
-						}
+							$miscursos[$punter]['hastheory'] = true;
 					}
+					
+					$stmt4 = $conn->prepare("SELECT tc.statement FROM exercice_content AS tc INNER JOIN topic_exercice AS t ON tc.id = t.id_exercice_content WHERE t.id_topic = :idtopic");
+					$stmt4->bindParam(':idtopic', $row2->id, PDO::PARAM_STR);
+					$stmt4->execute();
+					$total4 = $stmt4->rowCount();
+					if ($total4 > 0){
+							$miscursos[$punter]['hasexercice'] = true;
+					}
+					$punter++;//2
+					$id++;//3	
+					/*
 					//Buscar els exercicis d'un topic
 					$stmt4 = $conn->prepare("SELECT tc.statement FROM exercice_content AS tc INNER JOIN topic_exercice AS t ON tc.id = t.id_exercice_content WHERE t.id_topic = :idtopic");
 					$stmt4->bindParam(':idtopic', $row2->id, PDO::PARAM_STR);
@@ -101,22 +104,25 @@
 							$miscursos[$punter]['id'] = $id;
 							$miscursos[$punter]['name'] = $row3->name;
 							$miscursos[$punter]['parent'] = $idtopic;
-							$punter++;//4
+							
 							$idtopic2 = $id;//2
-							$id++;//5
-							/*$stmt4 = $conn->prepare("SELECT tc.title FROM theory_content AS tc INNER JOIN theory_topic AS t ON tc.id = t.id_theory_content WHERE t.id_topic = :idtopic");
+							
+							$stmt4 = $conn->prepare("SELECT tc.title FROM theory_content AS tc INNER JOIN theory_topic AS t ON tc.id = t.id_theory_content WHERE t.id_topic = :idtopic");
 							$stmt4->bindParam(':idtopic', $row3->id, PDO::PARAM_STR);
 							$stmt4->execute();
 							$total4 = $stmt4->rowCount();
 							if ($total4 > 0){
-								while ($row4 = $stmt4->fetchObject()) {
-									$miscursos[$punter]['id'] = $id;
-									$miscursos[$punter]['name'] = $row4->title;
-									$miscursos[$punter]['parent'] = $idtopic2;
-									$punter++;//3
-									$id++;//4
-								}
-							}*/
+								$miscursos[$punter]['hastheory'] = true;
+							}
+							$stmt4 = $conn->prepare("SELECT tc.statement FROM exercice_content AS tc INNER JOIN topic_exercice AS t ON tc.id = t.id_exercice_content WHERE t.id_topic = :idtopic");
+							$stmt4->bindParam(':idtopic', $row3->id, PDO::PARAM_STR);
+							$stmt4->execute();
+							$total4 = $stmt4->rowCount();
+							if ($total4 > 0){
+									$miscursos[$punter]['hasexercice'] = true;
+							}
+							$id++;//5
+							$punter++;//4
 							$stmt4 = $conn->prepare("SELECT id,name FROM topic WHERE subtopic = :idtopic");			
 							$stmt4->bindParam(':idtopic', $row3->id, PDO::PARAM_STR);
 							$stmt4->execute();

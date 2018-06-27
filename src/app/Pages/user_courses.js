@@ -124,12 +124,12 @@ class UserCourses extends React.Component {
 						generateNodeProps={({ node, path }) => {
 								return {
 									style: {
-										color: path.length===1 ? "black" : path.length===2 ? "green" : "blue",
+										color: node.iscourse ? "black" : node.istopic ? "blue" : node.istheory ? "green":"red",
 									},
 
 								buttons: [
 									<Button
-										className={path.length===1 ? "btn btn-1 white":"btn btn-2 white"}
+										className={"btn btn-1 white"}
 										onClick={() => 	this.click(node.name)}>
 										<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 									</Button>,
