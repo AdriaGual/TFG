@@ -107,6 +107,7 @@ class TeacherCourses extends React.Component {
 					</Grid>
 					<Grid item xs={3}> 
 						<Link to="/teacher_edit_course"><Button className="btn btn-2 down_30 white">Create New Course</Button></Link>
+						<Link to="/teacher_edit_exercice"><Button className="btn btn-5 down_30 white left_15">Create New Exercice</Button></Link>
 					</Grid>
 					<Grid item xs={12}>
 						<div style={{ height: 1500}}>
