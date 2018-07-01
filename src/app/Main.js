@@ -18,8 +18,10 @@ import UserExercice from './Pages/user_exercice.js';
 import UserQualifications from './Pages/user_qualifications.js';
 import TeacherCourses from './Pages/teacher_courses.js';
 import TeacherEditCourse from './Pages/teacher_edit_course.js';
-import TeacherEditExercice from './Pages/teacher_edit_exercice.js';
 import TeacherChooseExercice from './Pages/teacher_choose_exercice.js';
+import TeacherEditExerciceLocation2d from './Pages/teacher_edit_exercice_location2d.js';
+import TeacherEditExerciceTest2d from './Pages/teacher_edit_exercice_test2d.js';
+
 // Pages imports
 
 
@@ -55,7 +57,8 @@ export default class Main extends React.Component {
 			<Route path='/teacher_courses' render={() => (<div><TeacherCourses appState={this.appState}></TeacherCourses></div>)} />
 			<Route path='/teacher_edit_course' render={() => (<div><TeacherEditCourse appState={this.appState}></TeacherEditCourse></div>)} />
 			<Route path='/teacher_choose_exercice' render={() => (<div><TeacherChooseExercice appState={this.appState}></TeacherChooseExercice></div>)} />
-			<Route path='/teacher_edit_exercice' render={() => (<div><TeacherEditExercice appState={this.appState}></TeacherEditExercice></div>)} />
+			<Route path='/teacher_edit_exercice_location2d' render={() => (<div><TeacherEditExerciceLocation2d appState={this.appState}></TeacherEditExerciceLocation2d></div>)} />
+			<Route path='/teacher_edit_exercice_test2d' render={() => (<div><TeacherEditExerciceTest2d appState={this.appState}></TeacherEditExerciceTest2d></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

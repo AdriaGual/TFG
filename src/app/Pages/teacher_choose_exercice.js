@@ -51,15 +51,17 @@ class TeacherChooseExercice extends React.Component {
 	}
 	click = (name) => {
 		if (name== "2D"){
-			this.appState({exercice_type:"2D"})
+			this.appState({exercice_type:"2D"});
+			this.props.history.push('/teacher_edit_exercice_location2d');
 		}
 		if(name == "3D"){
 			this.appState({exercice_type: "3D"});
 		}
 		if(name == "Test"){
 			this.appState({exercice_type: "Test"});
+			this.props.history.push('/teacher_edit_exercice_test2d');
 		}
-		this.props.history.push('/teacher_edit_exercice');
+		
 	}
 	
 	
