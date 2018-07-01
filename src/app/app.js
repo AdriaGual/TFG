@@ -28,6 +28,7 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			logged: false,
+			exercice_type:"",
 			currentLanguage: 0,
 			username: "",
 			course_name:"",

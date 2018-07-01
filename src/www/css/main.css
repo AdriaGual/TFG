@@ -12,6 +12,10 @@ body {
 	overflow: hidden;
 }
 
+textarea {
+	resize: none;
+}
+
 main {
 	position: absolute;
 	overflow: auto;

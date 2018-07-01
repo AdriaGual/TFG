@@ -19,7 +19,7 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
-class TeacherCourses extends React.Component {
+class TeacherEditCourse extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -226,6 +226,6 @@ class TeacherCourses extends React.Component {
 }
 
 
-TeacherCourses = withRouter(TeacherCourses);
+TeacherEditCourse = withRouter(TeacherEditCourse);
 
-export default TeacherCourses;
+export default TeacherEditCourse;

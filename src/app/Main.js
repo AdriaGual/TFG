@@ -19,6 +19,7 @@ import UserQualifications from './Pages/user_qualifications.js';
 import TeacherCourses from './Pages/teacher_courses.js';
 import TeacherEditCourse from './Pages/teacher_edit_course.js';
 import TeacherEditExercice from './Pages/teacher_edit_exercice.js';
+import TeacherChooseExercice from './Pages/teacher_choose_exercice.js';
 // Pages imports
 
 
@@ -53,6 +54,7 @@ export default class Main extends React.Component {
 			<Route path='/user_qualifications' render={() => (<div><UserQualifications appState={this.appState}></UserQualifications></div>)} />
 			<Route path='/teacher_courses' render={() => (<div><TeacherCourses appState={this.appState}></TeacherCourses></div>)} />
 			<Route path='/teacher_edit_course' render={() => (<div><TeacherEditCourse appState={this.appState}></TeacherEditCourse></div>)} />
+			<Route path='/teacher_choose_exercice' render={() => (<div><TeacherChooseExercice appState={this.appState}></TeacherChooseExercice></div>)} />
 			<Route path='/teacher_edit_exercice' render={() => (<div><TeacherEditExercice appState={this.appState}></TeacherEditExercice></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>

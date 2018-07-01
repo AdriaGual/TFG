@@ -19,54 +19,24 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
-class TeacherCourses extends React.Component {
+class TeacherEditExercice extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-		searchString: '',
-		searchFocusIndex: 0,
-		searchFoundCount: null,
-		hasTextSolution:false,
-		treeData: [
-				{
-					name: "Topic 1",
-					expanded:true, 
-					children: [{ name: 'Topic 1 1', 
-					children: [{ name: 'Topic 1 1 1' },{ name: 'Topic 1 1 2' }] }] 
-			
-				},
-				{ name: 'Topic 2',
-					expanded:true, 
-					children: [{ name: 'Topic 2 1', 
-					children: [{ name: 'Topic 2 1 1' },{ name: 'Topic 2 1 2' }] },
-					{ name: 'Topic 2 2', 
-					children: [{ name:'Topic 2 2 1' },{ name: 'Topic 2 2 2' }] },
-					{ name: 'Topic 2 3', 
-					children: [{ name: 'Topic 2 3 1'},{ name: 'Topic 2 3 2' }] }
-					]
-				}
-			],
-				
+			hasTextSolution:false,
 		};
 	}
-	
 	
 	appState = this.props.appState;
 
 	handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
+		this.setState({ [name]: event.target.checked });
+	};
 	
 	/**
 	 * Renders the register page.
 	 */
 	render(){
-		 const getNodeKey = ({ treeIndex }) => treeIndex;
-		const {
-            treeData,
-            searchString,
-            searchFoundCount,
-        } = this.state;
 		return (
 			<div style={{ height: 1500}}>
 				<div className="left_30">	
@@ -99,13 +69,12 @@ class TeacherCourses extends React.Component {
 						
 						<Grid container>
 							<Grid item xs={1} > 
-							 <Checkbox
+								<Checkbox
 								  checked={this.state.hasTextSolution}
 								  onChange={this.handleChange('hasTextSolution')}
 								  value="checkedA"
 								/>
 							</Grid>
-							 
 							<Grid item xs={3} > 
 								<p>Text Solution:</p>
 							 </Grid>
@@ -113,6 +82,7 @@ class TeacherCourses extends React.Component {
 								<textarea value={this.state.value} onChange={this.handleChange} style={{height:50,width:400}}/>
 							:null}
 						</Grid>
+						
 						<p>Help Text:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
 						<Grid container>
@@ -136,8 +106,49 @@ class TeacherCourses extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-					<Grid item xs={1} > 
+					<Grid item xs={1}>
 					</Grid>
+					<Grid item xs={6} > 
+						<div id="image_div">
+							<div id="canvas_div">
+								<canvas id="canvas"></canvas>
+								<div id="canvas_button_group" class="part">
+									<div id="btn-group-location">
+										<button type="button" id="btn-edit-circle" title="Afegir o editar punt" class="btn-location selected"></button>
+										<button type="button" id="btn-delete-circle" title="Eliminar punt" class="btn-location"></button>
+									</div>
+									<div id="radius_div">
+										<div id="radius_input_group" class="input-group">
+											<span class="input-group-addon">Radi</span>
+											<input type="text" id="radius_value" class="form-control" value="5" />
+										</div>
+										<input id="radius_slider" type="range" min="1" max="10" step="1" value="5" />
+									</div>
+									<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
+								</div>
+							</div>
+							
+							<div id="image_file_input_group" class="input-group">
+								<input type="file" id="problem_image_input" />
+							</div>
+							<div id="current_image_input_group" class="input-group">
+								<input type="hidden" id="problem_image_url" value="" disabled />
+								<button type="button" id="btn-delete-image">Eliminar imatge</button>
+							</div>
+						</div>
+					</Grid>
+					
+					<Grid item xs={1} > 
+						<Button
+							className="btn btn-1 white left_15"
+							onClick={() => 	this.clicktheory(node.name)}
+						>
+							Preview
+						</Button>
+					</Grid>
+
+				</Grid>
+				<Grid container className="down_30 left_30">
 					<Grid item xs={2}> 
 						<Card>
 							<a className="orange size_30 left_30">Categories</a>
@@ -166,83 +177,29 @@ class TeacherCourses extends React.Component {
 							</List>
 						</Card>
 						<Grid item xs={1}>
-						<p></p>
-						</Grid>
-						<Card>
-							<a className="orange size_30 left_30">Exercice Type</a>
-							<hr/>
-							<Grid container>
-								<Grid item xs={2}>
-								</Grid>
-								<Grid item xs={4}>
-								<Button
-									className="btn btn-1 white"
-									onClick={() => 	this.clicktheory(node.name)}
-								>
-								Location
-								</Button>
-								</Grid>
-								<Grid item xs={4}>
-								<Button
-									className="btn btn-1 white left_15"
-									onClick={() => 	this.clicktheory(node.name)}
-								>
-								Test
-								</Button>
-								</Grid>
-								<Grid item xs={2}>
-								</Grid>
-							</Grid>
-							<Grid item xs={1}>
 							<p></p>
-							</Grid>
-							<Grid container>
-								<Grid item xs={2}>
-								</Grid>
-								<Grid item xs={4}>
-								<Button
-									className="btn btn-1 white"
-									onClick={() => 	this.clicktheory(node.name)}
-								>
-								3D
-								</Button>
-								</Grid>
-								<Grid item xs={4}>
-								<Button
-									className="btn btn-1 white left_15"
-									onClick={() => 	this.clicktheory(node.name)}
-								>
-								Unity
-								</Button>
-								</Grid>
-								<Grid item xs={2}>
-								</Grid>
-							</Grid>
-						</Card>
-						
-						
+						</Grid>
 					</Grid>
 					<Grid item xs={1}> 
 					</Grid>
 					<Grid item xs={2}> 
 						<Card>
-						<a className="orange size_30 left_30">User Type</a>
-						<hr/>
-						<List>
-							<ListItem>
-								<Checkbox/>
-								<ListItemText>Student</ListItemText>
-							</ListItem>
-							<ListItem>
-								<Checkbox/>
-								<ListItemText>Radiologist</ListItemText>
-							</ListItem>
-							<ListItem>
-								<Checkbox/>
-								<ListItemText>Doctor</ListItemText>
-							</ListItem>
-						
-						</List>
+							<a className="orange size_30 left_30">User Type</a>
+							<hr/>
+							<List>
+								<ListItem>
+									<Checkbox/>
+									<ListItemText>Student</ListItemText>
+								</ListItem>
+								<ListItem>
+									<Checkbox/>
+									<ListItemText>Radiologist</ListItemText>
+								</ListItem>
+								<ListItem>
+									<Checkbox/>
+									<ListItemText>Doctor</ListItemText>
+								</ListItem>
+							</List>
 						</Card>
 						<Grid item xs={1}> 
 							<p></p>
@@ -267,17 +224,6 @@ class TeacherCourses extends React.Component {
 							</List>
 						</Card>
 					</Grid>
-					<Grid item xs={1} > 
-						<Button
-							className="btn btn-1 white left_15"
-							onClick={() => 	this.clicktheory(node.name)}
-						>
-						Preview
-						</Button>
-					</Grid>
-					<Grid item xs={1}>
-						
-					</Grid>
 				</Grid>
 			</div>
 		
@@ -286,6 +232,6 @@ class TeacherCourses extends React.Component {
 }
 
 
-TeacherCourses = withRouter(TeacherCourses);
+TeacherEditExercice = withRouter(TeacherEditExercice);
 
-export default TeacherCourses;
+export default TeacherEditExercice;
