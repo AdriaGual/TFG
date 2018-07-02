@@ -32,6 +32,9 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
+	componentDidMount(){
+		this.forceUpdate();
+	}
 	
 	/**
 	 * Renders the register page.

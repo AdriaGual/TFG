@@ -100,7 +100,17 @@ class TeacherChooseExercice extends React.Component {
 							className="btn btn-1 white"
 							onClick={() => 	this.click("2D")}
 						>
-							<p>2D Image</p>
+							2D Image
+						</Button>
+					</Grid>
+					<Grid item xs={1}> 
+					</Grid>
+					<Grid item xs={2}> 
+						<Button
+							className="btn btn-1 white"
+							onClick={() => 	this.click("Test")}
+						>
+							Test
 						</Button>
 					</Grid>
 					<Grid item xs={1}> 
@@ -116,6 +126,7 @@ class TeacherChooseExercice extends React.Component {
 					<Grid item xs={1}>
 						
 					</Grid>
+					
 				</Grid>
 			</div>
 		

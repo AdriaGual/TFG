@@ -23,6 +23,17 @@ $(document).ready(function() {
 		if (solution) $(item).find("span.input-group-addon > input[type=checkbox]").trigger("change");
 	});
 	
+	$('body').on('change', 'span.input-group-addon > input[type=checkbox]', function() {
+		if ($(this).is(':checked')) {
+			$(this).closest('.answer_item').find('.note-editor').hide();
+			$(this).closest('.answer_item').find('.editor').show();
+		}
+		else {
+			$(this).closest('.answer_item').find('.note-editor').show();
+			$(this).closest('.answer_item').find('.editor').hide();
+		}
+	});
+	
 	
 	$('#btn-new-item').click(function() {
 		$('#items_box').append('\
@@ -35,13 +46,22 @@ $(document).ready(function() {
 					<div class="form-control editor"></div>\
 				</div>\
 				<span class="input-group-btn">\
-					<button type="button" class="btn btn-default btn-delete-item" data-id="-1">' + '</button>\
+					<button type="button" class="btn-delete-item" data-id="-1">' + 'Delete answer</button>\
 				</span>\
 			</div>\
 		');
       
 	});
 	
+	$('.note-editable').focus(function() {
+			$(this).closest('.note-editor').addClass('focused');
+		}).blur(function() {
+			$(this).closest('.note-editor').removeClass('focused');
+		});
+		
+		
+		$('.answer_item input[type=text]').keyup(function(e) { newAnswerOnEnterKeyUp(e, $(this)); });
+		
 	$("body").on("click", ".btn-delete-item", function() {
 		$(this).parent().parent().remove();
 	});

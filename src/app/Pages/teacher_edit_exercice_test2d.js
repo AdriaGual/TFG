@@ -106,9 +106,8 @@ class TeacherEditExerciceTest2d extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-					<Grid item xs={1}>
-					</Grid>
-					<Grid item xs={6} > 
+
+					<Grid item xs={4} > 
 						<div id="image_div">
 							<div id="canvas_div">
 								<canvas id="canvas" width="448" height="350"></canvas>
@@ -120,15 +119,15 @@ class TeacherEditExerciceTest2d extends React.Component {
 								<input type="hidden" id="problem_image_url" value="" disabled />
 								<button type="button" id="btn-delete-image">Eliminar imatge</button>
 							</div>
-							<div id="items_box">
-
-												</div>
-							<button type="button" id="btn-new-item" >Afegir resposta</button>
-								
+							
 						</div>
 					</Grid>
-					
-					<Grid item xs={1} > 
+					<Grid item xs={2} >
+						<div id="items_box">
+						</div>
+						<button type="button" id="btn-new-item" >Afegir resposta</button>
+					</Grid>
+					<Grid item xs={2} > 
 						<Button
 							className="btn btn-1 white left_15"
 							onClick={() => 	this.clicktheory(node.name)}
