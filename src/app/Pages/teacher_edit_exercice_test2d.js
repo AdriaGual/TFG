@@ -66,7 +66,6 @@ class TeacherEditExerciceTest2d extends React.Component {
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
 						<p>Question:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
-						
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox

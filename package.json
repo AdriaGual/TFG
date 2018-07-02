@@ -23,6 +23,7 @@
 	},
 	"dependencies": {
 		"bootstrap": "^4.1.1",
+		"loadjs": "^3.5.4",
 		"material-ui": "^1.0.0-beta.21",
 		"material-ui-icons": "^1.0.0-beta.17",
 		"react": "^16.1.1",

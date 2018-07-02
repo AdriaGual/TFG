@@ -2,10 +2,11 @@
 $(document).ready(function() {
 	var image_file = null;
 	
-	$('#problem_image_input').change(function(e) {
+	$(document).on('change', "#problem_image_input", function(e) {
 		if (e.target.files.length > 0) {
 			image_file = document.getElementById('problem_image_input').files[0];
 			setImage(URL.createObjectURL(e.target.files[0]));
+			URL.revokeObjectURL(e.target.files[0]);
 		}
 	});
 	

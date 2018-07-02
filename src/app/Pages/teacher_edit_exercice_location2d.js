@@ -27,15 +27,19 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		};
 	}
 	
+	componentWillMount(){
+		var loadjs = require('loadjs');
+		loadjs('js/canvas_viewer_loc.js',function (){
+			
+		});
+	}
+	
 	appState = this.props.appState;
 
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
-	componentDidMount(){
-		this.forceUpdate();
-	}
-	
+
 	/**
 	 * Renders the register page.
 	 */

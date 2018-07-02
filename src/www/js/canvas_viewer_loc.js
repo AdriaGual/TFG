@@ -23,6 +23,7 @@ var zoomLevel, zoomLow, zoomUp;
 var circles = [];
 
 function setImage(image_src) {
+
 	if (image_src == "") {
 		image = null;
 		location_points = [];
@@ -223,7 +224,7 @@ $(document).keydown(function(e) {
 
 // Execute when all document elements are loaded
 $(document).ready(function() {
-	
+
 	if ($("#canvas").length == 0) return;
 	
 	// Set the canvas size and get it and its context
