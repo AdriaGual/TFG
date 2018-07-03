@@ -19,7 +19,7 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
-class TeacherEditExerciceTest2d extends React.Component {
+class TeacherEditExerciceLocation3d extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -27,22 +27,22 @@ class TeacherEditExerciceTest2d extends React.Component {
 		};
 	}
 	
-	appState = this.props.appState;
-
 	componentWillMount(){
 		var loadjs = require('loadjs');
-		loadjs('js/test.js',function (){
+		loadjs('js/OrbitControls.js',function (){
 		});
-		loadjs('js/canvas_viewer_loc.js',function (){
+		loadjs('js/canvas_viewer_loc3d.js',function (){
 		});
-		loadjs('js/viewer2d.js',function (){
+		loadjs('js/adm_problem_loc3d.js',function (){
 		});
 	}
 	
+	appState = this.props.appState;
+
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
-	
+
 	/**
 	 * Renders the register page.
 	 */
@@ -76,6 +76,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
 						<p>Question:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
+						
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox
@@ -115,28 +116,49 @@ class TeacherEditExerciceTest2d extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-
-					<Grid item xs={4} > 
+					<Grid item xs={1}>
+					</Grid>
+					<Grid item xs={6} > 
 						<div id="image_div">
-							<div id="canvas_div">
-								<canvas id="canvas" width="448" height="350"></canvas>
+							<div id="3d" class="tab-pane fade in active">
+								<div id="canvas_div">
+									<span id="canvas" class="canvas"><canvas ></canvas></span>
+									<div id="canvas_button_group" class="part">
+										<button type="button" id="canvas-settings" title="Configuració"></button>
+										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
+									</div>
+								</div>
+								
+								<div id="models_button_group">
+									<span type="button" id="btn-add-model" >
+										Afegir												<input type="file" id="model_input" multiple=""/>
+									</span>
+									<button type="button" id="btn-library-model" class="btn btn-default btn-interface">Biblioteca</button>
+									<button type="button" id="btn-delete-model" class="btn btn-default btn-interface">Eliminar</button>
+								</div>
+								
+								<div id="displayed_models_input_group" class="input-group">
+									<span id="displayed_models_select_label" class="input-group-addon">Models</span>
+									<select id="displayed_models_select" class="form-control" aria-describedby="displayed_models_select_label"></select>
+									
+									<span class="input-group-btn">
+										<button type="button" id="btn-add-model-solution" class="btn btn-default btn-interface">Afegir a solució</button>
+									</span>
+								</div>
+								
+								<div id="list_models_solution_input_group" class="input-group">
+									<span id="list_models_solution_select_label" class="input-group-addon">Models solució</span>
+									<select id="list_models_solution_select" class="form-control" aria-describedby="list_models_solution_select_label" size="3"></select>
+									
+									<span class="input-group-btn">
+										<button type="button" id="btn-remove-selected-model" class="btn btn-default btn-interface">Eliminar</button>
+									</span>
+								</div>
 							</div>
-							<div id="image_file_input_group" class="input-group">
-								<input type="file" id="problem_image_input" />
-							</div>
-							<div id="current_image_input_group" class="input-group">
-								<input type="hidden" id="problem_image_url" value="" disabled />
-								<button type="button" id="btn-delete-image">Eliminar imatge</button>
-							</div>
-							
 						</div>
 					</Grid>
-					<Grid item xs={2} >
-						<div id="items_box">
-						</div>
-						<button type="button" id="btn-new-item" >Afegir resposta</button>
-					</Grid>
-					<Grid item xs={2} > 
+					
+					<Grid item xs={1} > 
 						<Button
 							className="btn btn-1 white left_15"
 							onClick={() => 	this.clicktheory(node.name)}
@@ -230,6 +252,6 @@ class TeacherEditExerciceTest2d extends React.Component {
 }
 
 
-TeacherEditExerciceTest2d = withRouter(TeacherEditExerciceTest2d);
+TeacherEditExerciceLocation3d = withRouter(TeacherEditExerciceLocation3d);
 
-export default TeacherEditExerciceTest2d;
+export default TeacherEditExerciceLocation3d;

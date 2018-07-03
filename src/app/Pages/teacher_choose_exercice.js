@@ -56,12 +56,16 @@ class TeacherChooseExercice extends React.Component {
 		}
 		if(name == "3D"){
 			this.appState({exercice_type: "3D"});
+			this.props.history.push('/teacher_edit_exercice_location3d');
 		}
 		if(name == "Test"){
 			this.appState({exercice_type: "Test"});
 			this.props.history.push('/teacher_edit_exercice_test2d');
 		}
-		
+		if(name == "MPR"){
+			this.appState({exercice_type: "MPR"});
+			this.props.history.push('/teacher_edit_exercice_mpr');
+		}
 	}
 	
 	
@@ -110,7 +114,7 @@ class TeacherChooseExercice extends React.Component {
 							className="btn btn-1 white"
 							onClick={() => 	this.click("Test")}
 						>
-							Test
+							Test 2D
 						</Button>
 					</Grid>
 					<Grid item xs={1}> 
@@ -118,13 +122,20 @@ class TeacherChooseExercice extends React.Component {
 					<Grid item xs={2}> 
 						<Button
 							className="btn btn-1 white"
-							onClick={() => 	this.click("Test")}
+							onClick={() => 	this.click("MPR")}
 						>
-							Test
+						MPR
 						</Button>
 					</Grid>
-					<Grid item xs={1}>
-						
+					<Grid item xs={1}> 
+					</Grid>
+					<Grid item xs={2}> 
+						<Button
+							className="btn btn-1 white"
+							onClick={() => 	this.click("3D")}
+						>
+						3D Image
+						</Button>
 					</Grid>
 					
 				</Grid>

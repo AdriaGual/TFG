@@ -19,7 +19,7 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
-class TeacherEditExerciceTest2d extends React.Component {
+class TeacherEditExerciceMPR extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -27,22 +27,26 @@ class TeacherEditExerciceTest2d extends React.Component {
 		};
 	}
 	
-	appState = this.props.appState;
-
 	componentWillMount(){
+		
 		var loadjs = require('loadjs');
-		loadjs('js/test.js',function (){
+		loadjs('js/Three.js',function (){
 		});
-		loadjs('js/canvas_viewer_loc.js',function (){
+		loadjs('js/OrbitControls.js',function (){
 		});
-		loadjs('js/viewer2d.js',function (){
+	
+		loadjs('js/canvas_viewer_mpr.js',function (){
+		});
+		loadjs('js/adm_problem_mpr.js',function (){
 		});
 	}
 	
+	appState = this.props.appState;
+
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
-	
+
 	/**
 	 * Renders the register page.
 	 */
@@ -76,6 +80,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
 						<p>Question:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
+						
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox
@@ -115,28 +120,82 @@ class TeacherEditExerciceTest2d extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-
-					<Grid item xs={4} > 
-						<div id="image_div">
-							<div id="canvas_div">
-								<canvas id="canvas" width="448" height="350"></canvas>
-							</div>
-							<div id="image_file_input_group" class="input-group">
-								<input type="file" id="problem_image_input" />
-							</div>
-							<div id="current_image_input_group" class="input-group">
-								<input type="hidden" id="problem_image_url" value="" disabled />
-								<button type="button" id="btn-delete-image">Eliminar imatge</button>
-							</div>
+					<Grid item xs={1}>
+					</Grid>
+					<Grid item xs={6} > 
+						<div class="tab-content">
+							<div id="mpr" class="tab-pane fade in active">
+								<div id="canvas_div">
+									<span id="canvas" class="canvas"><canvas></canvas></span>
+									<div id="canvas_button_group" class="part">
+										<button type="button" id="canvas-settings" title="Configuració"></button>
+										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
+									</div>
+								</div>
+								
+								<div id="select_set_input_group" class="input-group">
+									<span class="input-group-btn">
+										<button type="button" id="btn-choose-set" class="btn btn-default btn-interface">Escull de la biblioteca</button>
+									</span>
+									<input type="text" id="set-input-text" class="form-control" value="" disabled=""/>
+									
+									<div id="library_div" >
+										<div id="library_content">
+											<button type="button" id="btn-close-library"></button>
+											
+											<div id="library_title">Biblioteca</div>
+											
+											<div id="library_items">
+														<div class="library_item" data-id="1" title="PIG_AGG061">
+															<img src="img/IMG0093.jpg"/>
+															<div>PIG_AGG061</div>
+														</div>
+											</div>
+											
+											<div id="library_button_group">
+												<button type="button" id="btn-open-library-item" class="btn btn-default btn-interface" disabled="">Obrir conjunt</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div id="anatomical_planes_group">
+									<div id="axial_input_group" class="input-group">
+										<span id="axial_label" class="input-group-addon">Axial</span>
+										<input type="number" id="axial-number" class="form-control" aria-describedby="axial_label" value="0" min="0" max="0" disabled=""/>
+									</div>
+									
+									<div id="sagittal_input_group" class="input-group">
+										<span id="sagittal_label" class="input-group-addon">Sagital</span>
+										<input type="number" id="sagittal-number" class="form-control" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
+									</div>
+									
+									<div id="coronal_input_group" class="input-group">
+										<span id="coronal_label" class="input-group-addon">Coronal</span>
+										<input type="number" id="coronal-number" class="form-control" aria-describedby="coronal_label" value="0" min="0" max="0" disabled=""/>
+									</div>
+								</div>
+								
+								
+								
+								<div id="centre_radius_group">
+									<div id="centre_input_group" class="input-group">
+										<span id="centre_label" class="input-group-addon">Centre</span>
+										<input type="text" class="form-control" aria-describedby="centre_label" value="" readonly=""/>
+									</div>
+									
+									<div id="radius_input_group" class="input-group">
+										<span id="radius_label" class="input-group-addon">Radi</span>
+										<input type="number" id="radius-number" class="form-control" aria-describedby="radius_label" value="0" min="1" disabled=""/>
+									</div>
+								</div>
 							
+								
+							</div>
 						</div>
 					</Grid>
-					<Grid item xs={2} >
-						<div id="items_box">
-						</div>
-						<button type="button" id="btn-new-item" >Afegir resposta</button>
-					</Grid>
-					<Grid item xs={2} > 
+					
+					<Grid item xs={1} > 
 						<Button
 							className="btn btn-1 white left_15"
 							onClick={() => 	this.clicktheory(node.name)}
@@ -230,6 +289,6 @@ class TeacherEditExerciceTest2d extends React.Component {
 }
 
 
-TeacherEditExerciceTest2d = withRouter(TeacherEditExerciceTest2d);
+TeacherEditExerciceMPR= withRouter(TeacherEditExerciceMPR);
 
-export default TeacherEditExerciceTest2d;
+export default TeacherEditExerciceMPR;

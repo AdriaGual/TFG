@@ -30,7 +30,8 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	componentWillMount(){
 		var loadjs = require('loadjs');
 		loadjs('js/canvas_viewer_loc.js',function (){
-			
+		});
+		loadjs('js/viewer2d.js',function (){
 		});
 	}
 	
