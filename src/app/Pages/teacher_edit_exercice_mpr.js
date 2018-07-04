@@ -126,9 +126,10 @@ class TeacherEditExerciceMPR extends React.Component {
 						<div class="tab-content">
 							<div id="mpr" class="tab-pane fade in active">
 								<div id="canvas_div">
-									<span id="canvas" class="canvas"><canvas></canvas></span>
+									<span id="canvas" class="canvas">
+									
+									</span>
 									<div id="canvas_button_group" class="part">
-										<button type="button" id="canvas-settings" title="Configuració"></button>
 										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
 									</div>
 								</div>
@@ -139,17 +140,17 @@ class TeacherEditExerciceMPR extends React.Component {
 									</span>
 									<input type="text" id="set-input-text" class="form-control" value="" disabled=""/>
 									
-									<div id="library_div" >
+									<div id="library_div" style={{display:'none'}}>
 										<div id="library_content">
 											<button type="button" id="btn-close-library"></button>
 											
 											<div id="library_title">Biblioteca</div>
 											
 											<div id="library_items">
-														<div class="library_item" data-id="1" title="PIG_AGG061">
-															<img src="img/IMG0093.jpg"/>
-															<div>PIG_AGG061</div>
-														</div>
+												<div class="library_item" data-id="1" title="PIG_AGG061">
+													<img src="img/IMG0093.jpg"/>
+													<div>PIG_AGG061</div>
+												</div>
 											</div>
 											
 											<div id="library_button_group">
@@ -176,8 +177,6 @@ class TeacherEditExerciceMPR extends React.Component {
 									</div>
 								</div>
 								
-								
-								
 								<div id="centre_radius_group">
 									<div id="centre_input_group" class="input-group">
 										<span id="centre_label" class="input-group-addon">Centre</span>
@@ -189,8 +188,6 @@ class TeacherEditExerciceMPR extends React.Component {
 										<input type="number" id="radius-number" class="form-control" aria-describedby="radius_label" value="0" min="1" disabled=""/>
 									</div>
 								</div>
-							
-								
 							</div>
 						</div>
 					</Grid>

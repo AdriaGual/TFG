@@ -122,9 +122,10 @@ class TeacherEditExerciceLocation3d extends React.Component {
 						<div id="image_div">
 							<div id="3d" class="tab-pane fade in active">
 								<div id="canvas_div">
-									<span id="canvas" class="canvas"><canvas ></canvas></span>
+									<span id="canvas" class="canvas">
+										
+									</span>
 									<div id="canvas_button_group" class="part">
-										<button type="button" id="canvas-settings" title="Configuració"></button>
 										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
 									</div>
 								</div>

@@ -28,7 +28,7 @@ $(document).ready(function() {
 	}
 	
 	function buildEditors() {
-	
+		
 		
 		$('.note-editable').focus(function() {
 			$(this).closest('.note-editor').addClass('focused');

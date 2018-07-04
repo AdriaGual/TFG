@@ -4,9 +4,31 @@
  * Summary: Canvas interaction for MPR problems (JavaScript file)
  */
 
+var mpr_set_id = null;
+var mpr_path = null;
+var slices = {axial: 0, sagittal: 0, coronal: 0};
+var voxel_size = null;
+var solution_centre = null;
+var initial_radius = null;
+var current_slices = null;
+
+//http://gilabparc.udg.edu/lissa/ivet/planes/axial/IMG0000.jpg
+//http://gilabparc.udg.edu/lissa/ivet/planes/sagittal/IMG0000.jpg
+//http://gilabparc.udg.edu/lissa/ivet/planes/coronal/IMG0000.jpg
+//http://gilabparc.udg.edu/lissa/ivet/planes/coronal/IMG0511.jpg
+
+/*
+var mpr_library_sets = 
+{"1":{
+	"name":"PIG_AGG061","path":"mpr\/library\/PIG_AGG061",
+	"image":"mpr\/library\/PIG_AGG061\/axial\/IMG0093.jpg",
+	"slices":{"axial":187,"sagittal":512,"coronal":512},
+	"voxel_size":{"x":0.8984375,"y":0.8984375,"z":10}}
+	};
+*/
+
 var isFullscreen = false;
 var isIE = false;
-
 
 var scene;
 var mouse = new THREE.Vector2(0, 0);
@@ -65,9 +87,6 @@ function setPlanes() {
 	controls.enableKeys = false;
 	
 	var span = document.getElementById("canvas");
-	if (span==null){
-		return;
-	}
 	span.appendChild(renderer.domElement);
 	
 	// if (mpr_path != null) {
