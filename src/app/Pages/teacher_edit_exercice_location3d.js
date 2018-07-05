@@ -1,4 +1,4 @@
-"use strict";
+	"use strict";
 
 // React imports
 import React from 'react';
@@ -132,27 +132,26 @@ class TeacherEditExerciceLocation3d extends React.Component {
 								
 								<div id="models_button_group">
 									<span type="button" id="btn-add-model" >
-										Afegir												<input type="file" id="model_input" multiple=""/>
+										<input type="file" id="model_input" multiple=""/>
 									</span>
-									<button type="button" id="btn-library-model" class="btn btn-default btn-interface">Biblioteca</button>
-									<button type="button" id="btn-delete-model" class="btn btn-default btn-interface">Eliminar</button>
+									<Button type="button" id="btn-delete-model"  className="btn btn-5 white left_15 down_15">Eliminar</Button>
 								</div>
 								
-								<div id="displayed_models_input_group" class="input-group">
-									<span id="displayed_models_select_label" class="input-group-addon">Models</span>
-									<select id="displayed_models_select" class="form-control" aria-describedby="displayed_models_select_label"></select>
+								<div id="displayed_models_input_group" class="input-group" className="down_15">
+									<span id="displayed_models_select_label" >Models</span>
+									<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label" className="left_15" style={{width:200}}></Select>
 									
 									<span class="input-group-btn">
-										<button type="button" id="btn-add-model-solution" class="btn btn-default btn-interface">Afegir a solució</button>
+										<Button type="button" id="btn-add-model-solution" className="left_15 btn btn-4 white">Afegir a solució</Button>
 									</span>
 								</div>
 								
-								<div id="list_models_solution_input_group" class="input-group">
-									<span id="list_models_solution_select_label" class="input-group-addon">Models solució</span>
-									<select id="list_models_solution_select" class="form-control" aria-describedby="list_models_solution_select_label" size="3"></select>
+								<div id="list_models_solution_input_group" class="input-group" className="down_15">
+									<span id="list_models_solution_select_label" >Models solució</span>
+									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" className="left_15" ></select>
 									
 									<span class="input-group-btn">
-										<button type="button" id="btn-remove-selected-model" class="btn btn-default btn-interface">Eliminar</button>
+										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15 up_10">Eliminar</Button>
 									</span>
 								</div>
 							</div>
