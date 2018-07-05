@@ -17,15 +17,14 @@ var current_slices = null;
 //http://gilabparc.udg.edu/lissa/ivet/planes/coronal/IMG0000.jpg
 //http://gilabparc.udg.edu/lissa/ivet/planes/coronal/IMG0511.jpg
 
-/*
+
 var mpr_library_sets = 
 {"1":{
-	"name":"PIG_AGG061","path":"mpr\/library\/PIG_AGG061",
-	"image":"mpr\/library\/PIG_AGG061\/axial\/IMG0093.jpg",
+	"name":"PIG_AGG061","path":"img\/PIG_AGG061",
+	"image":"img\/PIG_AGG061\/axial\/IMG0093.jpg",
 	"slices":{"axial":187,"sagittal":512,"coronal":512},
 	"voxel_size":{"x":0.8984375,"y":0.8984375,"z":10}}
 	};
-*/
 
 var isFullscreen = false;
 var isIE = false;
