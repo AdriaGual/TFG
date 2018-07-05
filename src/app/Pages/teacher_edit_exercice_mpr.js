@@ -10,6 +10,7 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
+import Input from 'material-ui/Input';
 import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath } from 'react-sortable-tree';
 import List,{ListItem,ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
@@ -123,6 +124,10 @@ class TeacherEditExerciceMPR extends React.Component {
 					<Grid item xs={1}>
 					</Grid>
 					<Grid item xs={6} > 
+						<Grid container>
+						<Grid item xs={1}>
+						</Grid>
+						<Grid item>
 						<div class="tab-content">
 							<div id="mpr" class="tab-pane fade in active">
 								<div id="canvas_div">
@@ -134,62 +139,73 @@ class TeacherEditExerciceMPR extends React.Component {
 									</div>
 								</div>
 								
-								<div id="select_set_input_group" class="input-group">
+								<div id="select_set_input_group" className="down_10">
 									<span class="input-group-btn">
-										<button type="button" id="btn-choose-set" class="btn btn-default btn-interface">Escull de la biblioteca</button>
+										<Button type="button" id="btn-choose-set" className="btn btn-1 right_15 white">Escull de la biblioteca</Button>
 									</span>
-									<input type="text" id="set-input-text" class="form-control" value="" disabled=""/>
+									<Input type="text" id="set-input-text" className="left_15 borderS" value="" disabled=""/>
 									
-									<div id="library_div" style={{display:'none'}}>
+									<div id="library_div" style={{display:'none'}} className="borderS">
 										<div id="library_content">
-											<button type="button" id="btn-close-library"></button>
+											<Grid container>
+												<Grid item xs={6}>
+													<div id="library_title" className="orange size_30 left_15">Biblioteca</div>
+												</Grid>
+												<Grid item xs={4}>
+												<div id="library_button_group">
+												
+												<Button type="button" id="btn-open-library-item" className="btn btn-4 white down_10" disabled="">Obrir conjunt</Button>
+											</div>
+												</Grid>
+												<Grid item xs={2}>
+													<Button type="button" id="btn-close-library" className="btn btn-5 white down_10"><Icon className="fa fa-times" style={{ fontSize: 15 }}></Icon></Button>
+												</Grid>	
+											</Grid>
 											
-											<div id="library_title">Biblioteca</div>
-											
-											<div id="library_items">
-												<div class="library_item" data-id="1" title="PIG_AGG061">
-													<img src="img/IMG0093.jpg"/>
+											<div id="library_items" className="left_15">
+												<div class="library_item" data-id="1" title="PIG_AGG061" >
+													<img src="img/IMG0093.jpg" style={{width:100,height:100}}/>
 													<div>PIG_AGG061</div>
 												</div>
 											</div>
 											
-											<div id="library_button_group">
-												<button type="button" id="btn-open-library-item" class="btn btn-default btn-interface" disabled="">Obrir conjunt</button>
-											</div>
+											
 										</div>
 									</div>
 								</div>
 								
-								<div id="anatomical_planes_group">
+								<div id="anatomical_planes_group" className="down_10">
 									<div id="axial_input_group" class="input-group">
-										<span id="axial_label" class="input-group-addon">Axial</span>
-										<input type="number" id="axial-number" class="form-control" aria-describedby="axial_label" value="0" min="0" max="0" disabled=""/>
+										<span id="axial_label" >Axial</span>
+										<input type="number" id="axial-number" style={{width:100}} className="borderS left_15" aria-describedby="axial_label" value="0" min="0" max="0" disabled=""/>
 									</div>
 									
 									<div id="sagittal_input_group" class="input-group">
-										<span id="sagittal_label" class="input-group-addon">Sagital</span>
-										<input type="number" id="sagittal-number" class="form-control" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
+										<span id="sagittal_label" >Sagital</span>
+										<input type="number" id="sagittal-number" style={{width:100}} className="borderS left_15" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
 									</div>
 									
 									<div id="coronal_input_group" class="input-group">
-										<span id="coronal_label" class="input-group-addon">Coronal</span>
-										<input type="number" id="coronal-number" class="form-control" aria-describedby="coronal_label" value="0" min="0" max="0" disabled=""/>
+										<span id="coronal_label" >Coronal</span>
+										<input type="number" id="coronal-number" style={{width:100}} className="borderS left_15" aria-describedby="coronal_label" value="0" min="0" max="0" disabled=""/>
 									</div>
 								</div>
 								
-								<div id="centre_radius_group">
+								<div id="centre_radius_group" style={{width:100	}}>
 									<div id="centre_input_group" class="input-group">
-										<span id="centre_label" class="input-group-addon">Centre</span>
-										<input type="text" class="form-control" aria-describedby="centre_label" value="" readonly=""/>
+										<span id="centre_label" >Centre</span>
+										<input type="text" className="border left_15S" style={{width:100}} aria-describedby="centre_label" value="" readonly=""/>
 									</div>
 									
 									<div id="radius_input_group" class="input-group">
-										<span id="radius_label" class="input-group-addon">Radi</span>
-										<input type="number" id="radius-number" class="form-control" aria-describedby="radius_label" value="0" min="1" disabled=""/>
+										<span id="radius_label" >Radi</span>
+										<input type="number" className="borderS left_15" id="radius-number" style={{width:100}} aria-describedby="radius_label" value="0" min="1" disabled=""/>
 									</div>
 								</div>
 							</div>
 						</div>
+						</Grid>
+						</Grid>
 					</Grid>
 					
 					<Grid item xs={1} > 

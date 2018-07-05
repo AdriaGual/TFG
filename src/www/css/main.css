@@ -760,6 +760,10 @@ hr.vr {
 	margin-left: 30%!important;
 }
 
+.left_90pc{
+	margin-left: 90%!important;
+}
+
 .up_10{
 	margin-top: -10px!important;
 }
@@ -894,6 +898,11 @@ form.page {
 	margin: 1em 0;
 	padding: 1em;
 	background: rgba(255, 255, 255, 0.9);
+}
+
+.borderS{
+	
+	border: 3px ridge rgb(150, 200, 80);
 }
 
 /* -> image */
