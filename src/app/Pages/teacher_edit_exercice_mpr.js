@@ -194,7 +194,7 @@ class TeacherEditExerciceMPR extends React.Component {
 								<div id="centre_radius_group" style={{width:700}} className="down_10">
 									<div id="centre_input_group">
 										<span id="centre_label" >Centre</span>
-										<input type="text" className="border_grey" aria-describedby="centre_label" style={{width:150,marginLeft:22}} value="" readonly=""/>
+										<input type="text" className="border_grey" aria-describedby="centre_label" style={{width:160,marginLeft:22}} value="" readonly=""/>
 									</div>
 									<div id="radius_input_group" className="down_10" style={{width:200}}>
 										<span id="radius_label" >Radi</span>

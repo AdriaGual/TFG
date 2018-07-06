@@ -151,7 +151,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
 									
 									<span class="input-group-btn">
-										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15 up_10">Eliminar</Button>
+										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
 									</span>
 								</div>
 							</div>
