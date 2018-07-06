@@ -900,9 +900,12 @@ form.page {
 	background: rgba(255, 255, 255, 0.9);
 }
 
-.borderS{
-	
-	border: 3px ridge rgb(150, 200, 80);
+.border_grey{
+	border: 1px ridge rgb(169,169, 169);
+}
+
+.border_black{
+	border: 1px ridge rgb(169,169, 169);
 }
 
 /* -> image */

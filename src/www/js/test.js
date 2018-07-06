@@ -46,7 +46,7 @@ $(document).ready(function() {
 					<div class="form-control editor"></div>\
 				</div>\
 				<span class="input-group-btn">\
-					<button type="button" class="btn-delete-item" data-id="-1">' + 'Delete answer</button>\
+					<Button type="button" class="btn-delete-item" data-id="-1">' + 'Delete answer</Button>\
 				</span>\
 			</div>\
 		');

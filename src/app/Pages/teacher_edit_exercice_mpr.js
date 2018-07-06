@@ -143,9 +143,9 @@ class TeacherEditExerciceMPR extends React.Component {
 									<span class="input-group-btn">
 										<Button type="button" id="btn-choose-set" className="btn btn-1 right_15 white">Escull de la biblioteca</Button>
 									</span>
-									<Input type="text" id="set-input-text" className="left_15 borderS" value="" disabled=""/>
+									<Input type="text" id="set-input-text" className="left_15 border_grey" value="" disabled=""/>
 									
-									<div id="library_div" style={{display:'none'}} className="borderS">
+									<div id="library_div" style={{display:'none'}} className="border_black down_10">
 										<div id="library_content">
 											<Grid container>
 												<Grid item xs={6}>
@@ -175,31 +175,30 @@ class TeacherEditExerciceMPR extends React.Component {
 								</div>
 								
 								<div id="anatomical_planes_group" className="down_10">
-									<div id="axial_input_group" class="input-group">
+									<div id="axial_input_group">
 										<span id="axial_label" >Axial</span>
-										<input type="number" id="axial-number" style={{width:100}} className="borderS left_15" aria-describedby="axial_label" value="0" min="0" max="0" disabled=""/>
+										<input type="number" id="axial-number" style={{width:100,marginLeft:34}} className="border_grey" aria-describedby="axial_label" value="0" min="0" max="0" disabled=""/>
 									</div>
 									
-									<div id="sagittal_input_group" class="input-group">
+									<div id="sagittal_input_group" className="down_10">
 										<span id="sagittal_label" >Sagital</span>
-										<input type="number" id="sagittal-number" style={{width:100}} className="borderS left_15" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
+										<input type="number" id="sagittal-number" style={{width:100,marginLeft:20}} className="border_grey" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
 									</div>
 									
-									<div id="coronal_input_group" class="input-group">
+									<div id="coronal_input_group" className="down_10">
 										<span id="coronal_label" >Coronal</span>
-										<input type="number" id="coronal-number" style={{width:100}} className="borderS left_15" aria-describedby="coronal_label" value="0" min="0" max="0" disabled=""/>
+										<input type="number" id="coronal-number" style={{width:100,marginLeft:14}} className="border_grey" aria-describedby="coronal_label" value="0" min="0" max="0" disabled=""/>
 									</div>
 								</div>
 								
-								<div id="centre_radius_group" style={{width:100	}}>
-									<div id="centre_input_group" class="input-group">
+								<div id="centre_radius_group" style={{width:700}} className="down_10">
+									<div id="centre_input_group">
 										<span id="centre_label" >Centre</span>
-										<input type="text" className="border left_15S" style={{width:100}} aria-describedby="centre_label" value="" readonly=""/>
+										<input type="text" className="border_grey" aria-describedby="centre_label" style={{width:150,marginLeft:22}} value="" readonly=""/>
 									</div>
-									
-									<div id="radius_input_group" class="input-group">
+									<div id="radius_input_group" className="down_10" style={{width:200}}>
 										<span id="radius_label" >Radi</span>
-										<input type="number" className="borderS left_15" id="radius-number" style={{width:100}} aria-describedby="radius_label" value="0" min="1" disabled=""/>
+										<input type="number" className="border_grey" id="radius-number" style={{width:100,marginLeft:38}} aria-describedby="radius_label" value="0" min="1" disabled=""/>
 									</div>
 								</div>
 							</div>

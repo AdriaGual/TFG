@@ -134,7 +134,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 					<Grid item xs={2} >
 						<div id="items_box">
 						</div>
-						<button type="button" id="btn-new-item" >Afegir resposta</button>
+						<Button type="button" id="btn-new-item" className="btn btn-4 white" >Afegir resposta</Button>
 					</Grid>
 					<Grid item xs={2} > 
 						<Button

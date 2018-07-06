@@ -130,25 +130,25 @@ class TeacherEditExerciceLocation3d extends React.Component {
 									</div>
 								</div>
 								
-								<div id="models_button_group">
+								<div id="models_button_group" style={{width:700}}>
 									<span type="button" id="btn-add-model" >
 										<input type="file" id="model_input" multiple=""/>
 									</span>
-									<Button type="button" id="btn-delete-model"  className="btn btn-5 white left_15 down_15">Eliminar</Button>
+									<Button type="button" id="btn-delete-model" style={{marginLeft:31}} className="btn btn-5 white down_15">Eliminar</Button>
 								</div>
 								
-								<div id="displayed_models_input_group" class="input-group" className="down_15">
+								<div id="displayed_models_input_group" style={{width:700}} className="down_15">
 									<span id="displayed_models_select_label" >Models</span>
-									<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label" className="left_15" style={{width:200}}></Select>
+									<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label"  style={{width:200,marginLeft:71}}></Select>
 									
 									<span class="input-group-btn">
-										<Button type="button" id="btn-add-model-solution" className="left_15 btn btn-4 white">Afegir a solució</Button>
+										<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">Afegir a solució</Button>
 									</span>
 								</div>
 								
-								<div id="list_models_solution_input_group" class="input-group" className="down_15">
+								<div id="list_models_solution_input_group" style={{width:700}} className="down_15">
 									<span id="list_models_solution_select_label" >Models solució</span>
-									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" className="left_15" ></select>
+									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
 									
 									<span class="input-group-btn">
 										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15 up_10">Eliminar</Button>
