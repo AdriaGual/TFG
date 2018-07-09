@@ -122,8 +122,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 						<div id="image_div">
 							<div id="3d" class="tab-pane fade in active">
 								<div id="canvas_div">
-									<span id="canvas" class="canvas">
-										
+									<span id="canvas" class="canvas">										
 									</span>
 									<div id="canvas_button_group" class="part">
 										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
@@ -149,10 +148,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 								<div id="list_models_solution_input_group" style={{width:700}} className="down_15">
 									<span id="list_models_solution_select_label" >Models solució</span>
 									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
-									
-									<span class="input-group-btn">
-										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
-									</span>
+									<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
 								</div>
 							</div>
 						</div>
