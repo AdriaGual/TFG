@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+        <div class ="contenedor">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="teacher" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Teacher</div>
+            
+        </div>
+
+        
+        <div class="pop-up" id="teacher_pop-up">
+            <h3>Teacher information</h3>
+            <ul>
+                <li> Design different type of exercises. </li>
+                <li> Try exercises and experiment with them. </li>
+            </ul>
+        </div>
+        
+        
+        <script>
+                        
+            $( "#teacher" ).click(function()
+            {
+                showLoading();
+                UnityLoader.tryNextStep(function(){
+                    LoadPage("./editorMenu.html",hideLoading,null);
+                });
+            });
+            
+            
+            $(function() {
+                var moveLeft = 20;
+                var moveDown = 10;
+
+                $('#teacher').hover(function(e) {
+                  $('#teacher_pop-up').show();
+                  $("#teacher_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#teacher_pop-up').hide();
+                });
+
+                $('#teacher').mousemove(function(e) {
+                  $("#teacher_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+                
+                $('#student').hover(function(e) {
+                  $('#student_pop-up').show();
+                  $("#student_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#student_pop-up').hide();
+                });
+
+                $('#student').mousemove(function(e) {
+                  $("#student_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+                
+                $('#video').hover(function(e) {
+                  $('#video_pop-up').show();
+                  $("#video_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#video_pop-up').hide();
+                });
+
+                $('#video').mousemove(function(e) {
+                  $("#video_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+
+            });
+            
+        </script>
+    </body>
+</html>

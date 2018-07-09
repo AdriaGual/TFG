@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+        
+        <div class ="contenedor">
+            <h1>Select an exercise</h1>
+            <div class="item6_1">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="selection00" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">01</div>
+            </div>
+
+            <div class="item6_2">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="selection01" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">02</div>
+            </div>
+            
+            <div class="item6_3">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="named00" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">03</div>
+            </div>
+            
+            <div class="item6_4">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="named01" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">04</div>
+            </div>
+            
+            <div class="item6_5">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="animation" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">05</div>
+            </div>
+            
+            <div class="item6_6">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="back" class="hexBack" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Backpage</div>
+            </div>
+        </div>
+        
+        <div class="pop-up" id="selection00_pop-up">
+            <h3>Exercise information</h3>
+            <ul>
+                <li>Id: 01</li>
+                <li>Type: Identification</li>
+                <li>Correction: On real time</li>
+            </ul>
+        </div>
+        
+        <div class="pop-up" id="selection01_pop-up">
+            <h3>Exercise information</h3>
+            <ul>
+                <li>Id: 02</li>
+                <li>Type: Identification</li>
+                <li>Correction: At the end</li>
+            </ul>
+        </div>
+        
+        <div class="pop-up" id="named00_pop-up">
+            <h3>Exercise information</h3>
+            <ul>
+                <li>Id: 03</li>
+                <li>Type: Labelling</li>
+                <li>Correction: On real time</li>
+            </ul>
+        </div>
+        
+        <div class="pop-up" id="named01_pop-up">
+            <h3>Exercise information</h3>
+            <ul>
+                <li>Id: 04</li>
+                <li>Type: Labelling</li>
+                <li>Correction: At the end</li>
+            </ul>
+        </div>
+        
+        <div class="pop-up" id="animation_pop-up">
+            <h3>Exercise information</h3>
+            <ul>
+                <li>Id: 05</li>
+                <li>Type: Animation</li>
+                <li>Correction: At the end</li>
+            </ul>
+        </div>
+        
+        <script>
+            
+            $( "#back" ).click(function()
+            {
+                showLoading();
+                LoadPage("./role.html",hideLoading);
+            });
+            
+            $( "#selection00" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    setExerciseDatabase({
+                        statement: 'Select a name from the list and then click on the corresponding bone of the 3D model.',
+                        type: "selection",
+                        correction: "onRealTime",
+                        help: 2,
+                        letters: 0,
+                        errors: 3,
+                        random: 0,
+                        multimedia: '{"include":[15,14,53,52,99,102],"exclude":[],"regions":[]}' // elemJSON el per on es retorna la informació de l'exercici del Unity
+                    }, 
+                    function()
+                    {
+                        getExerciseDatabase(-1, // Obtenim la informació de l'exercici de la base de dades
+                        function(data)
+                        {
+                            getTranslationsPHP(1, // Obtenim la traducció per l'exercici i quan la tinguem executem la funció
+                            function() 
+                            { 
+                                updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
+                                function() // El flux de codi continua per aqui despres de updateExercise.
+                                {
+                                    LoadPageWithoutHistory("./exerciseSelection.html",
+                                    function()
+                                    {
+                                        $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
+                                        $( "#back" ).hide();
+                                        if (JSON.parse(JSON.parse(data).webContent).correctionEnd)
+                                        {
+                                            $( "#end" ).show();
+                                        }
+                                        else
+                                        {
+                                            $( "#end" ).hide();
+                                        }
+                                        backUnityFunction = function(){
+                                            showLoading();
+                                            LoadPageWithoutHistory("./studentMenu.html",hideLoading);
+                                        };
+                                        hideLoading();
+                                    }); // Cambiem de pàgina i al acabar treiem el loading
+                                }); 
+                            });
+                        });
+                    }); 
+                });
+            });
+            
+            $( "#selection01" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    setExerciseDatabase({
+                        statement: 'Select a name from the list and then click on the corresponding bone of the 3D model.',
+                        type: "selection",
+                        correction: "atTheEnd",
+                        help: 2,
+                        letters: 1,
+                        errors: 0,
+                        random: 0,
+                        multimedia: '{"include":[14,51,101],"exclude":[],"regions":[]}' // elemJSON el per on es retorna la informació de l'exercici del Unity
+                    }, 
+                    function()
+                    {
+                        getExerciseDatabase(-1, // Obtenim la informació de l'exercici de la base de dades
+                        function(data)
+                        {
+                            getTranslationsPHP(1, // Obtenim la traducció per l'exercici i quan la tinguem executem la funció
+                            function() 
+                            { 
+                                updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
+                                function() // El flux de codi continua per aqui despres de updateExercise.
+                                {
+                                    LoadPageWithoutHistory("./exerciseSelection.html",
+                                    function()
+                                    {
+                                        $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
+                                        $( "#back" ).hide();
+                                        if (JSON.parse(JSON.parse(data).webContent).correctionEnd)
+                                        {
+                                            $( "#end" ).show();
+                                        }
+                                        else
+                                        {
+                                            $( "#end" ).hide();
+                                        }
+                                        backUnityFunction = function(){
+                                            showLoading();
+                                            LoadPageWithoutHistory("./studentMenu.html",hideLoading);
+                                        };
+                                        hideLoading();
+                                    }); // Cambiem de pàgina i al acabar treiem el loading
+                                }); 
+                            });
+                        });
+                    }); 
+                });
+            });
+            
+            $( "#animation" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    $multimediaElement = '{"list":[{"jointName":"ThighLeft","moviments":[{"time":0.0,"values":[-0.06871865689754486,-0.08604907989501953,0.6939983367919922,0.7115051746368408]}]},{"jointName":"ElbowLeftJoint","moviments":[{"time":0.0,"values":[0.0,-9.446010196256794e-9,0.0,1.0]}]},{"jointName":"FootLeft","moviments":[{"time":0.0,"values":[0.0,0.0,-0.7071068286895752,0.7071068286895752]}]},{"jointName":"WristRightJoint","moviments":[{"time":0.0,"values":[0.0,0.7071068286895752,0.0,0.7071068286895752]}]},{"jointName":"LegRight","moviments":[{"time":0.0,"values":[2.960939271545726e-10,2.3267027415840859e-8,3.153019512147637e-10,1.0]}]},{"jointName":"FootRight","moviments":[{"time":0.0,"values":[6.727326778902378e-16,-6.727326778902378e-16,-0.7071068286895752,0.7071068286895752]}]},{"jointName":"ElbowRightJoint","moviments":[{"time":0.0,"values":[0.0,0.07845903933048248,0.0,-0.9969173669815064]},{"time":2.0,"values":[0.0,0.760405957698822,0.0,-0.649448037147522]},{"time":4.0,"values":[0.0,0.13917317986488343,0.0,-0.9902680516242981]}]},{"jointName":"ThighRight","moviments":[{"time":0.0,"values":[0.503376305103302,0.5033761262893677,-0.49660080671310427,-0.4966009557247162]}]},{"jointName":"HeadJoint","moviments":[{"time":0.0,"values":[0.0,0.0,-0.7021450400352478,0.7120339274406433]}]},{"jointName":"LegLeft","moviments":[{"time":0.0,"values":[-8.861854358785306e-15,-1.8794624168094743e-7,-4.761531968711097e-8,1.0]}]},{"jointName":"ShoulderLeftJoint","moviments":[{"time":0.0,"values":[-0.7051085233688355,-0.692726731300354,-0.14192122220993043,-0.05301013961434364]}]},{"jointName":"ShoulderRightJoint","moviments":[{"time":0.0,"values":[0.6954023838043213,0.19648726284503938,0.4642012119293213,0.5121772289276123]}]},{"jointName":"WristLeftJoint","moviments":[{"time":0.0,"values":[1.5102477508355355e-18,0.7071068286895752,-1.5102477508355355e-18,0.7071068286895752]}]}]}';                    var dataAnt = {
+                        question: "This movement corresponds to",
+                        a:"Flexion and extension",
+                        b:"Abduction and adduction",
+                        type: "animated",
+                        corrected: "a",
+                        multimedia: $multimediaElement 
+                    };
+                    
+                    setExerciseDatabase(dataAnt, 
+                    function()
+                    {
+                        getExerciseDatabase(-1, // Obtenim la informació de l'exercici de la base de dades
+                        function(data)
+                        {
+                            getTranslationsPHP(2, // Obtenim la traducció per l'exercici i quan la tinguem executem la funció
+                            function() 
+                            {
+                                updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
+                                function() // El flux de codi continua per aqui despres de updateExercise.
+                                {
+                                    LoadPageWithoutHistory("./exerciseAnimation.html",
+                                    function()
+                                    {
+                                        $("#questionTittle").html(JSON.parse(JSON.parse(data).webContent).question);
+                                        $("#answerA").html(JSON.parse(JSON.parse(data).webContent).answerA);
+                                        $("#answerB").html(JSON.parse(JSON.parse(data).webContent).answerB);
+                                        $( "#back" ).hide();
+                                        backUnityFunction = function(){
+                                            showLoading();
+                                            LoadPageWithoutHistory("./studentMenu.html",hideLoading);
+                                        };
+                                        hideLoading();
+                                    }); // Cambiem de pàgina i al acabar treiem el loading
+                                }); 
+                            });
+                        }
+                        );
+                    });
+      
+                });
+            });
+            
+            $( "#named00" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    setExerciseDatabase({
+                        statement: 'Click on an actived bone from the 3D model and then enter the name in the "name of the bone" box.',
+                        type: "named",
+                        correction: "onRealTime",
+                        help: 2,
+                        errors: 5,
+                        random: 0,
+                        multimedia: '{"include":[14,15,52,99,102],"exclude":[],"regions":[]}' // elemJSON el per on es retorna la informació de l'exercici del Unity
+                    }, 
+                    function()
+                    {
+                        getExerciseDatabase(-1, // Obtenim la informació de l'exercici de la base de dades
+                        function(data)
+                        {
+                            getTranslationsPHP(1, // Obtenim la traducció per l'exercici i quan la tinguem executem la funció
+                            function() 
+                            { 
+                                updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
+                                function() // El flux de codi continua per aqui despres de updateExercise.
+                                {
+                                    LoadPageWithoutHistory("./exerciseNamed.html",
+                                    function()
+                                    {
+                                        $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
+                                        $( "#back" ).hide();
+                                        if (JSON.parse(JSON.parse(data).webContent).correctionEnd)
+                                        {
+                                            $( "#end" ).show();
+                                        }
+                                        else
+                                        {
+                                            $( "#end" ).hide();
+                                        }
+                                        backUnityFunction = function(){
+                                            showLoading();
+                                            LoadPageWithoutHistory("./studentMenu.html",hideLoading);
+                                        };
+                                        hideLoading();
+                                    }); // Cambiem de pàgina i al acabar treiem el loading
+                                }); 
+                            });
+                        }
+                        );
+                    });
+                });
+            });
+            
+            $( "#named01" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    setExerciseDatabase({
+                        statement: 'Click on an actived bone from the 3D model and then enter the name in the "name of the bone" box.',
+                        type: "named",
+                        correction: "atTheEnd",
+                        help: 2,
+                        errors: 0,
+                        random: 0,
+                        multimedia: '{"include":[14,15],"exclude":[],"regions":[]}' // elemJSON el per on es retorna la informació de l'exercici del Unity
+                    }, 
+                    function()
+                    {
+                        getExerciseDatabase(-1, // Obtenim la informació de l'exercici de la base de dades
+                        function(data)
+                        {
+                            getTranslationsPHP(1, // Obtenim la traducció per l'exercici i quan la tinguem executem la funció
+                            function() 
+                            { 
+                                updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
+                                function() // El flux de codi continua per aqui despres de updateExercise.
+                                {
+                                    LoadPageWithoutHistory("./exerciseNamed.html",
+                                    function()
+                                    {
+                                        $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
+                                        $( "#back" ).hide();
+                                        if (JSON.parse(JSON.parse(data).webContent).correctionEnd)
+                                        {
+                                            $( "#end" ).show();
+                                        }
+                                        else
+                                        {
+                                            $( "#end" ).hide();
+                                        }
+                                        backUnityFunction = function(){
+                                            showLoading();
+                                            LoadPageWithoutHistory("./studentMenu.html",hideLoading);
+                                        };
+                                        hideLoading();
+                                    }); // Cambiem de pàgina i al acabar treiem el loading
+                                }); 
+                            });
+                        }
+                        );
+                    });
+                });
+            });
+            
+            $(function() {
+                var moveLeft = 20;
+                var moveDown = 10;
+
+                $('#selection00').hover(function(e) {
+                  $('#selection00_pop-up').show();
+                  $("#selection00_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#selection00_pop-up').hide();
+                });
+
+                $('#selection00').mousemove(function(e) {
+                  $("#selection00_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+
+                $('#selection01').hover(function(e) {
+                  $('#selection01_pop-up').show();
+                  $("#selection01_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#selection01_pop-up').hide();
+                });
+
+                $('#selection01').mousemove(function(e) {
+                  $("#selection01_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+                
+                $('#animation').hover(function(e) {
+                  $('#animation_pop-up').show();
+                  $("#animation_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#animation_pop-up').hide();
+                });
+
+                $('#animation').mousemove(function(e) {
+                  $("#animation_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+                
+                $('#named00').hover(function(e) {
+                  $('#named00_pop-up').show();
+                  $("#named00_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#named00_pop-up').hide();
+                });
+
+                $('#named00').mousemove(function(e) {
+                  $("#named00_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+                
+                $('#named01').hover(function(e) {
+                  $('#named01_pop-up').show();
+                  $("#named01_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#named01_pop-up').hide();
+                });
+
+                $('#named01').mousemove(function(e) {
+                  $("#named01_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+        <div id="contentEditor">
+            <div class="formBase">
+                <h3>Test question</h3>
+                <textarea class="textArea" name="uname" id="unameID" requered placeholder="Test question"></textarea>
+                <h3>Answers</h3>
+                <b>a: </b><textarea class="textArea" name="aans" id="aAnswer" requered placeholder="Answer a"></textarea> <br>
+                <b>b: </b><textarea class="textArea" name="bans" id="bAnswer" requered placeholder="Answer b"></textarea> <br>
+                <h3>Correct answer</h3>
+                <input type="radio" name="corrected" value="a" id="a" checked />
+                <label class="radioCheck" for="a">a</label>
+                <br>
+                <input type="radio" name="corrected" value="b" id="b" />
+                <label class="radioCheck" for="b">b</label>
+                <br>
+                <button id ="try" type="button" class="myButton" hidden>Preview</button>
+                <div id="helpDiv">To create an exercise it is necessary to enter a test question, the two possible answers and select the correct one.</div>
+            </div>
+
+            <div class="unity" id= "unityContent"> </div>
+        </div>
+        <button id ="back" type="button" class="myButton">Backpage</button>
+        
+        <script>
+            function itsReady()
+            {
+                if ($('#unameID').val() === "" || $('#aAnswer').val() === "" || $('#bAnswer').val() === "")
+                {
+                    $( "#try" ).hide();
+                    $('#helpDiv').show();
+                }
+                else
+                {
+                    $( "#try" ).show();
+                    $('#helpDiv').hide();
+                }
+            }
+            
+            $('#unameID').keyup(function (){
+                itsReady();
+            });
+            $('#aAnswer').keyup(function (){
+                itsReady();
+            });
+            $('#bAnswer').keyup(function (){
+                itsReady();
+            });
+            
+            $( "#back" ).click(function()
+            {
+                showLoading();
+                LoadPage("./editorMenu.html",hideLoading);
+            });
+            
+            $( "#try" ).click(function()
+            {
+                showLoading(); // Possem el loading
+                transferExercise( // Demanem la informació al Unity i esperem el SetExercise
+                function() // El flux de codi continua per aqui despres de transferExercise.
+                {
+                    // Pujo l'exercici a la base de dades
+                    
+                    var dataAnt = {
+                        question: $('#unameID').val(),
+                        a:$('#aAnswer').val(),
+                        b:$('#bAnswer').val(),
+                        type: "animated",
+                        corrected: $('input:radio[name=corrected]:checked').val(),
+                        multimedia: elemJSON // elemJSON el per on es retorna la informació de l'exercici del Unity
+                    };
+                    setExerciseDatabase(dataAnt, 
+                    function()
+                    {
+                        getExerciseDatabase(-1, // Obtenim la informació de l'exercici de la base de dades
+                        function(data)
+                        {
+                            getTranslationsPHP(2, // Obtenim la traducció per l'exercici i quan la tinguem executem la funció
+                            function() 
+                            {
+                                updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
+                                function() // El flux de codi continua per aqui despres de updateExercise.
+                                {
+                                    LoadPageWithoutHistory("./exerciseAnimation.html",
+                                    function()
+                                    {
+                                        $("#questionTittle").html(JSON.parse(JSON.parse(data).webContent).question);
+                                        $("#answerA").html(JSON.parse(JSON.parse(data).webContent).answerA);
+                                        $("#answerB").html(JSON.parse(JSON.parse(data).webContent).answerB);
+                                        backUnityFunction = function(){
+                                            showLoading();                                   
+                                            getTranslationsPHP(2,
+                                            function()
+                                            {
+                                                changeScene(1,
+                                                function()
+                                                {
+                                                    LoadPage("./animationEditor.html",
+                                                    function()
+                                                    {
+                                                        $("#unameID").html(dataAnt.question);
+                                                        $("#aAnswer").html(dataAnt.a);
+                                                        $("#bAnswer").html(dataAnt.b);
+                                                        $( "#a" ).prop( "checked", dataAnt.corrected === "a" );
+                                                        $( "#b" ).prop( "checked", dataAnt.corrected === "b" );
+                                                        $( "#try" ).show();
+                                                        $('#helpDiv').hide();
+                                                        restoreUnity(
+                                                        function(data)
+                                                        {
+                                                            gameInstance.SendMessage("Main Camera", "RecoveryUpdate",data);
+                                                            hideLoading();
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        };
+                                        hideLoading();
+                                    }); // Cambiem de pàgina i al acabar treiem el loading
+                                }); 
+                            });
+                        }
+                        );
+                    });
+                });       
+            });        
+        </script>
+    </body>    
+</html>

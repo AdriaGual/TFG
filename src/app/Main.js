@@ -23,6 +23,8 @@ import TeacherEditExerciceLocation2d from './Pages/teacher_edit_exercice_locatio
 import TeacherEditExerciceTest2d from './Pages/teacher_edit_exercice_test2d.js';
 import TeacherEditExerciceMPR from './Pages/teacher_edit_exercice_mpr.js';
 import TeacherEditExerciceLocation3d from './Pages/teacher_edit_exercice_location3d.js';
+import TeacherEditExerciceEdubody from './Pages/teacher_edit_exercice_edubody.js';
+
 // Pages imports
 
 
@@ -62,6 +64,7 @@ export default class Main extends React.Component {
 			<Route path='/teacher_edit_exercice_test2d' render={() => (<div><TeacherEditExerciceTest2d appState={this.appState}></TeacherEditExerciceTest2d></div>)} />
 			<Route path='/teacher_edit_exercice_mpr' render={() => (<div><TeacherEditExerciceMPR appState={this.appState}></TeacherEditExerciceMPR></div>)} />
 			<Route path='/teacher_edit_exercice_location3d' render={() => (<div><TeacherEditExerciceLocation3d appState={this.appState}></TeacherEditExerciceLocation3d></div>)} />
+			<Route path='/teacher_edit_exercice_edubody' render={() => (<div><TeacherEditExerciceEdubody appState={this.appState}></TeacherEditExerciceEdubody></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

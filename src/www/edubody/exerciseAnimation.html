@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+        
+        <div id="contentExercise">
+            <h3 id="questionTittle">Subject</h3>
+            <br>
+            <div id="contentQuestion">
+                <input type="radio" name="answer" value="a" id="a" />
+                    <label class="radioCheck" for="a" id = "answerA">a</label>
+                    <br>
+                    <input type="radio" name="answer" value="b" id="b" />
+                    <label class="radioCheck" for="b" id = "answerB">b</label>
+                <br>
+            </div>
+            <div id= "unityContent"> </div>
+            <div id= "resume" hidden>
+                <div><b>Errors: </b><span id="numberErrors">0</span></div>
+                <img id="correct" src="./Resources/correct.png" alt="Correct" hidden>
+                <img id= "incorrect" src="./Resources/incorrect.png" alt="Incorrect" hidden>
+            </div>
+            
+            <br>
+            <button id ="end" type="button" class="myButton"> End </button>
+            <button id ="back" type="button" class="myButton"> Back </button>
+        </div>
+        
+        <script>
+            $( "#back" ).click(function()
+            {
+                if (backUnityFunction !== null)
+                {
+                    backUnityFunction();
+                }
+            });
+            
+            $( "#end" ).click(function()
+            {
+                sendValue = "";
+                if($('input:radio[name=answer]:checked').val())   
+                {
+                    sendValue = $('input:radio[name=answer]:checked').val();
+                }
+                
+                $.ajax({
+                type: "POST",
+                url: './PHP/correction.php',
+                async: false,
+                timeout: 3000,
+                data: {valueAnswer: sendValue},
+                dataType: 'json',
+                success: function(data)
+                {
+                    hideUnity();
+                    showResume(data.webReturn.correctionValue === 1, data.webReturn.errors);
+                    $('#end').hide();
+                    $('#back').show();
+                    $('#contentQuestion').hide();
+                }
+                });
+            });
+        </script>
+    </body>    
+</html>

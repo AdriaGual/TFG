@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>        
+        <div class ="contenedor">
+            <div class="item4_1">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="selection" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Identification</div>
+            </div>
+
+            <div class="item4_2">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="named" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Labelling</div>
+            </div>
+            
+            <div class="item4_3">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="animation" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Animation</div>
+            </div>
+            
+            <div class="item4_4">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="back" class="hexBack" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Backpage</div>
+            </div>
+        </div>
+        
+        <div class="pop-up" id="selection_pop-up">
+            <h3>Identification exercise information</h3>
+            <ul>
+                <li> Identify components of a 3D anatomy model. </li>
+            </ul>
+        </div>
+        
+        <div class="pop-up" id="named_pop-up">
+            <h3>Labelling exercise information</h3>
+            <ul>
+                <li> Label components of a 3D anatomy model. </li>
+            </ul>
+        </div>
+        
+        <div class="pop-up" id="animation_pop-up">
+            <h3>Animation exercise information</h3>
+            <ul>
+                <li> Create animations of a 3D anatomy model. </li>
+            </ul>
+        </div>
+        
+        <script>
+            
+            $( "#back" ).click(function()
+            {
+                showLoading();
+                LoadPage("./role.html",hideLoading);
+            });
+            
+            $( "#selection" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    getTranslationsPHP(0,
+                    function()
+                    {
+                        changeScene(0,
+                        function()
+                        {
+                            LoadPage("./selectionEditor.html",hideLoading);
+                        });
+                    });
+                });
+            });
+            
+            $( "#animation" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    getTranslationsPHP(2,
+                    function()
+                    {
+                        changeScene(1,
+                        function()
+                        {
+                            LoadPage("./animationEditor.html",hideLoading);
+                        });
+                    });
+                });
+            });
+            
+            $( "#named" ).click(function()
+            {
+                showLoading();
+                waitEngine(
+                function()
+                {
+                    getTranslationsPHP(0,
+                    function()
+                    {
+                        changeScene(0,
+                        function()
+                        {
+                            LoadPage("./namedEditor.html",hideLoading);
+                        });
+                    });
+                });
+            });
+            
+            $(function() {
+                var moveLeft = 20;
+                var moveDown = 10;
+
+                $('#selection').hover(function(e) {
+                  $('#selection_pop-up').show();
+                  $("#selection_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#selection_pop-up').hide();
+                });
+
+                $('#selection').mousemove(function(e) {
+                  $("#selection_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+                
+                $('#animation').hover(function(e) {
+                  $('#animation_pop-up').show();
+                  $("#animation_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#animation_pop-up').hide();
+                });
+
+                $('#animation').mousemove(function(e) {
+                  $("#animation_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+                
+                $('#named').hover(function(e) {
+                  $('#named_pop-up').show();
+                  $("#named_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                }, function() {
+                  $('#named_pop-up').hide();
+                });
+
+                $('#named').mousemove(function(e) {
+                  $("#named_pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+                });
+            });
+        </script>
+    </body>
+</html>

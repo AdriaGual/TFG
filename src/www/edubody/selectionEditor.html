@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+        
+        
+        
+        <div id="contentEditor">
+            <div class="formBase">
+
+                <h3>Descriptor</h3>
+                <textarea class="textArea" name="uname" id="unameID" requered placeholder="Descriptor"></textarea>
+                <h3>Correction mode</h3>
+                <input type="radio" name="correction" value="realTime" id="realTime" checked />
+                <label class="radioCheck" for="realTime">Correction on real time</label>
+                <input type="radio" name="correction" value="atTheEnd" id="atTheEnd" />
+                <label class="radioCheck" for="atTheEnd">Correction at the end</label>
+                <h3>Random elements</h3>
+                <div class="number-wrap">
+                    <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_up_48px-32.png" class="arrow up">
+                    <input type="number" name="random" min="0" max="330" value='0'>
+                    <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-32.png" class="arrow down">
+                </div>
+                
+                <h3>Allowed errors</h3>
+                <div class="number-wrap">
+                    <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_up_48px-32.png" class="arrow up">
+                    <input type="number" name="errors" min="0" max="20" value='0'>
+                    <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-32.png" class="arrow down">
+                </div><br>
+                <input type="checkbox" name="help" id="help" />
+                <label class="radioCheck" for="help">Show help</label>
+                
+                <input type="checkbox" name="letters" id="letters" />
+                <label class="radioCheck" for="letters">Remove letters</label><br>
+                <button id ="try" type="button" class="myButton" hidden>Preview</button>
+                <div id="helpDiv">To create an exercise it is necessary to select the model components using the graphic editor.</div>
+            </div>
+            
+            <div class="unity" id= "unityContent"> </div>
+        </div>
+        <button id ="back" type="button" class="myButton">Backpage</button>
+        <script>                         
+            $('#unameID').keyup(function (){
+                if ($('#unameID').val() === "")
+                {
+                    $( "#try" ).hide();
+                    $('#helpDiv').show();
+                }
+                else
+                {
+                    $( "#try" ).show();
+                    $('#helpDiv').hide();
+                }
+            });
+
+            $( "#back" ).click(function()
+            {
+                showLoading();
+                LoadPage("./editorMenu.html",hideLoading);
+            });
+
+            $( "#try" ).click(function()
+            {
+                showLoading(); // Possem el loading
+                transferExercise( // Demanem la informació al Unity i esperem el SetExercise
+                function() // El flux de codi continua per aqui despres de transferExercise.
+                {
+                    // Pujo l'exercici a la base de dades
+                    if($('input[name=help]').is(":checked"))
+                    {
+                        helpValue = 2;
+                    }
+                    else
+                    {
+                        helpValue = 0;
+                    }
+                    
+                    if($('input[name=letters]').is(":checked"))
+                    {
+                        lettersValue = 1;
+                    }
+                    else
+                    {
+                        lettersValue = 0;
+                    }
+                    
+                    var dataAnt = {
+                        statement: $('#unameID').val(),
+                        type: "selection",
+                        correction: $('input:radio[name=correction]:checked').val(),
+                        help: helpValue,
+                        letters: lettersValue,
+                        errors: $('input[name=errors]').val(),
+                        random: $('input[name=random]').val(),
+                        multimedia: elemJSON // elemJSON el per on es retorna la informació de l'exercici del Unity
+                    };
+                    setExerciseDatabase(dataAnt, 
+                    function()
+                    {
+                        getExerciseDatabase(-1, // Obtenim la informació de l'exercici de la base de dades
+                        function(data)
+                        {
+                            getTranslationsPHP(1, // Obtenim la traducció per l'exercici i quan la tinguem executem la funció
+                            function() 
+                            { 
+                                updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
+                                function() // El flux de codi continua per aqui despres de updateExercise.
+                                {
+                                    LoadPageWithoutHistory("./exerciseSelection.html",
+                                    function()
+                                    {
+                                        $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
+                                        
+                                        if (JSON.parse(JSON.parse(data).webContent).correctionEnd)
+                                        {
+                                            $( "#end" ).show();
+                                        }
+                                        else
+                                        {
+                                            $( "#end" ).hide();
+                                        }
+                                        
+                                        backUnityFunction = function(){
+                                            showLoading();
+                                            getTranslationsPHP(0,
+                                            function()
+                                            {
+                                                changeScene(0,
+                                                function()
+                                                {
+                                                    LoadPageWithoutHistory("./selectionEditor.html",
+                                                    function()
+                                                    {
+                                                        $("#unameID").html(dataAnt.statement);
+                                                        $( "#realTime" ).prop( "checked", dataAnt.correction === "realTime" );
+                                                        $( "#atTheEnd" ).prop( "checked", dataAnt.correction === "atTheEnd" );
+                                                        $( "#help" ).prop( "checked", dataAnt.help);
+                                                        $("#letters").prop( "checked", dataAnt.letters);
+                                                        $('input[name=errors]').attr('value', dataAnt.errors);
+                                                        $('input[name=random]').attr('value', dataAnt.random);
+                                                        $( "#try" ).show();
+                                                        $('#helpDiv').hide();
+                                                        restoreUnity(
+                                                        function(data)
+                                                        {
+                                                            gameInstance.SendMessage("Main Camera", "RecoveryUpdate",data);
+                                                            hideLoading();
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        };
+                                        hideLoading();
+                                    }); // Cambiem de pàgina i al acabar treiem el loading
+                                }); 
+                            });
+                        }
+                        );
+                    });
+                });      
+            });
+            
+            $(function(){
+                $('input.number').each(function(){
+                  $(this).before('<img src="'+upURL+'" class="arrow up"></img>').after('<img src="'+downURL+'" class="arrow down"></img>')
+                });
+                $('.number-wrap').on('click', '.arrow', function(e){
+                  var input = $(this).parents('div.number-wrap').children('input');
+                  var value = parseInt(input.attr('value'));
+                  var min = parseInt(input.attr('min'));
+                  var max = parseInt(input.attr('max'));
+                  if ($(this).hasClass('up')) { var op = +1;} else {var op = -1;}
+                  if (!(min==value && op == -1) && !(max==value && op == +1)) {
+                      input.attr('value', value + op)
+                  }
+                })
+            });    
+        </script>
+    </body>    
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+        <div id="contentExercise">
+            <h3 id="subjectTittle">Subject</h3>
+            <br>
+            <div id= "unityContent"> </div>
+            <div id= "resume" hidden>
+                <div><b>Errors: </b><span id="numberErrors">0</span></div>
+                <img id="correct" src="./Resources/correct.png" alt="Correct" hidden>
+                <img id= "incorrect" src="./Resources/incorrect.png" alt="Incorrect" hidden>
+            </div>
+            
+            <br>
+            <button id ="end" type="button" class="myButton"> End </button>
+            <button id ="back" type="button" class="myButton"> Back </button>
+        </div>
+        <script>
+            $( "#back" ).click(function()
+            {
+                if (backUnityFunction !== null)
+                {
+                    backUnityFunction();
+                }
+            });
+            
+            $( "#end" ).click(function()
+            {
+                // TODO: Recuperar estado
+                $( "#end" ).hide();
+                endExercise();
+            });
+        </script>
+    </body>    
+</html>

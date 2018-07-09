@@ -66,6 +66,10 @@ class TeacherChooseExercice extends React.Component {
 			this.appState({exercice_type: "MPR"});
 			this.props.history.push('/teacher_edit_exercice_mpr');
 		}
+		if(name == "Edubody"){
+			this.appState({exercice_type: "Edubody"});
+			this.props.history.push('/teacher_edit_exercice_edubody');
+		}
 	}
 	
 	
@@ -138,6 +142,19 @@ class TeacherChooseExercice extends React.Component {
 						</Button>
 					</Grid>
 					
+				</Grid>
+				<Grid container className="down_15">
+					<Grid item xs={1} > 
+					</Grid>
+					<Grid item xs={2} > 
+						<Button
+							className="btn btn-1 white"
+							onClick={() => 	this.click("Edubody")}
+						>
+							Edubody
+						</Button>
+					</Grid>
+
 				</Grid>
 			</div>
 		

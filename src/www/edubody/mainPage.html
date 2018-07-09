@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+       
+        <div class="contenedor">
+            <div class="item">
+                <svg class="color-fill" width="150" height="150">
+                    <polygon id="start" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+                </svg>
+                <div class="centrado">Start</div>
+            </div>
+        </div>
+    
+        
+        <script>
+            $( "#start" ).click(function()
+            {
+                showLoading();
+                UnityLoader.tryNextStep(function(){
+                    LoadPage("./role.html",hideLoading,function(){ LoadPageWithoutHistory("./mainPage.html", hideLoading,null); });
+                });
+            });
+        </script>
+    </body>
+</html>
