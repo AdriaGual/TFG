@@ -10,6 +10,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Register from './Pages/register.js';
+import UserProfile from './Pages/user_profile.js';
 import UserCourses from './Pages/user_courses.js';
 import UserCourse from './Pages/user_course.js';
 import UserTheory from './Pages/user_theory.js';
@@ -24,6 +25,9 @@ import TeacherEditExerciceTest2d from './Pages/teacher_edit_exercice_test2d.js';
 import TeacherEditExerciceMPR from './Pages/teacher_edit_exercice_mpr.js';
 import TeacherEditExerciceLocation3d from './Pages/teacher_edit_exercice_location3d.js';
 import TeacherEditExerciceEdubody from './Pages/teacher_edit_exercice_edubody.js';
+import AdmParams from './Pages/adm_params.js';
+
+
 
 // Pages imports
 
@@ -53,6 +57,7 @@ export default class Main extends React.Component {
 			<Route exact path='/' render={() => (<div><Register appState={this.appState}></Register></div>)} />
 			<Route path='/user_courses' render={() => (<div><UserCourses appState={this.appState}></UserCourses></div>)} />
 			<Route path='/user_course' render={() => (<div><UserCourse appState={this.appState}></UserCourse></div>)} />
+			<Route path='/user_profile' render={() => (<div><UserProfile appState={this.appState}></UserProfile></div>)} />
 			<Route path='/user_theory' render={() => (<div><UserTheory appState={this.appState}></UserTheory></div>)} />
 			<Route path='/user_topic' render={() => (<div><UserTopic appState={this.appState}></UserTopic></div>)} />
 			<Route path='/user_exercice' render={() => (<div><UserExercice appState={this.appState}></UserExercice></div>)} />
@@ -65,6 +70,7 @@ export default class Main extends React.Component {
 			<Route path='/teacher_edit_exercice_mpr' render={() => (<div><TeacherEditExerciceMPR appState={this.appState}></TeacherEditExerciceMPR></div>)} />
 			<Route path='/teacher_edit_exercice_location3d' render={() => (<div><TeacherEditExerciceLocation3d appState={this.appState}></TeacherEditExerciceLocation3d></div>)} />
 			<Route path='/teacher_edit_exercice_edubody' render={() => (<div><TeacherEditExerciceEdubody appState={this.appState}></TeacherEditExerciceEdubody></div>)} />
+			<Route path='/adm_params' render={() => (<div><AdmParams appState={this.appState}></AdmParams></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

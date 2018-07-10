@@ -60,6 +60,10 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 					that.props.history.push('/teacher_courses');
 					that.appState({logged: true,username:$("#username").val()});
 				}
+				else if (response == "2"){
+					that.props.history.push('/adm_params');
+					that.appState({logged: true,username:$("#username").val()});
+				}
 				else if(response == "bad_login"){
 					that.setState({ showsnack: true ,snacktext: "Username or Password invalid!"});
 				}

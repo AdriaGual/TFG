@@ -106,9 +106,9 @@ export default class LoggedHeader extends React.Component {
 									  open={Boolean(anchorEl)}
 									  onClose={this.handleCloseMenu}
 									>
-									  <MenuItem onClick={this.handleAccount}>Profile</MenuItem>
-									  <Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>
-									  <Link to="/"><MenuItem onClick={this.handleClose}>Logout</MenuItem></Link>
+										<Link to="/user_profile"><MenuItem onClick={this.handleAccount}>Profile</MenuItem></Link>
+										<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>
+										<Link to="/"><MenuItem onClick={this.handleClose}>Logout</MenuItem></Link>
 									</Menu>
 								</Grid>
 							</Grid>
