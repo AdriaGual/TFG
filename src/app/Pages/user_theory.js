@@ -58,8 +58,10 @@ class Theory extends React.Component {
         } = this.state;
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.theory_title}</p></div>
 				<hr/>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
 						<p className="left_30 down_20 black size_12">{this.state.theory_subtitle}</p>

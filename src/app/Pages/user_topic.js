@@ -105,7 +105,7 @@ class UserTopic extends React.Component {
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
-					that.props.history.push('/user_exercice');
+					that.props.history.push('/user_exercise');
 				}
 			}
 		};
@@ -129,15 +129,17 @@ class UserTopic extends React.Component {
 			return <Redirect from='user_topic' to='/user_theory'/>;
 		}
 		if (redirect_exercice){
-			return <Redirect from='user_topic' to='/user_exercice'/>;
+			return <Redirect from='user_topic' to='/user_exercise'/>;
 		}
 		
 		
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.appState("topic_name")}
 				</p></div>
 				<hr/>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>Courses</Link><Link to={"/user_course"} className="blue" >>{this.appState("course_name")}</Link>
 				<Grid container>
 					<Grid item xs={10}  className="padding2"> 
 						<label htmlFor="find-box">

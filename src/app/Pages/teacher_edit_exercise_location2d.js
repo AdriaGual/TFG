@@ -1,4 +1,4 @@
-	"use strict";
+"use strict";
 
 // React imports
 import React from 'react';
@@ -19,7 +19,7 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
-class TeacherEditExerciceLocation3d extends React.Component {
+class TeacherEditExerciceLocation2d extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -29,11 +29,9 @@ class TeacherEditExerciceLocation3d extends React.Component {
 	
 	componentWillMount(){
 		var loadjs = require('loadjs');
-		loadjs('js/OrbitControls.js',function (){
+		loadjs('js/canvas_viewer_loc.js',function (){
 		});
-		loadjs('js/canvas_viewer_loc3d.js',function (){
-		});
-		loadjs('js/adm_problem_loc3d.js',function (){
+		loadjs('js/viewer2d.js',function (){
 		});
 	}
 	
@@ -52,7 +50,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 				<div className="left_30">	
 					<TextField
 						id="newtitle"
-						label="Enter Exercice Statement"
+						label="Enter Exercise Statement"
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>
@@ -63,6 +61,8 @@ class TeacherEditExerciceLocation3d extends React.Component {
 					/>
 				</div>
 				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" >Choose Exercise</Link>
+				<br/>
 				<Grid container>
 					<Grid item xs={12} >
 						<p></p>				
@@ -120,40 +120,30 @@ class TeacherEditExerciceLocation3d extends React.Component {
 					</Grid>
 					<Grid item xs={6} > 
 						<div id="image_div">
-							<div id="3d" class="tab-pane fade in active">
-								<div id="canvas_div">
-									<span id="canvas" class="canvas">
-										
-									</span>
-									<div id="canvas_button_group" class="part">
-										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
+							<div id="canvas_div">
+								<canvas id="canvas"></canvas>
+								<div id="canvas_button_group" class="part">
+									<div id="btn-group-location">
+										<button type="button" id="btn-edit-circle" title="Afegir o editar punt" class="btn-location selected"></button>
+										<button type="button" id="btn-delete-circle" title="Eliminar punt" class="btn-location"></button>
 									</div>
+									<div id="radius_div">
+										<div id="radius_input_group" class="input-group">
+											<span class="input-group-addon">Radi</span>
+											<input type="text" id="radius_value" class="form-control" value="5" />
+										</div>
+										<input id="radius_slider" type="range" min="1" max="10" step="1" value="5" />
+									</div>
+									<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
 								</div>
-								
-								<div id="models_button_group" style={{width:700}}>
-									<span type="button" id="btn-add-model" >
-										<input type="file" id="model_input" multiple=""/>
-									</span>
-									<Button type="button" id="btn-delete-model" style={{marginLeft:31}} className="btn btn-5 white down_15">Eliminar</Button>
-								</div>
-								
-								<div id="displayed_models_input_group" style={{width:700}} className="down_15">
-									<span id="displayed_models_select_label" >Models</span>
-									<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label"  style={{width:200,marginLeft:71}}></Select>
-									
-									<span class="input-group-btn">
-										<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">Afegir a solució</Button>
-									</span>
-								</div>
-								
-								<div id="list_models_solution_input_group" style={{width:700}} className="down_15">
-									<span id="list_models_solution_select_label" >Models solució</span>
-									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
-									
-									<span class="input-group-btn">
-										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
-									</span>
-								</div>
+							</div>
+							
+							<div id="image_file_input_group" class="input-group">
+								<input type="file" id="problem_image_input" />
+							</div>
+							<div id="current_image_input_group" class="input-group">
+								<input type="hidden" id="problem_image_url" value="" disabled />
+								<button type="button" id="btn-delete-image">Eliminar imatge</button>
 							</div>
 						</div>
 					</Grid>
@@ -252,6 +242,6 @@ class TeacherEditExerciceLocation3d extends React.Component {
 }
 
 
-TeacherEditExerciceLocation3d = withRouter(TeacherEditExerciceLocation3d);
+TeacherEditExerciceLocation2d = withRouter(TeacherEditExerciceLocation2d);
 
-export default TeacherEditExerciceLocation3d;
+export default TeacherEditExerciceLocation2d;

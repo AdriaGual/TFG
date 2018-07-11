@@ -97,6 +97,7 @@ class TeacherCourses extends React.Component {
 
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>
 				<hr/>
 				<Grid container>
@@ -113,7 +114,7 @@ class TeacherCourses extends React.Component {
 					</Grid>
 					<Grid item xs={3}> 
 						<Link to="/teacher_edit_course"><Button className="btn btn-2 down_30 white">Create New Course</Button></Link>
-						<Link to="/teacher_choose_exercice"><Button className="btn btn-5 down_30 white left_15">Create New Exercice</Button></Link>
+						<Link to="/teacher_choose_exercise"><Button className="btn btn-5 down_30 white left_15">Create New Exercice</Button></Link>
 					</Grid>
 					<Grid item xs={12}>
 						<div style={{ height: 1500}}>

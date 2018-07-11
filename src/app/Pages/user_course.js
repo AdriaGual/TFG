@@ -109,7 +109,7 @@ class UserCourse extends React.Component {
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
-					that.props.history.push('/user_exercice');
+					that.props.history.push('/user_exercise');
 				}
 			}
 		};
@@ -199,9 +199,12 @@ class UserCourse extends React.Component {
 
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30"><p>{this.appState("course_name")}
-				</p></div>
+				<br/>
+				<div className="left_30 down_20 orange size_30">
+					<p>{this.appState("course_name")}</p>
+				</div>
 				<hr/>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<Grid container>
 				<Grid item xs={10}>
 				</Grid>

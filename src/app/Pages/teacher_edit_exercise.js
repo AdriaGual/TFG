@@ -42,7 +42,7 @@ class TeacherEditExercice extends React.Component {
 				<div className="left_30">	
 					<TextField
 						id="newtitle"
-						label="Enter Exercice Statement"
+						label="Enter Exercise Statement"
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>

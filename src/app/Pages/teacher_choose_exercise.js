@@ -32,31 +32,31 @@ class TeacherChooseExercice extends React.Component {
 	click = (name) => {
 		if (name== "2D"){
 			this.appState({exercice_type:"2D"});
-			this.props.history.push('/teacher_edit_exercice_location2d');
+			this.props.history.push('/teacher_edit_exercise_location2d');
 		}
 		if(name == "3D"){
 			this.appState({exercice_type: "3D"});
-			this.props.history.push('/teacher_edit_exercice_location3d');
+			this.props.history.push('/teacher_edit_exercise_location3d');
 		}
 		if(name == "Test"){
 			this.appState({exercice_type: "Test"});
-			this.props.history.push('/teacher_edit_exercice_test2d');
+			this.props.history.push('/teacher_edit_exercise_test2d');
 		}
 		if(name == "MPR"){
 			this.appState({exercice_type: "MPR"});
-			this.props.history.push('/teacher_edit_exercice_mpr');
+			this.props.history.push('/teacher_edit_exercise_mpr');
 		}
 		if(name == "Animation"){
 			this.appState({exercice_type: "Animation"});
-			this.props.history.push('/teacher_edit_exercice_animation');
+			this.props.history.push('/teacher_edit_exercise_animation');
 		}
 		if(name == "Labelling"){
 			this.appState({exercice_type: "Labelling"});
-			this.props.history.push('/teacher_edit_exercice_labelling');
+			this.props.history.push('/teacher_edit_exercise_labelling');
 		}
 		if(name == "Selection"){
 			this.appState({exercice_type: "Selection"});
-			this.props.history.push('/teacher_edit_exercice_selection');
+			this.props.history.push('/teacher_edit_exercise_selection');
 		}
 	}
 	
@@ -80,10 +80,11 @@ class TeacherChooseExercice extends React.Component {
 			<div style={{ height: 1500}}>
 				<br/>
 				<div className="left_30">	
-					<p className="orange size_30">Choose Exercice Type</p>
+					<p className="orange size_30">Choose Exercise Type</p>
 				</div>
 				<hr/>
-
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
+				
 				<Grid container>
 					<Grid container>
 						<Grid item xs={1} > 
@@ -146,24 +147,9 @@ class TeacherChooseExercice extends React.Component {
 								Selection
 							</Button>
 						</Grid>
-						
-
-
 					</Grid>
 				</Grid>
-				<Grid container className="down_15">
-					<Grid item xs={1} > 
-					</Grid>
-					<Grid item xs={2} > 
-						
-					</Grid>
-					<Grid item xs={1}>
-					</Grid>
-					<Grid item xs={2} > 
-						
-					</Grid>
-
-				</Grid>
+				
 			</div>
 		
 		);

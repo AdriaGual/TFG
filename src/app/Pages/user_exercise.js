@@ -63,8 +63,10 @@ class UserExercice extends React.Component {
 		
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
 						<Card className="course_description_form margin2 padding2">

@@ -19,7 +19,7 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
-class TeacherEditExerciceLocation2d extends React.Component {
+class TeacherEditExerciceTest2d extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -27,20 +27,22 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		};
 	}
 	
+	appState = this.props.appState;
+
 	componentWillMount(){
 		var loadjs = require('loadjs');
+		loadjs('js/test.js',function (){
+		});
 		loadjs('js/canvas_viewer_loc.js',function (){
 		});
 		loadjs('js/viewer2d.js',function (){
 		});
 	}
 	
-	appState = this.props.appState;
-
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
-
+	
 	/**
 	 * Renders the register page.
 	 */
@@ -50,7 +52,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 				<div className="left_30">	
 					<TextField
 						id="newtitle"
-						label="Enter Exercice Statement"
+						label="Enter Exercise Statement"
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>
@@ -61,6 +63,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 					/>
 				</div>
 				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" >Choose Exercise</Link>
 				<Grid container>
 					<Grid item xs={12} >
 						<p></p>				
@@ -74,7 +77,6 @@ class TeacherEditExerciceLocation2d extends React.Component {
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
 						<p>Question:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
-						
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox
@@ -114,28 +116,12 @@ class TeacherEditExerciceLocation2d extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-					<Grid item xs={1}>
-					</Grid>
-					<Grid item xs={6} > 
+
+					<Grid item xs={4} > 
 						<div id="image_div">
 							<div id="canvas_div">
-								<canvas id="canvas"></canvas>
-								<div id="canvas_button_group" class="part">
-									<div id="btn-group-location">
-										<button type="button" id="btn-edit-circle" title="Afegir o editar punt" class="btn-location selected"></button>
-										<button type="button" id="btn-delete-circle" title="Eliminar punt" class="btn-location"></button>
-									</div>
-									<div id="radius_div">
-										<div id="radius_input_group" class="input-group">
-											<span class="input-group-addon">Radi</span>
-											<input type="text" id="radius_value" class="form-control" value="5" />
-										</div>
-										<input id="radius_slider" type="range" min="1" max="10" step="1" value="5" />
-									</div>
-									<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
-								</div>
+								<canvas id="canvas" width="448" height="350"></canvas>
 							</div>
-							
 							<div id="image_file_input_group" class="input-group">
 								<input type="file" id="problem_image_input" />
 							</div>
@@ -143,10 +129,15 @@ class TeacherEditExerciceLocation2d extends React.Component {
 								<input type="hidden" id="problem_image_url" value="" disabled />
 								<button type="button" id="btn-delete-image">Eliminar imatge</button>
 							</div>
+							
 						</div>
 					</Grid>
-					
-					<Grid item xs={1} > 
+					<Grid item xs={2} >
+						<div id="items_box">
+						</div>
+						<Button type="button" id="btn-new-item" className="btn btn-4 white" >Afegir resposta</Button>
+					</Grid>
+					<Grid item xs={2} > 
 						<Button
 							className="btn btn-1 white left_15"
 							onClick={() => 	this.clicktheory(node.name)}
@@ -240,6 +231,6 @@ class TeacherEditExerciceLocation2d extends React.Component {
 }
 
 
-TeacherEditExerciceLocation2d = withRouter(TeacherEditExerciceLocation2d);
+TeacherEditExerciceTest2d = withRouter(TeacherEditExerciceTest2d);
 
-export default TeacherEditExerciceLocation2d;
+export default TeacherEditExerciceTest2d;

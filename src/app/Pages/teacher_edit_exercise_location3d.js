@@ -1,4 +1,4 @@
-"use strict";
+	"use strict";
 
 // React imports
 import React from 'react';
@@ -19,7 +19,7 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
-class TeacherEditExerciceTest2d extends React.Component {
+class TeacherEditExerciceLocation3d extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -27,22 +27,22 @@ class TeacherEditExerciceTest2d extends React.Component {
 		};
 	}
 	
-	appState = this.props.appState;
-
 	componentWillMount(){
 		var loadjs = require('loadjs');
-		loadjs('js/test.js',function (){
+		loadjs('js/OrbitControls.js',function (){
 		});
-		loadjs('js/canvas_viewer_loc.js',function (){
+		loadjs('js/canvas_viewer_loc3d.js',function (){
 		});
-		loadjs('js/viewer2d.js',function (){
+		loadjs('js/adm_problem_loc3d.js',function (){
 		});
 	}
 	
+	appState = this.props.appState;
+
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
-	
+
 	/**
 	 * Renders the register page.
 	 */
@@ -52,7 +52,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 				<div className="left_30">	
 					<TextField
 						id="newtitle"
-						label="Enter Exercice Statement"
+						label="Enter Exercise Statement"
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>
@@ -63,6 +63,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 					/>
 				</div>
 				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" >Choose Exercise</Link>
 				<Grid container>
 					<Grid item xs={12} >
 						<p></p>				
@@ -76,6 +77,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
 						<p>Question:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
+						
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox
@@ -115,28 +117,49 @@ class TeacherEditExerciceTest2d extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-
-					<Grid item xs={4} > 
+					<Grid item xs={1}>
+					</Grid>
+					<Grid item xs={6} > 
 						<div id="image_div">
-							<div id="canvas_div">
-								<canvas id="canvas" width="448" height="350"></canvas>
+							<div id="3d" class="tab-pane fade in active">
+								<div id="canvas_div">
+									<span id="canvas" class="canvas">
+										
+									</span>
+									<div id="canvas_button_group" class="part">
+										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
+									</div>
+								</div>
+								
+								<div id="models_button_group" style={{width:700}}>
+									<span type="button" id="btn-add-model" >
+										<input type="file" id="model_input" multiple=""/>
+									</span>
+									<Button type="button" id="btn-delete-model" style={{marginLeft:31}} className="btn btn-5 white down_15">Eliminar</Button>
+								</div>
+								
+								<div id="displayed_models_input_group" style={{width:700}} className="down_15">
+									<span id="displayed_models_select_label" >Models</span>
+									<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label"  style={{width:200,marginLeft:71}}></Select>
+									
+									<span class="input-group-btn">
+										<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">Afegir a solució</Button>
+									</span>
+								</div>
+								
+								<div id="list_models_solution_input_group" style={{width:700}} className="down_15">
+									<span id="list_models_solution_select_label" >Models solució</span>
+									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
+									
+									<span class="input-group-btn">
+										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
+									</span>
+								</div>
 							</div>
-							<div id="image_file_input_group" class="input-group">
-								<input type="file" id="problem_image_input" />
-							</div>
-							<div id="current_image_input_group" class="input-group">
-								<input type="hidden" id="problem_image_url" value="" disabled />
-								<button type="button" id="btn-delete-image">Eliminar imatge</button>
-							</div>
-							
 						</div>
 					</Grid>
-					<Grid item xs={2} >
-						<div id="items_box">
-						</div>
-						<Button type="button" id="btn-new-item" className="btn btn-4 white" >Afegir resposta</Button>
-					</Grid>
-					<Grid item xs={2} > 
+					
+					<Grid item xs={1} > 
 						<Button
 							className="btn btn-1 white left_15"
 							onClick={() => 	this.clicktheory(node.name)}
@@ -230,6 +253,6 @@ class TeacherEditExerciceTest2d extends React.Component {
 }
 
 
-TeacherEditExerciceTest2d = withRouter(TeacherEditExerciceTest2d);
+TeacherEditExerciceLocation3d = withRouter(TeacherEditExerciceLocation3d);
 
-export default TeacherEditExerciceTest2d;
+export default TeacherEditExerciceLocation3d;

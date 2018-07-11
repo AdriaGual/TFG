@@ -57,7 +57,7 @@ class TeacherEditExerciceMPR extends React.Component {
 				<div className="left_30">	
 					<TextField
 						id="newtitle"
-						label="Enter Exercice Statement"
+						label="Enter Exercise Statement"
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>
@@ -68,6 +68,7 @@ class TeacherEditExerciceMPR extends React.Component {
 					/>
 				</div>
 				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" >Choose Exercise</Link>
 				<Grid container>
 					<Grid item xs={12} >
 						<p></p>				

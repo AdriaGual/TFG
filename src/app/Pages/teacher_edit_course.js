@@ -122,6 +122,8 @@ class TeacherEditCourse extends React.Component {
 					/>
 				</div>
 				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
+				<br/>
 				<Grid container>
 					<Grid item xs={5} > 
 						<a className="orange size_30 left_30">Topics</a>

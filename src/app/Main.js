@@ -15,18 +15,18 @@ import UserCourses from './Pages/user_courses.js';
 import UserCourse from './Pages/user_course.js';
 import UserTheory from './Pages/user_theory.js';
 import UserTopic from './Pages/user_topic.js';
-import UserExercice from './Pages/user_exercice.js';
+import UserExercise from './Pages/user_exercise.js';
 import UserQualifications from './Pages/user_qualifications.js';
 import TeacherCourses from './Pages/teacher_courses.js';
 import TeacherEditCourse from './Pages/teacher_edit_course.js';
-import TeacherChooseExercice from './Pages/teacher_choose_exercice.js';
-import TeacherEditExerciceLocation2d from './Pages/teacher_edit_exercice_location2d.js';
-import TeacherEditExerciceTest2d from './Pages/teacher_edit_exercice_test2d.js';
-import TeacherEditExerciceMPR from './Pages/teacher_edit_exercice_mpr.js';
-import TeacherEditExerciceLocation3d from './Pages/teacher_edit_exercice_location3d.js';
-import TeacherEditExerciceAnimation from './Pages/teacher_edit_exercice_animation.js';
-import TeacherEditExerciceLabelling from './Pages/teacher_edit_exercice_labelling.js';
-import TeacherEditExerciceSelection from './Pages/teacher_edit_exercice_selection.js';
+import TeacherChooseExercise from './Pages/teacher_choose_exercise.js';
+import TeacherEditExerciseLocation2d from './Pages/teacher_edit_exercise_location2d.js';
+import TeacherEditExerciseTest2d from './Pages/teacher_edit_exercise_test2d.js';
+import TeacherEditExerciseMPR from './Pages/teacher_edit_exercise_mpr.js';
+import TeacherEditExerciseLocation3d from './Pages/teacher_edit_exercise_location3d.js';
+import TeacherEditExerciseAnimation from './Pages/teacher_edit_exercise_animation.js';
+import TeacherEditExerciseLabelling from './Pages/teacher_edit_exercise_labelling.js';
+import TeacherEditExerciseSelection from './Pages/teacher_edit_exercise_selection.js';
 import TeacherEnroll from './Pages/teacher_enroll.js';
 import AdmParams from './Pages/adm_params.js';
 
@@ -63,18 +63,18 @@ export default class Main extends React.Component {
 			<Route path='/user_profile' render={() => (<div><UserProfile appState={this.appState}></UserProfile></div>)} />
 			<Route path='/user_theory' render={() => (<div><UserTheory appState={this.appState}></UserTheory></div>)} />
 			<Route path='/user_topic' render={() => (<div><UserTopic appState={this.appState}></UserTopic></div>)} />
-			<Route path='/user_exercice' render={() => (<div><UserExercice appState={this.appState}></UserExercice></div>)} />
+			<Route path='/user_exercise' render={() => (<div><UserExercise appState={this.appState}></UserExercise></div>)} />
 			<Route path='/user_qualifications' render={() => (<div><UserQualifications appState={this.appState}></UserQualifications></div>)} />
 			<Route path='/teacher_courses' render={() => (<div><TeacherCourses appState={this.appState}></TeacherCourses></div>)} />
 			<Route path='/teacher_edit_course' render={() => (<div><TeacherEditCourse appState={this.appState}></TeacherEditCourse></div>)} />
-			<Route path='/teacher_choose_exercice' render={() => (<div><TeacherChooseExercice appState={this.appState}></TeacherChooseExercice></div>)} />
-			<Route path='/teacher_edit_exercice_location2d' render={() => (<div><TeacherEditExerciceLocation2d appState={this.appState}></TeacherEditExerciceLocation2d></div>)} />
-			<Route path='/teacher_edit_exercice_test2d' render={() => (<div><TeacherEditExerciceTest2d appState={this.appState}></TeacherEditExerciceTest2d></div>)} />
-			<Route path='/teacher_edit_exercice_mpr' render={() => (<div><TeacherEditExerciceMPR appState={this.appState}></TeacherEditExerciceMPR></div>)} />
-			<Route path='/teacher_edit_exercice_location3d' render={() => (<div><TeacherEditExerciceLocation3d appState={this.appState}></TeacherEditExerciceLocation3d></div>)} />
-			<Route path='/teacher_edit_exercice_animation' render={() => (<div><TeacherEditExerciceAnimation appState={this.appState}></TeacherEditExerciceAnimation></div>)} />
-			<Route path='/teacher_edit_exercice_labelling' render={() => (<div><TeacherEditExerciceLabelling appState={this.appState}></TeacherEditExerciceLabelling></div>)} />
-			<Route path='/teacher_edit_exercice_selection' render={() => (<div><TeacherEditExerciceSelection appState={this.appState}></TeacherEditExerciceSelection></div>)} />
+			<Route path='/teacher_choose_exercise' render={() => (<div><TeacherChooseExercise appState={this.appState}></TeacherChooseExercise></div>)} />
+			<Route path='/teacher_edit_exercise_location2d' render={() => (<div><TeacherEditExerciseLocation2d appState={this.appState}></TeacherEditExerciseLocation2d></div>)} />
+			<Route path='/teacher_edit_exercise_test2d' render={() => (<div><TeacherEditExerciseTest2d appState={this.appState}></TeacherEditExerciseTest2d></div>)} />
+			<Route path='/teacher_edit_exercise_mpr' render={() => (<div><TeacherEditExerciseMPR appState={this.appState}></TeacherEditExerciseMPR></div>)} />
+			<Route path='/teacher_edit_exercise_location3d' render={() => (<div><TeacherEditExerciseLocation3d appState={this.appState}></TeacherEditExerciseLocation3d></div>)} />
+			<Route path='/teacher_edit_exercise_animation' render={() => (<div><TeacherEditExerciseAnimation appState={this.appState}></TeacherEditExerciseAnimation></div>)} />
+			<Route path='/teacher_edit_exercise_labelling' render={() => (<div><TeacherEditExerciseLabelling appState={this.appState}></TeacherEditExerciseLabelling></div>)} />
+			<Route path='/teacher_edit_exercise_selection' render={() => (<div><TeacherEditExerciseSelection appState={this.appState}></TeacherEditExerciseSelection></div>)} />
 			<Route path='/teacher_enroll' render={() => (<div><TeacherEnroll appState={this.appState}></TeacherEnroll></div>)} />
 			<Route path='/adm_params' render={() => (<div><AdmParams appState={this.appState}></AdmParams></div>)} />
 			<Redirect to='/' from='/test2 ' />

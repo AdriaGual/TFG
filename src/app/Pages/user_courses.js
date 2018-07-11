@@ -95,7 +95,7 @@ class UserCourses extends React.Component {
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
-					that.props.history.push('/user_exercice');
+					that.props.history.push('/user_exercise');
 				}
 			}
 		};
@@ -184,6 +184,7 @@ class UserCourses extends React.Component {
 
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>
 				<hr/>
 				<Grid container>
@@ -223,12 +224,13 @@ class UserCourses extends React.Component {
 										>
 											<Icon className="fa fa-pencil" style={{ fontSize: 15 }}></Icon>
 										</Button>:null,
+										node.iscourse ?
 										<Button
 											className="btn btn-1 white"
 											onClick={() => 	this.click(node.name)}
 										>
 											<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
-										</Button>,
+										</Button>:null,
 									],
 								};
 							}}

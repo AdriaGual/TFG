@@ -33,7 +33,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 			$('#unity').appendTo("#unityHide");
 		}
 		
-		this.props.history.push('/teacher_choose_exercice');	
+		this.props.history.push('/teacher_choose_exercise');	
 	}
 	componentDidMount(){
 		LoadEditorLabelling();
@@ -51,8 +51,11 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	 */
 	render(){
 		return (
-			<div style={{ height: 1500}}>
-				
+			<div>
+				<br/>
+				<div className="left_30 down_20 orange size_30"><p>Labelling Exercise</p></div>
+				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" onClick={() => this.click()}>Choose Exercise</Link>
 				<br/>
 				<Grid container>
 					<Grid item xs={1}> 

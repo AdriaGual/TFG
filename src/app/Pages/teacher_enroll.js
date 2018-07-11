@@ -114,26 +114,44 @@ class UserCourses extends React.Component {
 
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>Enroll</p></div>
 				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<Grid container>
-					
-					<Grid item xs={4}>
-						<Button onClick={() => this.clicktoggle()} className="btn btn-4 white">Select All</Button><br/>
-						<form id="formulari"></form>
-						<br/>
-						<br/>
-						<Button onClick={() => this.clickenroll()} className="btn btn-4 white"> Enroll Selected Students</Button>
-						
+					<Grid item xs={1}>
 					</Grid>
 					<Grid item xs={4}>
-						<input type="file" id="input" />
-						<a href="./public/Plantilla.xlsx">Plantilla</a>
-						
-						<br/>
-						<br/>
-						<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white"> Enroll Excel Students</Button>
-						
+						<Card style={{width:400}}>
+							<br/>
+							<p className="orange size_20" style={{marginLeft:130}}>Enroll Students</p>
+							<hr/>
+							<br/>
+							<button onClick={() => this.clicktoggle()} className="btn btn-1 check_selall  white" style={{border:"none",marginLeft:50}}><Icon className="fa fa-address-book" style={{ fontSize: 15,marginLeft:-1,marginTop:2 }}></Icon></button><br/>
+							<form id="formulari"></form>
+							<br/>
+							<br/>
+							<Button onClick={() => this.clickenroll()} style={{width:250,marginLeft:70,marginBottom:10}} className="btn btn-4 white"> Enroll Selected Students</Button>
+						</Card>
+					</Grid>
+					<Grid item xs={4}>
+						<Card style={{width:400}}>
+							<br/>
+							<p className="orange size_20" style={{marginLeft:95}}>Load Users From Excel</p>
+							<hr/>
+							<br/>
+							<a href="./public/Plantilla.xlsx" style={{color:"#0645AD",marginLeft:20}}>Download Template</a>
+							
+							<br/><br/>
+							
+							<p style={{marginLeft:20}} className="size_15 ">Load xlsx file</p> 
+							<input style={{marginLeft:20}}type="file" id="input" />
+							
+							
+							<br/>
+							<br/>
+							<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Enroll Excel Students</Button>
+						</Card>
 					</Grid>
 				</Grid>
 				

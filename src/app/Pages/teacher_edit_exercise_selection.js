@@ -33,7 +33,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 			$('#unity').appendTo("#unityHide");
 		}
 		
-		this.props.history.push('/teacher_choose_exercice');	
+		this.props.history.push('/teacher_choose_exercise');	
 	}
 	componentDidMount(){
 		LoadEditorSelection();
@@ -51,30 +51,20 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	 */
 	render(){
 		return (
-			<div style={{ height: 1500}}>
-				
-				<br/><br/>
+			<div>
+				<br/>
+				<div className="left_30 down_20 orange size_30"><p>Selection Exercise</p></div>
+				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" onClick={() => this.click()}>Choose Exercise</Link>
+				<br/>
 				<Grid container>
 					<Grid item xs={1}> 
 					</Grid>
-					
 					<Grid item xs={10} > 
 						<div id ="contentID">
 						</div>
-						
 					</Grid>
-					
-					<Grid item xs={1} > 
-						<Button
-							className="btn btn-1 white left_15"
-							onClick={() => this.click()}
-						>
-							Return 
-						</Button>
-					</Grid>
-
 				</Grid>
-				
 			</div>
 		
 		);
