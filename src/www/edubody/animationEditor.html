@@ -87,7 +87,7 @@ and open the template in the editor.
                                 updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
                                 function() // El flux de codi continua per aqui despres de updateExercise.
                                 {
-                                    LoadPageWithoutHistory("./exerciseAnimation.html",
+                                    LoadPageWithoutHistory("./edubody/exerciseAnimation.html",
                                     function()
                                     {
                                         $("#questionTittle").html(JSON.parse(JSON.parse(data).webContent).question);
@@ -101,7 +101,7 @@ and open the template in the editor.
                                                 changeScene(1,
                                                 function()
                                                 {
-                                                    LoadPage("./animationEditor.html",
+                                                    LoadPage("./edubody/animationEditor.html",
                                                     function()
                                                     {
                                                         $("#unameID").html(dataAnt.question);

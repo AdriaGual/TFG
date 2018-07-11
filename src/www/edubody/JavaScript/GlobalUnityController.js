@@ -4,16 +4,17 @@
  * Summary: All definitions
  */
 
-$("head").append('<script src="./JavaScript/KeyboardController.js"></script>');
-$("head").append('<script src="./JavaScript/TranslationManager.js"></script>');
-$("head").append('<script src="./JavaScript/ExerciseManager.js"></script>');
-$("head").append('<script src="./JavaScript/Communication/InputOutput.js"></script>');
-$("head").append('<script src="./JavaScript/Communication/UnityAdapter.js"></script>');
-$("head").append('<script src="./JavaScript/WebManager.js"></script>');
-$("head").append('<script src="./Build/UnityLoader.js"></script>');
+$("head").append('<script src="./edubody/JavaScript/KeyboardController.js"></script>');
+$("head").append('<script src="./edubody/JavaScript/TranslationManager.js"></script>');
+$("head").append('<script src="./edubody/JavaScript/ExerciseManager.js"></script>');
+$("head").append('<script src="./edubody/JavaScript/Communication/InputOutput.js"></script>');
+$("head").append('<script src="./edubody/JavaScript/Communication/UnityAdapter.js"></script>');
+$("head").append('<script src="./edubody/JavaScript/WebManager.js"></script>');
+$("head").append('<script src="./edubody/Build/UnityLoader.js"></script>');
+$("head").append('<script src="./edubody/JavaScript/Integration/Integration.js"></script>');
 
 const UNITY_ID = "unity";
-const UNITY_BUILD = "Build/prova.json";
+const UNITY_BUILD = "edubody/Build/prova.json";
 
 var actionToDo = null;
 var backUnityFunction = null;

@@ -1,0 +1,3 @@
+<FilesMatch "\.(unityweb)$">
+Header set Cache-Control "max-age=31536050"
+</FilesMatch>

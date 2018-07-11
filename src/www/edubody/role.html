@@ -7,13 +7,41 @@ and open the template in the editor.
 <html>
     <body>
         <div class ="contenedor">
+            <div class="item4_1">
               <svg class="color-fill" width="150" height="150">
                   <polygon id="teacher" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
               </svg>
               <div class="centrado">Teacher</div>
+            </div>
+
+            <div class="item4_2">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="student" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Student</div>
+            </div>
             
+            <div class="item4_3">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="video" class="hex" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Demo</div>
+            </div>
+            
+            <div class="item4_4">
+              <svg class="color-fill" width="150" height="150">
+                  <polygon id="back" class="hexBack" points="75,150 140,112.5 140,37.5 75,0 10,37.5 10,112.5"></polygon>
+              </svg>
+              <div class="centrado">Backpage</div>
+            </div>
         </div>
 
+        <div class="pop-up" id="student_pop-up">
+            <h3>Student information</h3>
+            <ul>
+                <li> Try to solve exercises. </li>
+            </ul>
+        </div>
         
         <div class="pop-up" id="teacher_pop-up">
             <h3>Teacher information</h3>
@@ -23,9 +51,21 @@ and open the template in the editor.
             </ul>
         </div>
         
+        <div class="pop-up" id="video_pop-up">
+            <h3>Demo information</h3>
+            <ul>
+                <li> Show exercises demonstrations. </li>
+            </ul>
+        </div>
         
         <script>
-                        
+            
+            $( "#back" ).click(function()
+            {
+                showLoading();
+                LoadPage("./mainPage.html",hideLoading);
+            });
+            
             $( "#teacher" ).click(function()
             {
                 showLoading();
@@ -34,6 +74,13 @@ and open the template in the editor.
                 });
             });
             
+            $( "#student" ).click(function()
+            {
+                showLoading();
+                UnityLoader.tryNextStep(function(){
+                    LoadPage("./studentMenu.html",hideLoading,null);
+                });
+            });
             
             $(function() {
                 var moveLeft = 20;

@@ -25,6 +25,7 @@ import TeacherEditExerciceTest2d from './Pages/teacher_edit_exercice_test2d.js';
 import TeacherEditExerciceMPR from './Pages/teacher_edit_exercice_mpr.js';
 import TeacherEditExerciceLocation3d from './Pages/teacher_edit_exercice_location3d.js';
 import TeacherEditExerciceEdubody from './Pages/teacher_edit_exercice_edubody.js';
+import TeacherEditExerciceLabelling from './Pages/teacher_edit_exercice_labelling.js';
 import AdmParams from './Pages/adm_params.js';
 
 
@@ -70,6 +71,7 @@ export default class Main extends React.Component {
 			<Route path='/teacher_edit_exercice_mpr' render={() => (<div><TeacherEditExerciceMPR appState={this.appState}></TeacherEditExerciceMPR></div>)} />
 			<Route path='/teacher_edit_exercice_location3d' render={() => (<div><TeacherEditExerciceLocation3d appState={this.appState}></TeacherEditExerciceLocation3d></div>)} />
 			<Route path='/teacher_edit_exercice_edubody' render={() => (<div><TeacherEditExerciceEdubody appState={this.appState}></TeacherEditExerciceEdubody></div>)} />
+			<Route path='/teacher_edit_exercice_labelling' render={() => (<div><TeacherEditExerciceLabelling appState={this.appState}></TeacherEditExerciceLabelling></div>)} />
 			<Route path='/adm_params' render={() => (<div><AdmParams appState={this.appState}></AdmParams></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>

@@ -58,7 +58,7 @@ function validateResponseOnlineCorrection(aux)
     ret = "";
     $.ajax({
     type: "POST",
-    url: './PHP/correction.php',
+    url: './edubody/PHP/correction.php',
     async: false,
     timeout: 3000,
     data: {ids: aux},

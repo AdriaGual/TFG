@@ -124,26 +124,8 @@ function LoadPage(str, action, back)
 
 $(document).ready( function() 
 {
-    showLoading();
-    
-    window.addEventListener("popstate", function(e)
-    {
-        if(e.state === null)
-            return;
-        showLoading();
-        
-        
-        LoadPageWithoutHistory(e.state, hideLoading, null);
-        
-        
-        
-        
-    } , false);
-    
-    history.replaceState ("./mainPage.html","./mainPage.html","#"+"./mainPage.html"); // Primer pas del tirar enrera
-    LoadPageWithoutHistory("./mainPage.html", hideLoading);
-    
-    var upURL = "https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_up_48px-32.png";
-    var downURL = "https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-32.png";
+   
 
 });
+
+

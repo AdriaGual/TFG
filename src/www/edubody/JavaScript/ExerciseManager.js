@@ -8,7 +8,7 @@ function restoreUnity(action)
 {
     $.ajax({
     type: "POST",
-    url: './PHP/recovery.php',
+    url: './edubody/PHP/recovery.php',
     async: false,
     timeout: 3000,
     data: {},
@@ -23,7 +23,7 @@ function getExerciseDatabase(id, action)
 {
     $.ajax({
         type: "POST",
-        url: './PHP/load.php',
+        url: './edubody/PHP/load.php',
         timeout: 3000,
         data: {id: id},
         success: function(exInfo)
@@ -38,7 +38,7 @@ function reloadExercise(action)
 {
     $.ajax({
     type: "POST",
-    url: './PHP/reload.php',
+    url: './edubody/PHP/reload.php',
     timeout: 3000,
     success: function(data)
     {
@@ -52,7 +52,7 @@ function setExerciseDatabase(dataInput, action)
 {
     $.ajax({
     type: "POST",
-    url: './PHP/setExercise.php',
+    url: './edubody/PHP/setExercise.php',
     timeout: 3000,
     data: dataInput,
     success: function()

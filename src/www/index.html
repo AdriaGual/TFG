@@ -15,16 +15,21 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 	<link rel="stylesheet" href="./css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="./css/main.css?0.3.3">
+	<link rel="stylesheet" type="text/css" href="./edubody/mainCSS.css">
 	<link rel="stylesheet" type="text/css" href="./css/tree.css?0.3.3">
+	
 	<link rel="stylesheet" type="text/css" href="./css/viewer2d.css">
 	<!-- Head -->
 	<title>WebApp</title>
 	<link rel="icon" type="image/png" href="./img/logos/favicon.png" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="./edubody/JavaScript/GlobalUnityController.js"></script>
+
   </head>
   
   <body>
 	<!-- Importing Libraries -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
 	<script src="https://catamphetamine.github.io/read-excel-file/read-excel-file.min.js"></script>
 	<!-- HTML5 cool libraries -->
 	<script src="./js/shapes.js"></script>
@@ -32,7 +37,17 @@
 	<!-- Canvas viewer dependences: shapes, transform -->
 	<script src="./js/Three.js"></script>
 	<!-- App content will be placed into this div -->
-	<div id="content"></div>
+	<div id="content">
+	</div>
+	
+        <div id="loading" hidden style="display: none;">
+            <img src="./edubody/Resources/loading.gif" alt="Loading..."> 
+        </div>
+            
+        <div id="unityHide" hidden style="display: none;">
+            <div id= "unity" style="width: 960px; height: 600px; margin: auto"> </div>
+        </div>
+        
 	<!-- Main script of our application -->
 	<script src="./app.js?0.3.11"></script>
   </body>
