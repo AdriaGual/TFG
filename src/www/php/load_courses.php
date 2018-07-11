@@ -25,6 +25,7 @@
 				$miscursos[$punter]['parent'] = $row->parentid;
 				$miscursos[$punter]['expanded'] = true;
 				$miscursos[$punter]['iscourse'] = true;
+				$miscursos[$punter]['idsql'] = $row->id;
 				$punter++;//1
 				$id++;//2
 				$idcourse = $row->id;

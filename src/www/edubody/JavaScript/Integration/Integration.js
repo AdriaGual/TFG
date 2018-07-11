@@ -17,7 +17,7 @@ function LoadEditorSelection()
                         changeScene(0,
                         function()
                         {
-                            LoadPageWithoutHistory("./selectionEditor.html",hideLoading);
+                            LoadPageWithoutHistory("./edubody/selectionEditor.html",hideLoading);
                         });
                     });
             });
@@ -75,7 +75,7 @@ function LoadEditorLabelling()
                         changeScene(0,
                         function()
                         {
-                            LoadPageWithoutHistory("./namedEditor.html",hideLoading);
+                            LoadPageWithoutHistory("./edubody/namedEditor.html",hideLoading);
                         });
                     });
         //    });

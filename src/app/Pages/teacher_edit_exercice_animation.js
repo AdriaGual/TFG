@@ -27,33 +27,16 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		};
 	}
 	
-	componentWillMount(){
-		var loadjs = require('loadjs');
-
-		
-	}
-	
 	click  =()=>{
-		console.log("AAAAA");
 		if ($('#unityContent').length) // Si existia el guardem
 		{
-			console.log("ENTRA");
 			$('#unity').appendTo("#unityHide");
 		}
-		console.log("ABANS PUSH");
-		this.props.history.push('/teacher_choose_exercice');
-		console.log("AAAAA2");
-		/**if ($('#unityContent').length) // Si existeix
-        {
-            $('#unity').appendTo("#unityContent");
-        }*/
 		
+		this.props.history.push('/teacher_choose_exercice');	
 	}
 	componentDidMount(){
-	
-       
 		LoadEditorAnimation();
-		
 	}
 	
 	appState = this.props.appState;
@@ -69,11 +52,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		return (
 			<div style={{ height: 1500}}>
 				
-				<Grid container>
-					<Grid item xs={12} >
-						<p></p>				
-					</Grid>
-				</Grid>
+				<br/>
 				<Grid container>
 					<Grid item xs={1}> 
 					</Grid>
@@ -86,7 +65,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 					
 					<Grid item xs={1} > 
 						<Button
-							className="btn btn-1 white left_15"
+							className="btn btn-1 white left_15 down_10"
 							onClick={() => this.click()}
 						>
 							Return 

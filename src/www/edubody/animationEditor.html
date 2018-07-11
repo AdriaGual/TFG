@@ -6,27 +6,28 @@ and open the template in the editor.
 -->
 <html>
     <body>
-        <div id="contentEditor">
-            <div class="formBase">
-                <h3>Test question</h3>
-                <textarea class="textArea" name="uname" id="unameID" requered placeholder="Test question"></textarea>
-                <h3>Answers</h3>
-                <b>a: </b><textarea class="textArea" name="aans" id="aAnswer" requered placeholder="Answer a"></textarea> <br>
-                <b>b: </b><textarea class="textArea" name="bans" id="bAnswer" requered placeholder="Answer b"></textarea> <br>
-                <h3>Correct answer</h3>
-                <input type="radio" name="corrected" value="a" id="a" checked />
+        <div id="contentEditor" class=" down_15">
+			<br><br>
+            <div class="border_grey" style="width:500px;">
+                <h3 style="margin-left:190px;" class="orange size_20">Test question</h3>
+                <textarea class="textArea" style="margin-left:100px;width:300px;height:100px;" name="uname" id="unameID" requered placeholder="Test question"></textarea>
+                <h3 style="margin-left:220px;" class="orange size_20">Answers</h3>
+                <b style="margin-left:150px;">a: </b><textarea class="textArea" name="aans" id="aAnswer" requered placeholder="Answer a"></textarea> <br>
+                <b style="margin-left:150px;">b: </b><textarea class="textArea" name="bans" id="bAnswer" requered placeholder="Answer b"></textarea> <br>
+                <h3  style="margin-left:180px;" class="orange size_20">Correct answer</h3>
+                <input style="margin-left:240px;" type="radio" name="corrected" value="a" id="a" checked />
                 <label class="radioCheck" for="a">a</label>
                 <br>
-                <input type="radio" name="corrected" value="b" id="b" />
+                <input style="margin-left:240px;" type="radio" name="corrected" value="b" id="b" />
                 <label class="radioCheck" for="b">b</label>
                 <br>
-                <button id ="try" type="button" class="myButton" hidden>Preview</button>
-                <div id="helpDiv">To create an exercise it is necessary to enter a test question, the two possible answers and select the correct one.</div>
+                <button id ="try" type="button" class="btn btn-1 down_15" hidden style="border:none;width:90px;height:36px;border-radius: 3px;margin-left:215px;font-weight: 700">PREVIEW</button>
+                <div id="helpDiv" style="margin-left:50px;margin-right:50px">To create an exercise it is necessary to enter a test question, the two possible answers and select the correct one.</div>
             </div>
 
             <div class="unity" id= "unityContent"> </div>
         </div>
-        <button id ="back" type="button" class="myButton">Backpage</button>
+     
         
         <script>
             function itsReady()
@@ -53,11 +54,6 @@ and open the template in the editor.
                 itsReady();
             });
             
-            $( "#back" ).click(function()
-            {
-                showLoading();
-                LoadPage("./editorMenu.html",hideLoading);
-            });
             
             $( "#try" ).click(function()
             {

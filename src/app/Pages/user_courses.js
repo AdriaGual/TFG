@@ -102,7 +102,7 @@ class UserCourses extends React.Component {
 		$.ajax(settings);
 	};
 	
-		clicktheory = (name) => {
+	clicktheory = (name) => {
 		var that = this;
 		var settings = {
 			type: 'POST',

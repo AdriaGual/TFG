@@ -6,44 +6,40 @@ and open the template in the editor.
 -->
 <html>
     <body>
-        
-        
-        
         <div id="contentEditor">
-            <div class="formBase">
-
-                <h3>Descriptor</h3>
-                <textarea class="textArea" name="uname" id="unameID" requered placeholder="Descriptor"></textarea>
-                <h3>Correction mode</h3>
-                <input type="radio" name="correction" value="realTime" id="realTime" checked />
-                <label class="radioCheck" for="realTime">Correction on real time</label>
+            <div class="border_grey" style="width:500px;">
+				<br><br>
+                <h3 style="margin-left:200px;" class="orange size_20">Descriptor</h3>
+                <textarea class="textArea" style="margin-left:100px;width:300px;height:100px;" name="uname" id="unameID" requered placeholder="Descriptor"></textarea>
+                <h3 style="margin-left:180px;" class="orange size_20">Correction mode</h3>
+                <input type="radio" name="correction" value="realTime" id="realTime" checked style="margin-left:70px;"/>
+                <label class="radioCheck" for="realTime" >Correction on real time</label>
                 <input type="radio" name="correction" value="atTheEnd" id="atTheEnd" />
                 <label class="radioCheck" for="atTheEnd">Correction at the end</label>
-                <h3>Random elements</h3>
-                <div class="number-wrap">
+                <h3 style="margin-left:175px;" class="orange size_20">Random elements</h3>
+                <div class="number-wrap" style="margin-left:150px;">
                     <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_up_48px-32.png" class="arrow up">
                     <input type="number" name="random" min="0" max="330" value='0'>
                     <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-32.png" class="arrow down">
                 </div>
                 
-                <h3>Allowed errors</h3>
-                <div class="number-wrap">
+                <h3 style="margin-left:185px;" class="orange size_20">Allowed errors</h3>
+                <div class="number-wrap" style="margin-left:150px;"> 
                     <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_up_48px-32.png" class="arrow up">
                     <input type="number" name="errors" min="0" max="20" value='0'>
                     <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-32.png" class="arrow down">
                 </div><br>
-                <input type="checkbox" name="help" id="help" />
-                <label class="radioCheck" for="help">Show help</label>
+                <input type="checkbox" name="help" id="help" style="margin-left:150px;"/>
+                <label class="radioCheck" for="help" >Show help</label>
                 
                 <input type="checkbox" name="letters" id="letters" />
-                <label class="radioCheck" for="letters">Remove letters</label><br>
-                <button id ="try" type="button" class="myButton" hidden>Preview</button>
-                <div id="helpDiv">To create an exercise it is necessary to select the model components using the graphic editor.</div>
+                <label class="radioCheck" for="letters">Remove letters</label><br><br>
+                <button id ="try" type="button" class="btn btn-1" hidden style="border:none;width:90px;height:36px;border-radius: 3px;margin-left:215px;font-weight: 700">PREVIEW</button>
+                <div id="helpDiv" style="margin-left:50px;margin-right:50px">To create an exercise it is necessary to select the model components using the graphic editor.</div>
             </div>
             
             <div class="unity" id= "unityContent"> </div>
         </div>
-        <button id ="back" type="button" class="myButton">Backpage</button>
         <script>                         
             $('#unameID').keyup(function (){
                 if ($('#unameID').val() === "")
@@ -58,11 +54,7 @@ and open the template in the editor.
                 }
             });
 
-            $( "#back" ).click(function()
-            {
-                showLoading();
-                LoadPage("./editorMenu.html",hideLoading);
-            });
+          
 
             $( "#try" ).click(function()
             {
@@ -111,7 +103,7 @@ and open the template in the editor.
                                 updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
                                 function() // El flux de codi continua per aqui despres de updateExercise.
                                 {
-                                    LoadPageWithoutHistory("./exerciseSelection.html",
+                                    LoadPageWithoutHistory("./edubody/exerciseSelection.html",
                                     function()
                                     {
                                         $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
@@ -133,7 +125,7 @@ and open the template in the editor.
                                                 changeScene(0,
                                                 function()
                                                 {
-                                                    LoadPageWithoutHistory("./selectionEditor.html",
+                                                    LoadPageWithoutHistory("./edubody/selectionEditor.html",
                                                     function()
                                                     {
                                                         $("#unameID").html(dataAnt.statement);

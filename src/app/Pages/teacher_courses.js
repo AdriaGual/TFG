@@ -64,6 +64,12 @@ class TeacherCourses extends React.Component {
           ))}
 		
 	}
+	
+	clickenroll = (idsql) => {
+		this.appState({id_course: idsql});
+		this.props.history.push('/teacher_enroll');
+		
+	};
 
 	
 	/**
@@ -115,6 +121,22 @@ class TeacherCourses extends React.Component {
 						  treeData={this.state.treeData}
 						  onChange={treeData => 	this.treeChange(treeData,flatData)}
 						  searchQuery={searchString}
+						  generateNodeProps={({ node, path }) => {
+									return {
+										style: {
+											color: node.iscourse ? "black" : node.istopic ? "blue" : node.istheory ? "green":"red",
+										},
+
+									buttons: [
+										node.iscourse ? <Button
+											className="btn btn-4 white right_15"
+											onClick={() => 	this.clickenroll(node.idsql)}
+										>
+											<Icon className="fa fa-graduation-cap" style={{ fontSize: 15 }}></Icon>
+										</Button>:null,
+									],
+								};
+							}}
 						/>
 						</div>
 					</Grid>

@@ -27,21 +27,18 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		};
 	}
 	
-	componentWillMount(){
-		var loadjs = require('loadjs');
-		loadjs('js/edubody/JavaScript/GlobalUnityController.js',function (){
-		});
+	click  =()=>{
+		if ($('#unityContent').length) // Si existia el guardem
+		{
+			$('#unity').appendTo("#unityHide");
+		}
 		
+		this.props.history.push('/teacher_choose_exercice');	
+	}
+	componentDidMount(){
+		LoadEditorLabelling();
 	}
 	
-	click  =()=>{
-
-    
-		//SaveUnity();
-		this.props.history.push('/teacher_choose_exercice');
-		//ReloadUnity();
-		
-	}
 	
 	appState = this.props.appState;
 
@@ -56,17 +53,15 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		return (
 			<div style={{ height: 1500}}>
 				
-				<Grid container>
-					<Grid item xs={12} >
-						<p></p>				
-					</Grid>
-				</Grid>
+				<br/>
 				<Grid container>
 					<Grid item xs={1}> 
 					</Grid>
 					
 					<Grid item xs={10} > 
-						<iframe className="edubody" src="edubody/LabellingEditorcall.html"></iframe>
+						<div id ="contentID">
+						</div>
+						
 					</Grid>
 					
 					<Grid item xs={1} > 

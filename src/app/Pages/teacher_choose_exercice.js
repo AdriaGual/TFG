@@ -27,26 +27,6 @@ class TeacherChooseExercice extends React.Component {
 		searchFocusIndex: 0,
 		searchFoundCount: null,
 		hasTextSolution:false,
-		treeData: [
-				{
-					name: "Topic 1",
-					expanded:true, 
-					children: [{ name: 'Topic 1 1', 
-					children: [{ name: 'Topic 1 1 1' },{ name: 'Topic 1 1 2' }] }] 
-			
-				},
-				{ name: 'Topic 2',
-					expanded:true, 
-					children: [{ name: 'Topic 2 1', 
-					children: [{ name: 'Topic 2 1 1' },{ name: 'Topic 2 1 2' }] },
-					{ name: 'Topic 2 2', 
-					children: [{ name:'Topic 2 2 1' },{ name: 'Topic 2 2 2' }] },
-					{ name: 'Topic 2 3', 
-					children: [{ name: 'Topic 2 3 1'},{ name: 'Topic 2 3 2' }] }
-					]
-				}
-			],
-				
 		};
 	}
 	click = (name) => {
@@ -66,16 +46,19 @@ class TeacherChooseExercice extends React.Component {
 			this.appState({exercice_type: "MPR"});
 			this.props.history.push('/teacher_edit_exercice_mpr');
 		}
-		if(name == "Edubody"){
-			this.appState({exercice_type: "Edubody"});
-			this.props.history.push('/teacher_edit_exercice_edubody');
+		if(name == "Animation"){
+			this.appState({exercice_type: "Animation"});
+			this.props.history.push('/teacher_edit_exercice_animation');
 		}
 		if(name == "Labelling"){
 			this.appState({exercice_type: "Labelling"});
 			this.props.history.push('/teacher_edit_exercice_labelling');
 		}
+		if(name == "Selection"){
+			this.appState({exercice_type: "Selection"});
+			this.props.history.push('/teacher_edit_exercice_selection');
+		}
 	}
-	
 	
 	appState = this.props.appState;
 
@@ -95,78 +78,89 @@ class TeacherChooseExercice extends React.Component {
         } = this.state;
 		return (
 			<div style={{ height: 1500}}>
+				<br/>
 				<div className="left_30">	
-					<p>Choose Exercice Type:</p>
+					<p className="orange size_30">Choose Exercice Type</p>
 				</div>
 				<hr/>
+
 				<Grid container>
-					<Grid item xs={12} >
-						<p></p>				
+					<Grid container>
+						<Grid item xs={1} > 
+						</Grid>
+						<Grid item xs={2} > 
+							<br/><br/>
+							<Button
+								className="btn btn-1 white"
+								onClick={() => 	this.click("2D")}
+								style={{width:100}}
+							>
+								2D Image
+							</Button>
+							<Button
+								className="btn btn-1 white left_15"
+								onClick={() => 	this.click("Test")}
+								style={{width:100}}
+							>
+								Test 2D
+							</Button>
+							
+							<br/><br/>
+							
+							<Button
+								className="btn btn-1 white"
+								onClick={() => 	this.click("MPR")}
+								style={{width:100}}
+							>
+							MPR
+							</Button>
+							<Button
+								className="btn btn-1 white"
+								onClick={() => 	this.click("3D")}
+								style={{width:100,marginLeft:15}}
+							>
+							3D Image
+							</Button>
+							<br/><br/>
+							<Button
+								className="btn btn-1 white"
+								onClick={() => 	this.click("Animation")}
+								style={{width:100}}
+							>
+								Animation
+							</Button>
+							<Button
+								className="btn btn-1 white"
+								style={{width:100,marginLeft:15}}
+								onClick={() => 	this.click("Labelling")}
+							>
+								Labelling
+							</Button>
+							
+							<br/><br/>
+							<Button
+								className="btn btn-1 white"
+								onClick={() => 	this.click("Selection")}
+								style={{width:100}}
+							>
+								Selection
+							</Button>
+						</Grid>
+						
+
+
 					</Grid>
-				</Grid>
-				<Grid container>
-					<Grid item xs={1} > 
-					</Grid>
-					<Grid item xs={2} > 
-						<Button
-							className="btn btn-1 white"
-							onClick={() => 	this.click("2D")}
-						>
-							2D Image
-						</Button>
-					</Grid>
-					<Grid item xs={1}> 
-					</Grid>
-					<Grid item xs={2}> 
-						<Button
-							className="btn btn-1 white"
-							onClick={() => 	this.click("Test")}
-						>
-							Test 2D
-						</Button>
-					</Grid>
-					<Grid item xs={1}> 
-					</Grid>
-					<Grid item xs={2}> 
-						<Button
-							className="btn btn-1 white"
-							onClick={() => 	this.click("MPR")}
-						>
-						MPR
-						</Button>
-					</Grid>
-					<Grid item xs={1}> 
-					</Grid>
-					<Grid item xs={2}> 
-						<Button
-							className="btn btn-1 white"
-							onClick={() => 	this.click("3D")}
-						>
-						3D Image
-						</Button>
-					</Grid>
-					
 				</Grid>
 				<Grid container className="down_15">
 					<Grid item xs={1} > 
 					</Grid>
 					<Grid item xs={2} > 
-						<Button
-							className="btn btn-1 white"
-							onClick={() => 	this.click("Edubody")}
-						>
-							Edubody
-						</Button>
+						
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
 					<Grid item xs={2} > 
-						<Button
-							className="btn btn-1 white"
-							onClick={() => 	this.click("Labelling")}
-						>
-							Labelling
-						</Button>
+						
 					</Grid>
 
 				</Grid>

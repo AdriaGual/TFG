@@ -274,63 +274,6 @@ div.pop-up {
     font-size: 15px;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
-}
-label[class="radioCheck"] {
-  position: relative;
-  display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  padding-left: 30px;
-  padding-right: 10px;
-  line-height: 36px;
-  cursor: pointer;
-}
-label[class="radioCheck"]::before {
-  content: " ";
-  position: absolute;
-  top: 6px;
-  left: 0;
-  display: block;
-  width: 24px;
-  height: 24px;
-  border: 2px solid #383F9D;
-  border-radius: 4px;
-  z-index: -1;
-}
-input[type="radio"] + label::before {
-  border-radius: 18px;
-}
-/* Checked */
-input[type="checkbox"]:checked + label,
-input[type="radio"]:checked + label {
-  padding-left: 10px;
-  color: #fff;
-}
-input[type="checkbox"]:checked + label::before,
-input[type="radio"]:checked + label::before {
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: #383F9D;
-}
-/* Transition */
-label[class="radioCheck"],
-label[class="radioCheck"]::before {
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
-}
-
-.textArea{
-    width: 100%;
-    height: 50px;
-}
-
 .number-wrap {
   position: relative;
   width: 200px;
@@ -358,7 +301,7 @@ label[class="radioCheck"]::before {
 
 .number-wrap input[type = "number"] {
   padding: 0.6rem;
-  border-radius: 25px;
+  border-radius: 3px;
   border: solid 1px #ddd;
   margin: 0;
   text-align: center;

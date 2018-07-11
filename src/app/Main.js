@@ -24,8 +24,10 @@ import TeacherEditExerciceLocation2d from './Pages/teacher_edit_exercice_locatio
 import TeacherEditExerciceTest2d from './Pages/teacher_edit_exercice_test2d.js';
 import TeacherEditExerciceMPR from './Pages/teacher_edit_exercice_mpr.js';
 import TeacherEditExerciceLocation3d from './Pages/teacher_edit_exercice_location3d.js';
-import TeacherEditExerciceEdubody from './Pages/teacher_edit_exercice_edubody.js';
+import TeacherEditExerciceAnimation from './Pages/teacher_edit_exercice_animation.js';
 import TeacherEditExerciceLabelling from './Pages/teacher_edit_exercice_labelling.js';
+import TeacherEditExerciceSelection from './Pages/teacher_edit_exercice_selection.js';
+import TeacherEnroll from './Pages/teacher_enroll.js';
 import AdmParams from './Pages/adm_params.js';
 
 
@@ -70,8 +72,10 @@ export default class Main extends React.Component {
 			<Route path='/teacher_edit_exercice_test2d' render={() => (<div><TeacherEditExerciceTest2d appState={this.appState}></TeacherEditExerciceTest2d></div>)} />
 			<Route path='/teacher_edit_exercice_mpr' render={() => (<div><TeacherEditExerciceMPR appState={this.appState}></TeacherEditExerciceMPR></div>)} />
 			<Route path='/teacher_edit_exercice_location3d' render={() => (<div><TeacherEditExerciceLocation3d appState={this.appState}></TeacherEditExerciceLocation3d></div>)} />
-			<Route path='/teacher_edit_exercice_edubody' render={() => (<div><TeacherEditExerciceEdubody appState={this.appState}></TeacherEditExerciceEdubody></div>)} />
+			<Route path='/teacher_edit_exercice_animation' render={() => (<div><TeacherEditExerciceAnimation appState={this.appState}></TeacherEditExerciceAnimation></div>)} />
 			<Route path='/teacher_edit_exercice_labelling' render={() => (<div><TeacherEditExerciceLabelling appState={this.appState}></TeacherEditExerciceLabelling></div>)} />
+			<Route path='/teacher_edit_exercice_selection' render={() => (<div><TeacherEditExerciceSelection appState={this.appState}></TeacherEditExerciceSelection></div>)} />
+			<Route path='/teacher_enroll' render={() => (<div><TeacherEnroll appState={this.appState}></TeacherEnroll></div>)} />
 			<Route path='/adm_params' render={() => (<div><AdmParams appState={this.appState}></AdmParams></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
