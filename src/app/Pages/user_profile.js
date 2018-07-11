@@ -54,15 +54,35 @@ class UserCourses extends React.Component {
 		$.ajax(settings);
 	}
 	
-	click = () => {
+	clickusername = () => {
 		var that = this;
 		var settings = {
 			type: 'POST',
 			data: { 
-				'username': $("#username").val(), 
-				'password': $("#password").val(), 
+				'username': $("#newusername").val(), 
+				'repeatedusername': $("#repeatnewusername").val(), 
 			},
-			url: 'php/login.php',
+			url: 'php/changeusername.php',
+			success: function(response) {
+				if (response == "OK"){
+					that.appState({username: $("#newusername").val()});
+				}
+				
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	clickpassword = () => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'oldpass': $("#oldpass").val(), 
+				'newpass': $("#newpass").val(), 
+				'repeatnewpass': $("#repeatnewpass").val(), 
+			},
+			url: 'php/changepassword.php',
 			success: function(response) {
 				if (response == "0"){
 					that.props.history.push('/user_courses');
@@ -87,6 +107,7 @@ class UserCourses extends React.Component {
 		$.ajax(settings);
 	};
 	
+	
 	/**
 	 * Renders the register page.
 	 */
@@ -99,17 +120,52 @@ class UserCourses extends React.Component {
 
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>Profile</p></div>
 				<hr/>
+				<br/>
 				<Grid container>
+					<Grid item xs={1}>
+					</Grid>
+					<Grid item xs={4}>
+						<Card style={{width:300,height:300}}>
+						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Username</p>
+						<hr/>
+						<br/>
+						<TextField
+							id="newusername"
+							style={{width:200,marginLeft:50}}
+							label="Enter your New Username"
+							onChange={(event, newValue) =>
+								this.setState({
+									newusername: newValue
+								})
+							}
+						/>
+						<br/>
+						<TextField
+							id="repeatnewusername"
+							style={{width:200,marginLeft:50}}
+							label="Repeat your New Username"
+							onChange={(event, newValue) =>
+								this.setState({
+									repeatnewusername: newValue
+								})
+							}
+						/>
+						<br/>
+						<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Username</Button>
+						</Card>
+					</Grid>
 					
 					<Grid item xs={4}>
-						<a>Change Password</a>
+						<Card style={{width:300,height:300}}>
+						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Password</p>
 						<hr/>
 						<TextField
 							id="oldpass"
+							style={{width:200,marginLeft:50}}
 							label="Enter your Old Password"
-							className="text_field"
 							onChange={(event, newValue) =>
 								this.setState({
 									oldpass: newValue
@@ -119,8 +175,8 @@ class UserCourses extends React.Component {
 						<br/>
 						<TextField
 							id="newpass"
+							style={{width:200,marginLeft:50}}
 							label="Enter your New Password"
-							className="text_field"
 							onChange={(event, newValue) =>
 								this.setState({
 									newpass: newValue
@@ -130,17 +186,17 @@ class UserCourses extends React.Component {
 						<br/>
 						<TextField
 							id="repeatnewpass"
+							style={{width:200,marginLeft:50}}
 							label="Repeat your New Password"
-							className="text_field"
 							onChange={(event, newValue) =>
 								this.setState({
-									repenewpass: newValue
+									repeatnewpass: newValue
 								})
 							}
 						/>
 						<br/>
-						<Button onClick={() => this.click()} className="btn btn-1 white"> Change Password</Button>
-						
+						<Button onClick={() => this.clickpassword()} style={{marginLeft:65,marginTop:20}} className="btn btn-1 white"> Change Password</Button>
+						</Card>
 					</Grid>
 				</Grid>
 				

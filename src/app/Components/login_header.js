@@ -58,7 +58,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 				}
 				else if (response == "1"){
 					that.props.history.push('/teacher_courses');
-					that.appState({logged: true,username:$("#username").val()});
+					that.appState({logged: true,is_teacher:true,username:$("#username").val()});
 				}
 				else if (response == "2"){
 					that.props.history.push('/adm_params');

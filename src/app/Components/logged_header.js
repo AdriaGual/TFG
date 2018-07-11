@@ -52,6 +52,8 @@ export default class LoggedHeader extends React.Component {
 	
 	handleClose = () => {
 		this.setState({ anchorEl: null });
+		this.appState({is_teacher: false});
+		this.appState({is_student: false});
 		this.appState({logged: false});
 		//PHP destroy
 		$.ajax({
@@ -107,7 +109,8 @@ export default class LoggedHeader extends React.Component {
 									  onClose={this.handleCloseMenu}
 									>
 										<Link to="/user_profile"><MenuItem onClick={this.handleAccount}>Profile</MenuItem></Link>
-										<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>
+										{this.appState("is_student")?<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>:null}
+										{this.appState("is_teacher")?<Link to="/teacher_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>:null}
 										<Link to="/"><MenuItem onClick={this.handleClose}>Logout</MenuItem></Link>
 									</Menu>
 								</Grid>
