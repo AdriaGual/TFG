@@ -73,6 +73,24 @@ class UserCourses extends React.Component {
 		$.ajax(settings);
 	};
 	
+	clickemail = () => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'email': $("#newemail").val(), 
+				'repeatemail': $("#repeatnewemail").val(), 
+			},
+			url: 'php/changeemail.php',
+			success: function(response) {
+				if (response == "OK"){
+				}
+				
+			}
+		};
+		$.ajax(settings);
+	};
+	
 	clickpassword = () => {
 		var that = this;
 		var settings = {
@@ -127,7 +145,7 @@ class UserCourses extends React.Component {
 				<Grid container>
 					<Grid item xs={1}>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={3}>
 						<Card style={{width:300,height:300}}>
 						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Username</p>
 						<hr/>
@@ -158,12 +176,13 @@ class UserCourses extends React.Component {
 						</Card>
 					</Grid>
 					
-					<Grid item xs={4}>
+					<Grid item xs={3}>
 						<Card style={{width:300,height:300}}>
 						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Password</p>
 						<hr/>
 						<TextField
 							id="oldpass"
+							type="password"
 							style={{width:200,marginLeft:50}}
 							label="Enter your Old Password"
 							onChange={(event, newValue) =>
@@ -175,6 +194,7 @@ class UserCourses extends React.Component {
 						<br/>
 						<TextField
 							id="newpass"
+							type="password"
 							style={{width:200,marginLeft:50}}
 							label="Enter your New Password"
 							onChange={(event, newValue) =>
@@ -186,6 +206,7 @@ class UserCourses extends React.Component {
 						<br/>
 						<TextField
 							id="repeatnewpass"
+							type="password"
 							style={{width:200,marginLeft:50}}
 							label="Repeat your New Password"
 							onChange={(event, newValue) =>
@@ -196,6 +217,36 @@ class UserCourses extends React.Component {
 						/>
 						<br/>
 						<Button onClick={() => this.clickpassword()} style={{marginLeft:65,marginTop:20}} className="btn btn-1 white"> Change Password</Button>
+						</Card>
+					</Grid>
+					<Grid item xs={3}>
+						<Card style={{width:300,height:300}}>
+						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change E-mail</p>
+						<hr/>
+						<br/>
+						<TextField
+							id="newemail"
+							style={{width:200,marginLeft:50}}
+							label="Enter your New E-mail"
+							onChange={(event, newValue) =>
+								this.setState({
+									newemail: newValue
+								})
+							}
+						/>
+						<br/>
+						<TextField
+							id="repeatnewemail"
+							style={{width:200,marginLeft:50}}
+							label="Repeat your New E-mail"
+							onChange={(event, newValue) =>
+								this.setState({
+									repeatnewemail: newValue
+								})
+							}
+						/>
+						<br/>
+						<Button onClick={() => this.clickemail()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change E-mail</Button>
 						</Card>
 					</Grid>
 				</Grid>
