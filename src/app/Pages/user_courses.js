@@ -212,13 +212,13 @@ class UserCourses extends React.Component {
 										},
 
 									buttons: [
-										node.hastheory ? <Button
+										node.hastheory ? node.iscourse ? null:  <Button
 											className="btn btn-4 white right_15"
 											onClick={() => 	this.clicktheory(node.name)}
 										>
 											<Icon className="fa fa-book" style={{ fontSize: 15 }}></Icon>
 										</Button>:null,
-										node.hasexercice ? <Button
+										node.hasexercice ?node.iscourse ? null:  <Button
 											className="btn btn-5 white right_15"
 											onClick={() => 	this.clickexercice(node.name)}
 										>

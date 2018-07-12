@@ -10,6 +10,9 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import SortableTree, {
   getFlatDataFromTree,
   getTreeFromFlatData,
@@ -29,6 +32,8 @@ class UserCourses extends React.Component {
 			searchString: '',
 			searchFocusIndex: 0,
 			searchFoundCount: null,
+			showsnack: false,
+			snacktext: "",
 		};
 	}
 	appState = this.props.appState;
@@ -44,6 +49,7 @@ class UserCourses extends React.Component {
 			url: 'php/enroll.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
+				$("#formulari").empty();
 				for (var a=0; a<jsonData.length; a++){
 					$("#formulari").append("<label><input type='checkbox' name='student[]' value='"+jsonData[a].id+"' />"+jsonData[a].username+" ("+jsonData[a].email+")"+"</label><br/>");
 				}
@@ -75,6 +81,7 @@ class UserCourses extends React.Component {
 					url: 'php/create_users_from_session.php',
 					success: function(response) {
 						if (response=="OK"){
+							that.setState({ showsnack: true ,snacktext: "Enrolled users!"});
 							that.props.history.push("/teacher_courses");
 						}
 					}
@@ -87,7 +94,6 @@ class UserCourses extends React.Component {
 	};
 	
 	clickenroll = () => {
-		
 		var formData = $('#formulari').serialize();
 
 		var that = this;
@@ -96,7 +102,26 @@ class UserCourses extends React.Component {
 			data: formData,
 			url: 'php/enroll_add_users.php',
 			success: function(response) {
-				
+				if(response=="OK"){
+					var then = that;
+
+					var settings = {
+						type: 'POST',
+						data: { 
+							'idcurs': then.appState("id_course")
+						},
+						url: 'php/enroll.php',
+						success: function(response) {
+							var jsonData = JSON.parse(response);
+							$("#formulari").empty();
+							for (var a=0; a<jsonData.length; a++){
+								$("#formulari").append("<label><input type='checkbox' name='student[]' value='"+jsonData[a].id+"' />"+jsonData[a].username+" ("+jsonData[a].email+")"+"</label><br/>");
+							}
+						}
+					};
+					$.ajax(settings);
+					that.setState({ showsnack: true ,snacktext: "Enrolled users!"});
+				}
 			}
 		};
 		$.ajax(settings);
@@ -127,7 +152,7 @@ class UserCourses extends React.Component {
 							<p className="orange size_20" style={{marginLeft:130}}>Enroll Students</p>
 							<hr/>
 							<br/>
-							<button onClick={() => this.clicktoggle()} className="btn btn-1 check_selall  white" style={{border:"none",marginLeft:50}}><Icon className="fa fa-address-book" style={{ fontSize: 15,marginLeft:-1,marginTop:2 }}></Icon></button>Select all<br/>
+							<button onClick={() => this.clicktoggle()} className="btn btn-1 check_selall  white" style={{border:"none",marginLeft:24}}><Icon className="fa fa-address-book" style={{ fontSize: 15,marginLeft:-1,marginTop:2 }}></Icon></button>Select all<br/>
 							<form id="formulari"></form>
 							<br/>
 							<br/>
@@ -154,7 +179,26 @@ class UserCourses extends React.Component {
 						</Card>
 					</Grid>
 				</Grid>
-				
+				<Snackbar
+				  anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				  }}
+				  open={this.state.showsnack}
+				  autoHideDuration={4000}
+				  onClose={this.handleClose}
+				  message={<span id="message-id">{this.state.snacktext}</span>}
+				  action={[
+					<IconButton
+					  key="close"
+					  aria-label="Close"
+					  color="inherit"
+					  onClick={this.handleClose}
+					>
+					<CloseIcon />
+					</IconButton>,
+				  ]}
+				/>
 			</div>
 		
 		);

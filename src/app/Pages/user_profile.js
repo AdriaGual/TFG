@@ -10,6 +10,9 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import SortableTree, {
   getFlatDataFromTree,
   getTreeFromFlatData,
@@ -29,6 +32,8 @@ class UserCourses extends React.Component {
 			searchString: '',
 			searchFocusIndex: 0,
 			searchFoundCount: null,
+			showsnack: false,
+			snacktext: "",
 		};
 	}
 	appState = this.props.appState;
@@ -65,7 +70,46 @@ class UserCourses extends React.Component {
 			url: 'php/changeusername.php',
 			success: function(response) {
 				if (response == "OK"){
+					that.setState({ showsnack: true ,snacktext: "Username updated correctly!"});
 					that.appState({username: $("#newusername").val()});
+				}
+				else if (response =="empty_inputfields"){
+					that.setState({ showsnack: true ,snacktext: "Empty input fields in Username!"});
+				}
+				else if (response =="fields_not_equal"){
+					that.setState({ showsnack: true ,snacktext: "Fields not equal in Username!"});
+				}
+				
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		  return;
+		}
+		this.setState({ showsnack: false });
+	};
+	
+	clickphonenumber = () => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'newphonenumber': $("#newphonenumber").val(), 
+				'repeatnewphonenumber': $("#repeatnewphonenumber").val(), 
+			},
+			url: 'php/changephonenumber.php',
+			success: function(response) {
+				if (response == "OK"){
+					that.setState({ showsnack: true ,snacktext: "Phone number updated correctly!"});
+				}
+				else if (response =="empty_inputfields"){
+					that.setState({ showsnack: true ,snacktext: "Empty input fields in Phone Number!"});
+				}
+				else if (response =="fields_not_equal"){
+					that.setState({ showsnack: true ,snacktext: "Fields not equal in Phone Number!"});
 				}
 				
 			}
@@ -84,6 +128,13 @@ class UserCourses extends React.Component {
 			url: 'php/changeemail.php',
 			success: function(response) {
 				if (response == "OK"){
+					that.setState({ showsnack: true ,snacktext: "E-mail updated correctly!"});
+				}
+				else if (response =="empty_inputfields"){
+					that.setState({ showsnack: true ,snacktext: "Empty input fields in E-mail!"});
+				}
+				else if (response =="fields_not_equal"){
+					that.setState({ showsnack: true ,snacktext: "Fields not equal in E-mail!"});
 				}
 				
 			}
@@ -102,23 +153,17 @@ class UserCourses extends React.Component {
 			},
 			url: 'php/changepassword.php',
 			success: function(response) {
-				if (response == "0"){
-					that.props.history.push('/user_courses');
-					that.appState({logged: true,is_student:true,username:$("#username").val()});
+				if (response == "OK"){
+					that.setState({ showsnack: true ,snacktext: "Password updated correctly!"});
 				}
-				else if (response == "1"){
-					that.props.history.push('/teacher_courses');
-					that.appState({logged: true,username:$("#username").val()});
+				else if (response =="empty_inputfields"){
+					that.setState({ showsnack: true ,snacktext: "Empty input fields in Password!"});
 				}
-				else if (response == "2"){
-					that.props.history.push('/adm_params');
-					that.appState({logged: true,username:$("#username").val()});
+				else if (response =="fields_not_equal"){
+					that.setState({ showsnack: true ,snacktext: "Fields not equal in Password!"});
 				}
-				else if(response == "bad_login"){
-					that.setState({ showsnack: true ,snacktext: "Username or Password invalid!"});
-				}
-				else if(response == "empty_inputfields"){
-					that.setState({ showsnack: true ,snacktext: "Empty input fields in login!"});
+				else if (response="old_password_not_correct"){
+					that.setState({ showsnack: true ,snacktext: "Old Password not correct!"});
 				}
 			}
 		};
@@ -175,32 +220,32 @@ class UserCourses extends React.Component {
 							<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Username</Button>
 						</Card>
 						<Card style={{width:300,height:300,marginTop:70}}>
-							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Username</p>
+							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Phone Number</p>
 							<hr/>
 							<br/>
 							<TextField
-								id="newusername"
-								style={{width:200,marginLeft:50}}
-								label="Enter your New Username"
+								id="newphonenumber"
+								style={{width:220,marginLeft:40}}
+								label="Enter your New Phone Number"
 								onChange={(event, newValue) =>
 									this.setState({
-										newusername: newValue
+										newphonenumber: newValue
 									})
 								}
 							/>
 							<br/>
 							<TextField
-								id="repeatnewusername"
-								style={{width:200,marginLeft:50}}
-								label="Repeat your New Username"
+								id="repeatnewphonenumber"
+								style={{width:240,marginLeft:30}}
+								label="Repeat your New Phone Number"
 								onChange={(event, newValue) =>
 									this.setState({
-										repeatnewusername: newValue
+										repeatnewphonenumber: newValue
 									})
 								}
 							/>
 							<br/>
-							<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Username</Button>
+							<Button onClick={() => this.clickphonenumber()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Phone Number</Button>
 						</Card>
 					</Grid>
 					
@@ -278,7 +323,26 @@ class UserCourses extends React.Component {
 						</Card>
 					</Grid>
 				</Grid>
-				
+				<Snackbar
+				  anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				  }}
+				  open={this.state.showsnack}
+				  autoHideDuration={4000}
+				  onClose={this.handleClose}
+				  message={<span id="message-id">{this.state.snacktext}</span>}
+				  action={[
+					<IconButton
+					  key="close"
+					  aria-label="Close"
+					  color="inherit"
+					  onClick={this.handleClose}
+					>
+					<CloseIcon />
+					</IconButton>,
+				  ]}
+				/>
 			</div>
 		
 		);

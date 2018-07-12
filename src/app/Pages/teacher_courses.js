@@ -51,7 +51,7 @@ class TeacherCourses extends React.Component {
 					getParentKey: node => node.parent, // resolve a node's parent's key
 					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
 				})});
-				console.log(jsonData);
+
 			}
 		};
 		$.ajax(settings);

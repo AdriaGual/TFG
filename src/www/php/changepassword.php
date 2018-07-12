@@ -35,10 +35,8 @@
 				}
 			}
 			else{
-				var_dump("parameters_not_equal");
+				echo"fields_not_equal";
 			}
-			return;
-			
 		}
 	
 		$conn = null;

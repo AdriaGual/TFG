@@ -73,8 +73,7 @@ class UserCourses extends React.Component {
 			   
 			  }, (error) => {
 			  	console.error(error)
-		});
-				
+		});		
 	}	
 	
 	/**

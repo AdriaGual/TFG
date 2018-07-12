@@ -35,57 +35,110 @@ class UserCourses extends React.Component {
 
 	componentDidMount() {
 		var that = this;
+		//1. Load Topics and Problems
 		var settings = {
 			type: 'POST',
 			data: { 
 				'idcurs': that.appState("id_course")
 			},
-			url: 'php/enroll.php',
+			url: 'php/load_assign_exercises.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
+				
+				var name=jsonData[0].name;
+				$("#formulariexercises").append("<p>"+jsonData[0].name+"</p>");
 				for (var a=0; a<jsonData.length; a++){
-					$("#formulari").append("<label><input type='checkbox' name='student[]' value='"+jsonData[a].id+"' />"+jsonData[a].username+" ("+jsonData[a].email+")"+"</label><br/>");
+					if (name != jsonData[a].name){
+						$("#formulariexercises").append("<br/>");
+						$("#formulariexercises").append("<p>"+jsonData[a].name+"</p>");
+						name=jsonData[a].name;
+					}
+					
+					$("#formulariexercises").append("<p class='size15'><input type='checkbox' id='"+a+"' name='exercise[]' value='"+jsonData[a].id+"' />"+jsonData[a].statement+"<select style='width:100px;margin-left:83px'><option></option><option value='no_penalty'>No Penalty</option><option value='partial_penalty'>Partial Penalty</option><option value='full_penalty'>Full Penalty</option></select><input style='margin-left:50px;width:50px' type='number'/><input style='margin-left:46px;width:50px' type='number'/><input style='margin-left:46px;width:50px' type='number'/><input style='margin-left:45px;width:140px' type='date'/><input style='margin-left:5px;width:140px' type='date'/></p>");
 				}
+				
+				//2. Load students and add topics
+				var settings2 = {
+					type: 'POST',
+					data: { 
+						'idcurs': that.appState("id_course")
+					},
+					url: 'php/load_assign_exercises_students.php',
+					success: function(response) {
+						var jsonData2 = JSON.parse(response);
+						
+						for (var b=0; b<jsonData2.length; b++){
+							$("#formulari").append("<hr/><label><input type='checkbox' class='"+b+"' name='students[]' value='"+jsonData2[b].id+"' />"+jsonData2[b].name+" "+jsonData2[b].surname+"</label><br/><br/>");
+							//Now, its showtime!
+							
+							name=jsonData[0].name;
+							$("#formulari").append("<p>"+jsonData[0].name+"</p>");
+							for (var a=0; a<jsonData.length; a++){
+								if (name != jsonData[a].name){
+									$("#formulari").append("<br/>");
+									$("#formulari").append("<p>"+jsonData[a].name+"</p>");
+									name=jsonData[a].name;
+								}
+					
+								$("#formulari").append("<p class='size15'><input type='checkbox' class='"+b+"' id='"+a+"' name='info[]' value='"+jsonData2[b].id+"#"+jsonData[a].id+"' />"+jsonData[a].statement+"</p>");
+							}
+							$("#formulari").append("<br/>");
+						}
+						
+						//3. Do magic stuff
+						 $('#formulariexercises input[type=checkbox]').change(function() {
+							 var idproblema = $(this).prop("id");
+							 								 
+							//We are going to mark
+							if ($(this).prop("checked")) $(this).prop("checked",true);
+							else $(this).prop("checked",false);
+										
+							$("#formulari > label input[type=checkbox]:checked").each(function() {
+								var laclase = $(this).prop("class");
+								
+								//Now, mark or unmark
+								var selected = $("#"+idproblema+"."+laclase);
+								selected.prop("checked", !selected.prop("checked"));
+							});
+
+						 });
+				}
+		};
+		$.ajax(settings2);
+		
 			}
 		};
 		$.ajax(settings);
+		
 	}
 	
 	clicktoggle= ()=>{
-		var checkBoxes = $("input[type=checkbox]");
+		var checkBoxes = $("#formulariexercises input[type=checkbox]");
+        checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+
+		//Also, update students!
+		if (checkBoxes.prop("checked")){
+			$("#formulari > label input[type=checkbox]:checked").each(function() {
+				var laclase = $(this).prop("class");
+				var selected = $("input[name='info[]']."+laclase);
+				selected.prop("checked",true);
+			});
+		}
+		else{
+			$("#formulari > label input[type=checkbox]:checked").each(function() {
+				var laclase = $(this).prop("class");
+				var selected = $("input[name='info[]']."+laclase);
+				selected.prop("checked",false);
+			});
+		}
+	}
+	clicktoggle2= ()=>{
+		var checkBoxes = $("#formulari > label input[type=checkbox]"); //only students!
         checkBoxes.prop("checked", !checkBoxes.prop("checked"));		
 	}
+
 	
-	clickenrollexcel = () => {
-		
-		var input = document.getElementById('input')
-		var that = this;
-		var jsonexcel = "";
-		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
-			   // `data` is an array of rows
-			   // each row being an array of cells.
-			   jsonexcel = JSON.stringify(data, null, 2);
-			   
-			   var settings = {
-					type: 'POST',
-					data: { 
-						'jsonexcel': jsonexcel
-					},
-					url: 'php/create_users_from_session.php',
-					success: function(response) {
-						if (response=="OK"){
-							that.props.history.push("/teacher_courses");
-						}
-					}
-				};
-				$.ajax(settings);
-			   
-			  }, (error) => {
-			  	console.error(error)
-		});
-	};
-	
-	clickenroll = () => {
+	clickaddexercise = () => {
 		
 		var formData = $('#formulari').serialize();
 
@@ -93,13 +146,16 @@ class UserCourses extends React.Component {
 		var settings = {
 			type: 'POST',
 			data: formData,
-			url: 'php/enroll_add_users.php',
+			url: 'php/add_exercises.php',
 			success: function(response) {
-				
+				if(response=="OK"){
+					that.props.history.push("/teacher_courses");
+				}
 			}
 		};
 		$.ajax(settings);
 	};
+
 	
 	/**
 	 * Renders the register page.
@@ -120,36 +176,81 @@ class UserCourses extends React.Component {
 				<Grid container>
 					<Grid item xs={1}>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={3}>
 						<Card style={{width:400}}>
 							<br/>
-							<p className="orange size_20" style={{marginLeft:130}}>Enroll Students</p>
+							<p className="orange size_20" style={{marginLeft:160}}>Students</p>
 							<hr/>
 							<br/>
-							<button onClick={() => this.clicktoggle()} className="btn btn-1 check_selall  white" style={{border:"none",marginLeft:50}}><Icon className="fa fa-address-book" style={{ fontSize: 15,marginLeft:-1,marginTop:2 }}></Icon></button>Select all<br/>
+							<button onClick={() => this.clicktoggle2()} className="btn btn-1 check_selall  white" style={{border:"none",marginLeft:26}}><Icon className="fa fa-address-book" style={{ fontSize: 15,marginLeft:-1,marginTop:2 }}></Icon></button> All / None<br/>
 							<form id="formulari"></form>
 							<br/>
 							<br/>
-							<Button onClick={() => this.clickenroll()} style={{width:250,marginLeft:70,marginBottom:10}} className="btn btn-4 white"> Enroll Selected Students</Button>
 						</Card>
+						<br/>
+						<Button onClick={() => this.clickaddexercise()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Add Exercices</Button>
 					</Grid>
-					<Grid item xs={4}>
-						<Card style={{width:400}}>
+					<Grid item xs={5}>
+						<Card style={{width:1200}}>
 							<br/>
-							<p className="orange size_20" style={{marginLeft:95}}>Load Users From Excel</p>
+							<p className="orange size_20" style={{marginLeft:550}}>Exercises</p>
 							<hr/>
 							<br/>
-							<a href="./public/Plantilla.xlsx" style={{color:"#0645AD",marginLeft:20}}>Download Template</a>
-							
-							<br/><br/>
-							
-							<p style={{marginLeft:20}} className="size_15 ">Load xlsx file</p> 
-							<input style={{marginLeft:20}}type="file" id="input" />
-							
+							<Grid container>
+								<Grid item xs={2}>
+								<button onClick={() => this.clicktoggle()} className="btn btn-1 check_selall  white" style={{border:"none",marginLeft:25,marginTop:-10}}><Icon className="fa fa-address-book" style={{ fontSize: 15,marginLeft:-1,marginTop:2 }}></Icon></button> All / None
+								</Grid>
+								<Grid item xs={2}>
+									<p className="size12"  style={{marginLeft:25}} >Strategy</p>
+								</Grid>
+								<Grid item xs={1}>
+									<p style={{marginLeft:-50}} className="size12">NS (of 1)</p>
+								</Grid>
+								<Grid item xs={1}>
+									<p className="size12"  style={{marginLeft:-44}} >Attemp.</p>
+								</Grid>
+								<Grid item xs={1}>
+									<p className="size12"  style={{marginLeft:-40}} >Time</p>
+								</Grid>
+								<Grid item xs={1}>
+									<p className="size12">From</p>
+								</Grid>
+								<Grid item xs={1}>
+									<p className="size12"  style={{marginLeft:60}} >To</p>
+								</Grid>
+							</Grid>
+							<Grid container>
+								<Grid item xs={2}>
+									
+								</Grid>
+								<Grid item xs={2}>
+									<select style={{width:100}}>
+									  <option></option>
+									  <option value="no_penalty">No Penalty</option>
+									  <option value="partial_penalty">Partial Penalty</option>
+									  <option value="full_penalty">Full Penalty</option>
+									</select>
+								</Grid>
+								<Grid item xs={1} >
+									<input style={{marginLeft:-50,width:50}} type="number"/>
+								</Grid>
+								<Grid item xs={1}>
+									<input style={{marginLeft:-50,width:50}} type="number"/>
+								</Grid>
+								<Grid item xs={1}>
+									<input style={{marginLeft:-50,width:50}} type="number"/>
+								</Grid>
+								<Grid item xs={1}>
+									<input style={{marginLeft:-50,width:140}} type="date"/>
+								</Grid>
+								<Grid item xs={1}>
+									<input tyle={{width:140}} type="date"/>
+								</Grid>
+							</Grid>
+							<form id="formulariexercises"></form>
 							
 							<br/>
 							<br/>
-							<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Enroll Excel Students</Button>
 						</Card>
 					</Grid>
 				</Grid>
