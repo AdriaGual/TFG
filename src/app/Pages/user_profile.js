@@ -143,36 +143,64 @@ class UserCourses extends React.Component {
 				<hr/>
 				<br/>
 				<Grid container>
-					<Grid item xs={1}>
+					<Grid item xs={2}>
 					</Grid>
 					<Grid item xs={3}>
 						<Card style={{width:300,height:300}}>
-						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Username</p>
-						<hr/>
-						<br/>
-						<TextField
-							id="newusername"
-							style={{width:200,marginLeft:50}}
-							label="Enter your New Username"
-							onChange={(event, newValue) =>
-								this.setState({
-									newusername: newValue
-								})
-							}
-						/>
-						<br/>
-						<TextField
-							id="repeatnewusername"
-							style={{width:200,marginLeft:50}}
-							label="Repeat your New Username"
-							onChange={(event, newValue) =>
-								this.setState({
-									repeatnewusername: newValue
-								})
-							}
-						/>
-						<br/>
-						<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Username</Button>
+							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Username</p>
+							<hr/>
+							<br/>
+							<TextField
+								id="newusername"
+								style={{width:200,marginLeft:50}}
+								label="Enter your New Username"
+								onChange={(event, newValue) =>
+									this.setState({
+										newusername: newValue
+									})
+								}
+							/>
+							<br/>
+							<TextField
+								id="repeatnewusername"
+								style={{width:200,marginLeft:50}}
+								label="Repeat your New Username"
+								onChange={(event, newValue) =>
+									this.setState({
+										repeatnewusername: newValue
+									})
+								}
+							/>
+							<br/>
+							<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Username</Button>
+						</Card>
+						<Card style={{width:300,height:300,marginTop:70}}>
+							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Username</p>
+							<hr/>
+							<br/>
+							<TextField
+								id="newusername"
+								style={{width:200,marginLeft:50}}
+								label="Enter your New Username"
+								onChange={(event, newValue) =>
+									this.setState({
+										newusername: newValue
+									})
+								}
+							/>
+							<br/>
+							<TextField
+								id="repeatnewusername"
+								style={{width:200,marginLeft:50}}
+								label="Repeat your New Username"
+								onChange={(event, newValue) =>
+									this.setState({
+										repeatnewusername: newValue
+									})
+								}
+							/>
+							<br/>
+							<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Username</Button>
 						</Card>
 					</Grid>
 					
@@ -216,12 +244,12 @@ class UserCourses extends React.Component {
 							}
 						/>
 						<br/>
-						<Button onClick={() => this.clickpassword()} style={{marginLeft:65,marginTop:20}} className="btn btn-1 white"> Change Password</Button>
+						<Button onClick={() => this.clickpassword()} style={{marginLeft:68,marginTop:20}} className="btn btn-1 white"> Change Password</Button>
 						</Card>
 					</Grid>
 					<Grid item xs={3}>
 						<Card style={{width:300,height:300}}>
-						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change E-mail</p>
+						<p className="orange size_20" style={{marginLeft:80,marginTop:10}}>Change E-mail</p>
 						<hr/>
 						<br/>
 						<TextField
@@ -246,7 +274,7 @@ class UserCourses extends React.Component {
 							}
 						/>
 						<br/>
-						<Button onClick={() => this.clickemail()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change E-mail</Button>
+						<Button onClick={() => this.clickemail()} style={{marginLeft:85,marginTop:50}} className="btn btn-1 white"> Change E-mail</Button>
 						</Card>
 					</Grid>
 				</Grid>
