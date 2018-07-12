@@ -28,6 +28,7 @@ import TeacherEditExerciseAnimation from './Pages/teacher_edit_exercise_animatio
 import TeacherEditExerciseLabelling from './Pages/teacher_edit_exercise_labelling.js';
 import TeacherEditExerciseSelection from './Pages/teacher_edit_exercise_selection.js';
 import TeacherEnroll from './Pages/teacher_enroll.js';
+import TeacherAssignExercise from './Pages/teacher_assign_exercise.js';
 import AdmParams from './Pages/adm_params.js';
 
 
@@ -57,26 +58,27 @@ export default class Main extends React.Component {
 	render(){		
 		return (
 		<main className="padding0"><Switch>
-			<Route exact path='/' render={() => (<div><Register appState={this.appState}></Register></div>)} />
-			<Route path='/user_courses' render={() => (<div><UserCourses appState={this.appState}></UserCourses></div>)} />
-			<Route path='/user_course' render={() => (<div><UserCourse appState={this.appState}></UserCourse></div>)} />
-			<Route path='/user_profile' render={() => (<div><UserProfile appState={this.appState}></UserProfile></div>)} />
-			<Route path='/user_theory' render={() => (<div><UserTheory appState={this.appState}></UserTheory></div>)} />
-			<Route path='/user_topic' render={() => (<div><UserTopic appState={this.appState}></UserTopic></div>)} />
-			<Route path='/user_exercise' render={() => (<div><UserExercise appState={this.appState}></UserExercise></div>)} />
-			<Route path='/user_qualifications' render={() => (<div><UserQualifications appState={this.appState}></UserQualifications></div>)} />
-			<Route path='/teacher_courses' render={() => (<div><TeacherCourses appState={this.appState}></TeacherCourses></div>)} />
-			<Route path='/teacher_edit_course' render={() => (<div><TeacherEditCourse appState={this.appState}></TeacherEditCourse></div>)} />
-			<Route path='/teacher_choose_exercise' render={() => (<div><TeacherChooseExercise appState={this.appState}></TeacherChooseExercise></div>)} />
-			<Route path='/teacher_edit_exercise_location2d' render={() => (<div><TeacherEditExerciseLocation2d appState={this.appState}></TeacherEditExerciseLocation2d></div>)} />
-			<Route path='/teacher_edit_exercise_test2d' render={() => (<div><TeacherEditExerciseTest2d appState={this.appState}></TeacherEditExerciseTest2d></div>)} />
-			<Route path='/teacher_edit_exercise_mpr' render={() => (<div><TeacherEditExerciseMPR appState={this.appState}></TeacherEditExerciseMPR></div>)} />
-			<Route path='/teacher_edit_exercise_location3d' render={() => (<div><TeacherEditExerciseLocation3d appState={this.appState}></TeacherEditExerciseLocation3d></div>)} />
-			<Route path='/teacher_edit_exercise_animation' render={() => (<div><TeacherEditExerciseAnimation appState={this.appState}></TeacherEditExerciseAnimation></div>)} />
-			<Route path='/teacher_edit_exercise_labelling' render={() => (<div><TeacherEditExerciseLabelling appState={this.appState}></TeacherEditExerciseLabelling></div>)} />
-			<Route path='/teacher_edit_exercise_selection' render={() => (<div><TeacherEditExerciseSelection appState={this.appState}></TeacherEditExerciseSelection></div>)} />
-			<Route path='/teacher_enroll' render={() => (<div><TeacherEnroll appState={this.appState}></TeacherEnroll></div>)} />
-			<Route path='/adm_params' render={() => (<div><AdmParams appState={this.appState}></AdmParams></div>)} />
+			<Route exact path='/' render={() => (<div><div><Register appState={this.appState}></Register></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_courses' render={() => (<div><div><UserCourses appState={this.appState}></UserCourses></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_course' render={() => (<div><div><UserCourse appState={this.appState}></UserCourse></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_profile' render={() => (<div><div><UserProfile appState={this.appState}></UserProfile></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_theory' render={() => (<div><div><UserTheory appState={this.appState}></UserTheory></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_topic' render={() => (<div><div><UserTopic appState={this.appState}></UserTopic></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_exercise' render={() => (<div><div><UserExercise appState={this.appState}></UserExercise></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_qualifications' render={() => (<div><div><UserQualifications appState={this.appState}></UserQualifications></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_courses' render={() => (<div><div><TeacherCourses appState={this.appState}></TeacherCourses></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_course' render={() => (<div><div><TeacherEditCourse appState={this.appState}></TeacherEditCourse></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_choose_exercise' render={() => (<div><div><TeacherChooseExercise appState={this.appState}></TeacherChooseExercise></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_exercise_location2d' render={() => (<div><div><TeacherEditExerciseLocation2d appState={this.appState}></TeacherEditExerciseLocation2d></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_exercise_test2d' render={() => (<div><div><TeacherEditExerciseTest2d appState={this.appState}></TeacherEditExerciseTest2d></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_exercise_mpr' render={() => (<div><div><TeacherEditExerciseMPR appState={this.appState}></TeacherEditExerciseMPR></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_exercise_location3d' render={() => (<div><div><TeacherEditExerciseLocation3d appState={this.appState}></TeacherEditExerciseLocation3d></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_exercise_animation' render={() => (<div><div><TeacherEditExerciseAnimation appState={this.appState}></TeacherEditExerciseAnimation></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_exercise_labelling' render={() => (<div><div><TeacherEditExerciseLabelling appState={this.appState}></TeacherEditExerciseLabelling></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_edit_exercise_selection' render={() => (<div><div><TeacherEditExerciseSelection appState={this.appState}></TeacherEditExerciseSelection></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_enroll' render={() => (<div><div><TeacherEnroll appState={this.appState}></TeacherEnroll></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_assign_exercise' render={() => (<div><div><TeacherAssignExercise appState={this.appState}></TeacherAssignExercise></div><div className="bot_margin"></div></div>)} />
+			<Route path='/adm_params' render={() => (<div><div><AdmParams appState={this.appState}></AdmParams></div><div className="bot_margin"></div></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

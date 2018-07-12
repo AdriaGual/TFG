@@ -62,18 +62,14 @@ class TeacherEditExerciceLocation2d extends React.Component {
 					</Grid>
 					
 					<Grid item xs={10} > 
+						
 						<div id ="contentID">
 						</div>
 						
 					</Grid>
 					
 					<Grid item xs={1} > 
-						<Button
-							className="btn btn-1 white left_15"
-							onClick={() => this.click()}
-						>
-							Return 
-						</Button>
+					
 					</Grid>
 
 				</Grid>

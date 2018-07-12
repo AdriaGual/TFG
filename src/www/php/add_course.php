@@ -57,7 +57,11 @@
 			$stmt->bindParam(':id_course', $last_course_id, PDO::PARAM_STR);
 			$stmt->bindParam(':id_topic', $last_topic_id, PDO::PARAM_STR);
 			$stmt->execute();
-		}		
+		}	
+		$stmt = $conn->prepare("INSERT INTO enrollment (id_user,id_course) VALUES (:iduser, :idcourse)");
+		$stmt->bindParam(':iduser', $_SESSION['userid'], PDO::PARAM_STR);
+		$stmt->bindParam(':idcourse', $last_course_id, PDO::PARAM_STR);
+		$stmt->execute();
 		
 		echo "OK"; 
 		

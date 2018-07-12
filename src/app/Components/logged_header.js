@@ -66,7 +66,26 @@ export default class LoggedHeader extends React.Component {
 		this.setState({ anchorEl: null });
 	};
 	
-
+	componentDidMount(){
+		var that=this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'is_teacher': that.appState("is_teacher"),
+				'is_student': that.appState("is_student")
+			},
+			url: 'php/usertype_session.php',
+			success: function(response) {
+				if (response=="is_teacher"){	
+					that.appState({is_teacher:true,is_student:false});
+				}
+				else{
+					that.appState({is_teacher:false,is_student:true});
+				}
+			}
+		};
+		$.ajax(settings);
+	}
 	/**
 	 * Renders the Header app.
 	 */

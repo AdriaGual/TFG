@@ -51,7 +51,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	 */
 	render(){
 		return (
-			<div>
+			<div  style={{ height: 1500}}>
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>Selection Exercise</p></div>
 				<hr/>

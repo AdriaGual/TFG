@@ -35,7 +35,6 @@ class UserCourses extends React.Component {
 
 	componentDidMount() {
 		var that = this;
-
 		var settings = {
 			type: 'POST',
 			data: { 
@@ -115,7 +114,7 @@ class UserCourses extends React.Component {
 		return (
 			<div>
 				<br/>
-				<div className="left_30 down_20 orange size_30"><p>Enroll</p></div>
+				<div className="left_30 down_20 orange size_30"><p>Assign Exercises</p></div>
 				<hr/>
 				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<Grid container>

@@ -50,7 +50,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	 */
 	render(){
 		return (
-			<div>
+			<div className="flex_container">
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>Animation Exercise</p></div>
 				<hr/>

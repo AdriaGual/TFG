@@ -26,6 +26,13 @@ main {
 	left: 0;
 }
 
+.flex_container{
+	float: left;
+	min-height: 100px;
+	
+	
+}
+
 .edubody{
 	border:0;
 	width:100%;
@@ -379,6 +386,11 @@ hr.vr {
 .margin0 {
 	margin: 0em !important;
 }
+
+.bot_margin{
+	margin-bottom:80px;
+}
+
 .margin1 {
 	margin: 0.5em !important;
 }

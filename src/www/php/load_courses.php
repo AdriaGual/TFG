@@ -19,27 +19,35 @@
 			$miscursos = array();
 			$punter = 0;
 			$id = 1;
+			//Per cada curs
 			while ($row = $stmt->fetchObject()) {
+				//guardo el curs
 				$miscursos[$punter]['id'] = $id;
 				$miscursos[$punter]['name'] =  $row->name;
 				$miscursos[$punter]['parent'] = $row->parentid;
 				$miscursos[$punter]['expanded'] = true;
 				$miscursos[$punter]['iscourse'] = true;
 				$miscursos[$punter]['idsql'] = $row->id;
+				
+				$punterCurs= $punter;
 				$punter++;//1
+				$parentid = $id;
 				$id++;//2
 				$idcourse = $row->id;
 				if ($row->parentid == null){
 					//Consultar topics del curs
-					$stmt2 = $conn->prepare("SELECT t.id,t.name FROM course_topic AS ct INNER JOIN topic AS t ON ct.id_topic = t.id WHERE id_course = :idcourse");
+					$stmt2 = $conn->prepare("SELECT t.id,t.name,t.subtopic FROM course_topic AS ct INNER JOIN topic AS t ON ct.id_topic = t.id WHERE id_course = :idcourse");
 					$stmt2->bindParam(':idcourse', $idcourse, PDO::PARAM_STR);
 					$stmt2->execute();
 					$total2 = $stmt2->rowCount();
+					
 					if ($total2 > 0){
+						//Per cada topic
 						while ($row2 = $stmt2->fetchObject()) {
+							if ($row2->subtopic==0){
 							$miscursos[$punter]['id'] = $id;
 							$miscursos[$punter]['name'] = $row2->name;
-							$miscursos[$punter]['parent'] = $idcourse;
+							$miscursos[$punter]['parent'] = $parentid;
 							$miscursos[$punter]['istopic'] = true;
 							
 							//Buscar les teories d'un topic
@@ -49,6 +57,7 @@
 							$total4 = $stmt4->rowCount();
 							if ($total4 > 0){
 									$miscursos[$punter]['hastheory'] = true;
+									$miscursos[$punterCurs]['hastheory'] = true;
 							}
 							//Buscar exercicis d'un topic
 							$stmt4 = $conn->prepare("SELECT tc.statement FROM exercice_content AS tc INNER JOIN topic_exercice AS t ON tc.id = t.id_exercice_content WHERE t.id_topic = :idtopic");
@@ -57,6 +66,7 @@
 							$total4 = $stmt4->rowCount();
 							if ($total4 > 0){
 									$miscursos[$punter]['hasexercice'] = true;
+									$miscursos[$punterCurs]['hasexercice'] = true;
 							}
 							
 							$punter++;//2
@@ -153,7 +163,7 @@
 									}
 								}
 							}
-						}
+						}}
 					}
 				}
 				

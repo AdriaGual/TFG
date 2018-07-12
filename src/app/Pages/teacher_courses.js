@@ -70,6 +70,12 @@ class TeacherCourses extends React.Component {
 		this.props.history.push('/teacher_enroll');
 		
 	};
+	
+	clickassignexercise = (idsql) => {
+		this.appState({id_course: idsql});
+		this.props.history.push('/teacher_assign_exercise');
+		
+	};
 
 	
 	/**
@@ -135,6 +141,12 @@ class TeacherCourses extends React.Component {
 										>
 											<Icon className="fa fa-graduation-cap" style={{ fontSize: 15 }}></Icon>
 										</Button>:null,
+										node.hasexercice? node.iscourse?<Button
+											className="btn btn-5 white right_15"
+											onClick={() => 	this.clickassignexercise(node.idsql)}
+										>
+											<Icon className="fa fa-calendar" style={{ fontSize: 15 }}></Icon>
+										</Button>:null:null,
 									],
 								};
 							}}
