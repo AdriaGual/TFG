@@ -60,8 +60,9 @@
 									$miscursos[$punterCurs]['hastheory'] = true;
 							}
 							//Buscar exercicis d'un topic
-							$stmt4 = $conn->prepare("SELECT tc.statement FROM exercice_content AS tc INNER JOIN topic_exercice AS t ON tc.id = t.id_exercice_content WHERE t.id_topic = :idtopic");
+							$stmt4 = $conn->prepare("SELECT tc.statement FROM exercice_content AS tc INNER JOIN topic_exercice AS t ON tc.id = t.id_exercice_content INNER JOIN user_exercise AS ue ON tc.id = ue.id_exercise WHERE t.id_topic = :idtopic AND ue.id_user=:iduser");
 							$stmt4->bindParam(':idtopic', $row2->id, PDO::PARAM_STR);
+							$stmt4->bindParam(':iduser', $myid, PDO::PARAM_STR);
 							$stmt4->execute();
 							$total4 = $stmt4->rowCount();
 							if ($total4 > 0){

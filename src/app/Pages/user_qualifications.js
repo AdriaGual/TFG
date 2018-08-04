@@ -39,131 +39,13 @@ class UserQualifications extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
-	let id = 0;
-	function createdades(name, tries, puntuation, avg_tries, avg_puntuation) {
-	  id += 1;
-	  return { id, name, tries, puntuation, avg_tries, avg_puntuation };
-	}
-
-	const dades = [
-	  createdades('Exercice 1', "1/3", 6.0, "1.33/3", 4.0),
-	  createdades('Exercice 2',"2/3", 9.0, "2.47/3", 7.3),
-	  createdades('Exercice 3',"3/3", 10.0, "1.24/3", 8.0),
-	  createdades('Exercice 4', "1/3", 3.7, "1.57/3", 2.3),
-	  createdades('Exercice 5', "1/3", 5.5, "2.67/3", 6.9),
-	];
-
-	var tablemode=true;
-	var showresults;
-	if (tablemode){
-	
-	}
 
 		return (
-			<div style={{height:1500}}>
+			<div>
 				<div className="left_30 down_20 orange size_30"><p>Course 1</p></div>
 				<hr/>
-				<div className="left_30 down_20 orange size_20 ">Topic 1</div>
-				<Paper>
-			      <Table >
-			        <TableHead>
-			          <TableRow>
-			            <TableCell>Exercices</TableCell>
-			            <TableCell numeric>Tries</TableCell>
-			            <TableCell numeric>Puntuation</TableCell>
-			            <TableCell numeric>Average Tries</TableCell>
-			            <TableCell numeric>Average Puntuation</TableCell>
-			          </TableRow>
-			        </TableHead>
-			        <TableBody>
-			          {dades.map(n => {
-			            return (
-			              <TableRow key={n.id}>
-			                <TableCell component="th" scope="row">
-			                  {n.name}
-			                </TableCell>
-			                <TableCell numeric>{n.tries}</TableCell>
-			                <TableCell numeric>{n.puntuation}</TableCell>
-			                <TableCell numeric>{n.avg_tries}</TableCell>
-			                <TableCell numeric>{n.avg_puntuation}</TableCell>
-			              </TableRow>
-			            );
-			          })}
-			        </TableBody>
-			      </Table>
-			    </Paper>
-			    <hr />
-			    <div className="left_30 down_20 orange size_20 ">Topic 2</div>
-				<Paper>
-			      <Table >
-			        <TableHead>
-			          <TableRow>
-			            <TableCell>Exercices</TableCell>
-			            <TableCell numeric>Tries</TableCell>
-			            <TableCell numeric>Puntuation</TableCell>
-			            <TableCell numeric>Average Tries</TableCell>
-			            <TableCell numeric>Average Puntuation</TableCell>
-			          </TableRow>
-			        </TableHead>
-			        <TableBody>
-			          {dades.map(n => {
-			            return (
-			              <TableRow key={n.id}>
-			                <TableCell component="th" scope="row">
-			                  {n.name}
-			                </TableCell>
-			                <TableCell numeric>{n.tries}</TableCell>
-			                <TableCell numeric>{n.puntuation}</TableCell>
-			                <TableCell numeric>{n.avg_tries}</TableCell>
-			                <TableCell numeric>{n.avg_puntuation}</TableCell>
-			              </TableRow>
-			            );
-			          })}
-			        </TableBody>
-			      </Table>
-			    </Paper>
-			     <hr />
-			    <div className="left_30 down_20 orange size_20 ">Topic 3</div>
-				<Paper>
-			      <Table >
-			        <TableHead>
-			          <TableRow>
-			            <TableCell>Exercices</TableCell>
-			            <TableCell numeric>Tries</TableCell>
-			            <TableCell numeric>Puntuation</TableCell>
-			            <TableCell numeric>Average Tries</TableCell>
-			            <TableCell numeric>Average Puntuation</TableCell>
-			          </TableRow>
-			        </TableHead>
-			        <TableBody>
-			          {dades.map(n => {
-			            return (
-			              <TableRow key={n.id}>
-			                <TableCell component="th" scope="row">
-			                  {n.name}
-			                </TableCell>
-			                <TableCell numeric>{n.tries}</TableCell>
-			                <TableCell numeric>{n.puntuation}</TableCell>
-			                <TableCell numeric>{n.avg_tries}</TableCell>
-			                <TableCell numeric>{n.avg_puntuation}</TableCell>
-			              </TableRow>
-			            );
-			          })}
-			        </TableBody>
-			      </Table>
-			    </Paper>
-				<BarChart
-					axes
-					height={300}
-					width={500}
-					data={[
-						  {x: 'Topic 1: Exercici 1', y: 6},
-						  {x: 'Topic 1: Exercici 2', y: 9},
-						  {x: 'Topic 1: Exercici 3', y: 10},
-						  {x: 'Topic 1: Exercici 4', y: 3.7},
-						  {x: 'Topic 1: Exercici 5', y: 5.5}
-						]}
-				  />
+				
+				
 			</div>
 		
 		);

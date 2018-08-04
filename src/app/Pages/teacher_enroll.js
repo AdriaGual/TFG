@@ -34,6 +34,7 @@ class UserCourses extends React.Component {
 			searchFoundCount: null,
 			showsnack: false,
 			snacktext: "",
+			showinfo:false,
 		};
 	}
 	appState = this.props.appState;
@@ -84,6 +85,41 @@ class UserCourses extends React.Component {
 							that.setState({ showsnack: true ,snacktext: "Enrolled users!"});
 							that.props.history.push("/teacher_courses");
 						}
+					}
+				};
+				$.ajax(settings);
+			   
+			  }, (error) => {
+			  	console.error(error)
+		});
+	};
+	
+	clickshowexcel = () => {
+		
+		var input = document.getElementById('input')
+		var that = this;
+		var jsonexcel = "";
+		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
+			   // `data` is an array of rows
+			   // each row being an array of cells.
+			   jsonexcel = JSON.stringify(data, null, 2);
+			   
+			   var settings = {
+					type: 'POST',
+					data: { 
+						'jsonexcel': jsonexcel
+					},
+					url: 'php/show_users_from_session.php',
+					success: function(response) {
+						that.setState({showinfo: true});
+						var jsonData = JSON.parse(response);
+						$("#formulari2").empty();
+						$("#formulari2").append("<table style='width:100%'><tr><th style='width:(100/5)%'>Username</th><th style='width:(100/5)%'>Name</th> <th style='width:(100/5)%'>Surname</th><th style='width:(100/5)%'>Email</th><th style='width:(100/5)%'>New Student?</th></tr>");
+						for (var a=0; a<jsonData.length; a++){
+							$("#formulari2 tr:last").after("<tr><td style='width:(100/5)%'>"+jsonData[a].username+"</td><td style='width:(100/5)%'>"+jsonData[a].name+"</td> <td style='width:(100/5)%'>"+jsonData[a].surname+"</td> <td style='width:(100/5)%'>"+jsonData[a].email+"</td> <td style='width:(100/5)%'>"+jsonData[a].isnew+"</td> </tr>");
+						}
+						$("#formulari2 tr:last").after("</table>");
+						
 					}
 				};
 				$.ajax(settings);
@@ -146,7 +182,7 @@ class UserCourses extends React.Component {
 				<Grid container>
 					<Grid item xs={1}>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={3}>
 						<Card style={{width:400}}>
 							<br/>
 							<p className="orange size_20" style={{marginLeft:130}}>Enroll Students</p>
@@ -159,7 +195,7 @@ class UserCourses extends React.Component {
 							<Button onClick={() => this.clickenroll()} style={{width:250,marginLeft:70,marginBottom:10}} className="btn btn-4 white"> Enroll Selected Students</Button>
 						</Card>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={3}>
 						<Card style={{width:400}}>
 							<br/>
 							<p className="orange size_20" style={{marginLeft:95}}>Load Users From Excel</p>
@@ -171,12 +207,27 @@ class UserCourses extends React.Component {
 							
 							<p style={{marginLeft:20}} className="size_15 ">Load xlsx file</p> 
 							<input style={{marginLeft:20}}type="file" id="input" />
-							
-							
 							<br/>
 							<br/>
-							<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Enroll Excel Students</Button>
+							<Button onClick={() => this.clickshowexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Show Excel Students</Button>
 						</Card>
+						
+					</Grid>
+					<Grid item xs={4}>
+						{ this.state.showinfo ? 
+							<Card style={{width:700}}>
+								<br/>
+								<p className="orange size_20" style={{marginLeft:160}}>Students</p>
+								<hr/>
+								<br/>
+								<form id="formulari2"></form>
+								<br/>
+								<br/>
+								<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Enroll Excel Students</Button>		
+							</Card>
+												
+							: null
+						}
 					</Grid>
 				</Grid>
 				<Snackbar
