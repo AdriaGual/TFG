@@ -72,8 +72,9 @@ class UserCourses extends React.Component {
 		$.ajax(settings);
 	}
 	
-	click = (name) => {
+	click = (name,idsql) => {
 		var that = this;
+		this.appState({id_course: idsql});
 		var settings = {
 			type: 'POST',
 			data: { 
@@ -227,7 +228,7 @@ class UserCourses extends React.Component {
 										node.iscourse ?
 										<Button
 											className="btn btn-1 white"
-											onClick={() => 	this.click(node.name)}
+											onClick={() => 	this.click(node.name,node.idsql)}
 										>
 											<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 										</Button>:null,

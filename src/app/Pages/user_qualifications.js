@@ -26,7 +26,57 @@ class UserQualifications extends React.Component {
 		}
 	}
 	appState = this.props.appState;
+	
+	componentDidMount() {
+		var that = this;
 
+		var settings = {
+			type: 'POST',
+			data: { 
+				'idcurs': that.appState("id_course")
+			},
+			url: 'php/show_user_course_topics.php',
+			async:false,
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				$("#formulari").empty();
+				
+				for (var a=0; a<jsonData.length; a++){
+					$("#formulari").append("<label>"+jsonData[a].topicname+"</label><hr/>");
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'idtopic': jsonData[a].idtopic
+						},
+						async:false,
+						url: 'php/show_user_topic_qualifications.php',
+						success: function(response2) {
+							var jsonData2 = JSON.parse(response2);
+							$("#formulari").append("<table style='width:100%'><tr><th style='width:(100/4)%'>Exercice</th><th style='width:(100/4)%'>Tries</th> <th style='width:(100/4)%'>Puntuation</th><th style='width:(100/4)%'>Finished</th></tr>");
+							for (var b=0; b<jsonData2.length; b++){
+								var color;
+								if (jsonData2[b].finished>0){
+									color = "#91F5AD";
+								}
+								else{
+									color = "#F49090";
+								}
+								$("#formulari tr:last").after("<tr><td style='width:(100/4)%'>"+jsonData2[b].statement+"</td><td style='width:(100/4)%'>"+jsonData2[b].tries+"</td> <td style='width:(100/4)%'>"+jsonData2[b].puntuation+"</td> <td style='width:(100/4)%' bgcolor = "+color+" >"+jsonData2[b].finished+"</td> </tr>");
+							}
+							$("#formulari tr:last").after("</table>");
+							$("#formulari").append("<br/>");
+						}
+					};
+					$.ajax(settings2);
+				}
+			}
+		};
+		$.ajax(settings);
+		
+		
+
+		
+	}
 
 	
 	
@@ -42,9 +92,9 @@ class UserQualifications extends React.Component {
 
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30"><p>Course 1</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{this.appState("course_name")}</p></div>
 				<hr/>
-				
+				<form id="formulari"></form>
 				
 			</div>
 		

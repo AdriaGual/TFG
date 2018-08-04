@@ -1,6 +1,4 @@
 ﻿<?php
-	require '../PHPMailer/PHPMailerAutoload.php';
-
 	session_start(); 
 
 	$curs = $_SESSION["idcurs"];
@@ -88,7 +86,6 @@
 				
 			}
 			else{
-				
 				$row = $stmt->fetchObject();
 				
 				$result[$punter]['username'] = $row->username;
@@ -97,7 +94,6 @@
 				$result[$punter]['email'] = $jsonexcel[$i][4];
 				$result[$punter]['isnew'] = false;
 				$punter++;
-
 			}
 		}
 						

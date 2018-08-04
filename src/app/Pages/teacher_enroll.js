@@ -224,8 +224,7 @@ class UserCourses extends React.Component {
 								<br/>
 								<br/>
 								<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Enroll Excel Students</Button>		
-							</Card>
-												
+							</Card>				
 							: null
 						}
 					</Grid>
