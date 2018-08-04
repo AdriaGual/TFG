@@ -42,7 +42,7 @@ class UserQualifications extends React.Component {
 				$("#formulari").empty();
 				
 				for (var a=0; a<jsonData.length; a++){
-					$("#formulari").append("<label>"+jsonData[a].topicname+"</label><hr/>");
+					$("#formulari").append("<p style='font-weight:bold'>"+jsonData[a].topicname+"</p><hr/>");
 					var settings2 = {
 						type: 'POST',
 						data: { 
@@ -72,13 +72,8 @@ class UserQualifications extends React.Component {
 			}
 		};
 		$.ajax(settings);
-		
-		
-
-		
 	}
 
-	
 	
 	/**
 	 * Renders the register page.
@@ -92,6 +87,7 @@ class UserQualifications extends React.Component {
 
 		return (
 			<div>
+				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.appState("course_name")}</p></div>
 				<hr/>
 				<form id="formulari"></form>

@@ -51,7 +51,6 @@ class TeacherCourses extends React.Component {
 					getParentKey: node => node.parent, // resolve a node's parent's key
 					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
 				})});
-
 			}
 		};
 		$.ajax(settings);
@@ -74,6 +73,13 @@ class TeacherCourses extends React.Component {
 	clickassignexercise = (idsql) => {
 		this.appState({id_course: idsql});
 		this.props.history.push('/teacher_assign_exercise');
+		
+	};
+	
+	clickqualifications = (name,idsql) => {
+		this.appState({course_name: name});
+		this.appState({id_course: idsql});
+		this.props.history.push('/teacher_qualifications');
 		
 	};
 
@@ -118,9 +124,10 @@ class TeacherCourses extends React.Component {
 							/>
 						</label>
 					</Grid>
-					<Grid item xs={3}> 
+					<Grid item xs={5}> 
 						<Link to="/teacher_edit_course"><Button className="btn btn-2 down_30 white">Create New Course</Button></Link>
 						<Link to="/teacher_choose_exercise"><Button className="btn btn-5 down_30 white left_15">Create New Exercice</Button></Link>
+						<Link to="/teacher_create_theory"><Button className="btn btn-1 down_30 white left_15">Create New Theory</Button></Link>
 					</Grid>
 					<Grid item xs={12}>
 						<div style={{ height: 1500}}>
@@ -141,12 +148,19 @@ class TeacherCourses extends React.Component {
 										>
 											<Icon className="fa fa-graduation-cap" style={{ fontSize: 15 }}></Icon>
 										</Button>:null,
-										node.hasexercice? node.iscourse?<Button
+										node.iscourse?<Button
 											className="btn btn-5 white right_15"
 											onClick={() => 	this.clickassignexercise(node.idsql)}
 										>
 											<Icon className="fa fa-calendar" style={{ fontSize: 15 }}></Icon>
-										</Button>:null:null,
+										</Button>
+										:null,
+										node.iscourse?<Button
+											className="btn btn-1 white right_15"
+											onClick={() => 	this.clickqualifications(node.name,node.idsql)}
+										>
+											<Icon className="fa fa-list-ol" style={{ fontSize: 15 }}></Icon>
+										</Button>:null,
 									],
 								};
 							}}
