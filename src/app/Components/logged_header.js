@@ -44,6 +44,24 @@ export default class LoggedHeader extends React.Component {
 
 	handleCourses = () => {
 		this.setState({ anchorEl: null });
+		var that=this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'is_teacher': that.appState("is_teacher"),
+				'is_student': that.appState("is_student")
+			},
+			url: 'php/usertype_session.php',
+			success: function(response) {
+				if (response=="is_teacher"){	
+					that.appState({is_student:false});
+				}
+				else{
+					that.appState({is_student:true});
+				}
+			}
+		};
+		$.ajax(settings);
 	};
 	
 	handleAccount = () => {
@@ -77,10 +95,10 @@ export default class LoggedHeader extends React.Component {
 			url: 'php/usertype_session.php',
 			success: function(response) {
 				if (response=="is_teacher"){	
-					that.appState({is_teacher:true,is_student:false});
+					that.appState({is_student:false});
 				}
 				else{
-					that.appState({is_teacher:false,is_student:true});
+					that.appState({is_student:true});
 				}
 			}
 		};
@@ -128,8 +146,7 @@ export default class LoggedHeader extends React.Component {
 									  onClose={this.handleCloseMenu}
 									>
 										<Link to="/user_profile"><MenuItem onClick={this.handleAccount}>Profile</MenuItem></Link>
-										{this.appState("is_student")?<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>:null}
-										{this.appState("is_teacher")?<Link to="/teacher_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>:null}
+										{this.appState("is_student")?<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>:<Link to="/teacher_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>}
 										<Link to="/"><MenuItem onClick={this.handleClose}>Logout</MenuItem></Link>
 									</Menu>
 								</Grid>

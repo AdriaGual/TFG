@@ -35,6 +35,13 @@ th, td {
     text-align: left;
 }
 
+.big_text{
+    display: block;
+    word-wrap:break-word;
+    width: 500px;
+    white-space: normal;
+}
+
 .flex_container{
 	float: left;
 	min-height: 100px;

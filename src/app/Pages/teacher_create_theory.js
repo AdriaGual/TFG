@@ -37,19 +37,23 @@ class Theory extends React.Component {
 	}
 	
 	click = () => {
-		/*var canvas = document.getElementById('canvas');
-		var dataURL = canvas.toDataURL();
+		var canvas = document.getElementById('canvas');
+		var dataURL = canvas.toDataURL("image/png");
 		var settings = {
 			type: 'POST',
 			data: { 
 				'img': dataURL, 
+				'title': $("#newtitle").val(), 
+				'subtitle': $("#newsubtitle").val(), 
+				'content': $("#content_text").val(), 
+				'url': $("#url_text").val(), 
 			},
 			url: 'php/save_theory.php',
 			success: function(response) {
-				
+				console.log(dataURL);
 			}
 		};
-		$.ajax(settings);*/
+		$.ajax(settings);
 	}
 	
 	/**
@@ -94,10 +98,10 @@ class Theory extends React.Component {
 						/>
 						<br/><br/>
 						<p>Content:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:400,width:600}}/>
+						<textarea id="content_text" value={this.state.value} onChange={this.handleChange} style={{height:400,width:600}}/>
 						<br/>
 						<p>URL:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:600}}/>
+						<textarea id="url_text" value={this.state.value} onChange={this.handleChange} style={{height:100,width:600}}/>
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
@@ -123,6 +127,7 @@ class Theory extends React.Component {
 					</Grid>
 					<Grid item xs={2} > 
 						<Button
+							id="btn-save"
 							className="btn btn-1 white left_30"
 							onClick={() => 	this.click()}
 						>

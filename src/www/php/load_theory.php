@@ -26,6 +26,7 @@
 				$miscursos['subtitle']=$row->subtitle;
 				$miscursos['content']=$row->content;
 				$miscursos['url']=$row->url;
+				$miscursos['img']=$row->img;
 				echo json_encode($miscursos);
 			}
 			else{

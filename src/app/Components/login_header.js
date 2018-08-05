@@ -73,6 +73,28 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 			}
 		};
 		$.ajax(settings);
+		
+		var that=this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'is_teacher': that.appState("is_teacher"),
+				'is_student': that.appState("is_student")
+			},
+			url: 'php/usertype_session.php',
+			success: function(response) {
+				if (response=="is_teacher"){
+
+					that.appState({is_student:false});
+				}
+				else{
+					that.appState({is_student:true});
+				}
+			}
+		};
+		$.ajax(settings);
+		
+		
 	};
 	
 	click_forgot_pass = () => {
