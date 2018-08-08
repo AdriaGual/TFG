@@ -2,7 +2,7 @@
 	session_start(); 
 
 	$name = $_POST["name"];
-	
+	$myid = $_SESSION["userid"];
 	$username = "root";
 	$password = "";
 
@@ -18,6 +18,9 @@
 			$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 			$stmt->execute();
 			
+			
+			
+			
 			$total = $stmt->rowCount();
 			if ($total > 0){
 				$miscursos = array();
@@ -27,9 +30,18 @@
 				$miscursos['description']=$row->description;
 				$miscursos['question']=$row->question;
 				$miscursos['help']=$row->help;
-				$miscursos['tries']=$row->n_tries;
+				$miscursos['ntries']=$row->n_tries;
 				$miscursos['type_component']=$row->type_component;
 				$miscursos['img']=$row->img;
+				
+				$idsql = $row->id;
+				$stmt2 = $conn->prepare("SELECT * FROM user_exercise WHERE id_user = :myid AND id_exercise = :idexercise");
+				$stmt2->bindParam(':myid', $myid, PDO::PARAM_STR);
+				$stmt2->bindParam(':idexercise', $idsql, PDO::PARAM_STR);
+				$stmt2->execute();
+				$row2 = $stmt2->fetchObject();
+				$miscursos['tries']=$row2->tries;
+				
 				echo json_encode($miscursos);
 			}
 			else{

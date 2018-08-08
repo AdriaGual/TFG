@@ -19,7 +19,7 @@ import SortableTree from 'react-sortable-tree';
  
 var n;
 var img;
-var type_component;
+var tries;
 
 class UserExercice extends React.Component {
 	constructor(props){
@@ -29,7 +29,8 @@ class UserExercice extends React.Component {
 			exercice_description:"",
 			exercice_question:"",
 			exercice_help:"",
-			exercice_tries:"",
+			exercice_ntries:"",
+			tries:"",
 			component:"",
 			id:"",
 			img:"",
@@ -60,8 +61,8 @@ class UserExercice extends React.Component {
 				that.setState({exercice_description: jsonData.description});
 				that.setState({exercice_question: jsonData.question});
 				that.setState({exercice_help: jsonData.help});
-				that.setState({exercice_ntries: jsonData.tries});
-				
+				that.setState({exercice_ntries: jsonData.ntries});
+				that.setState({tries: jsonData.tries});
 				that.setState({id: jsonData.isql});
 				img = jsonData.img;
 				n = jsonData.type_component;
@@ -133,8 +134,43 @@ class UserExercice extends React.Component {
 			},
 			url: 'php/verify_answers_test.php',
 			success: function(response) {
-				if (response=="OK"){
-					that.props.history.push("/teacher_courses");
+				if (response=="match"){
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'name': that.appState("exercice_name"),
+							'tries': that.state.tries,
+							'puntuation': 10,
+						},
+						url: 'php/save_test_mark.php',
+						success: function(response2) {
+
+						}
+					};
+					$.ajax(settings2);
+				}
+				else if (response=="no_match"){
+					var a = that.state.tries;
+					if (that.state.tries>=that.state.exercice_ntries){
+						var settings2 = {
+							type: 'POST',
+							data: { 
+								'name': that.appState("exercice_name"),
+								'tries': that.state.tries,
+								'puntuation': 0,
+							},
+							url: 'php/save_test_mark.php',
+							success: function(response2) {
+
+							}
+						};
+						$.ajax(settings2);
+					}
+					else{
+						a++;
+					}
+					
+					that.setState({tries: a});
 				}
 			}
 		};
@@ -166,7 +202,7 @@ class UserExercice extends React.Component {
 						<Card className="course_description_form margin2 padding2">
 								<p className="margin1">{this.state.exercice_help}</p>
 						</Card>
-						<p className="left_30 down_20 black size_20">Tries: {this.state.exercice_ntries}</p>
+						<p className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</p>
 
 					</Grid>
 					<Grid item xs={4}  className="padding2">
@@ -183,13 +219,17 @@ class UserExercice extends React.Component {
 						<div id="formulari"></div>
 						<hr/>
 						<br/>
-						<Button
-							id="btn-save"
-							className="btn btn-1 white left_30"
-							onClick={() => 	this.clickcorregir()}
-						>
-							Corregir
-						</Button>
+						{this.state.tries < this.state.exercice_ntries ?
+							<Button
+								id="btn-save"
+								className="btn btn-1 white left_30"
+								onClick={() => 	this.clickcorregir()}
+							> Corregir</Button>: null
+						
+						
+						}
+							
+						
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
