@@ -17,23 +17,27 @@
 			$stmt = $conn->prepare("SELECT * FROM exercice_content WHERE statement = :name");
 			$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 			$stmt->execute();
+
+			$row = $stmt->fetchObject();
 			
-			$total = $stmt->rowCount();
+			$idexercise = $row->id;
+			$stmt2 = $conn->prepare("SELECT * FROM test_answers_exercise WHERE id_exercise = :idexercise");
+			$stmt2->bindParam(':idexercise', $idexercise, PDO::PARAM_STR);
+			$stmt2->execute();
+			$total = $stmt2->rowCount();
 			if ($total > 0){
-				$miscursos = array();
-				$row = $stmt->fetchObject();
-				$miscursos['idsql']=$row->id;
-				$miscursos['statement']=$row->statement;
-				$miscursos['description']=$row->description;
-				$miscursos['question']=$row->question;
-				$miscursos['help']=$row->help;
-				$miscursos['tries']=$row->n_tries;
-				$miscursos['type_component']=$row->type_component;
-				$miscursos['img']=$row->img;
+				$miscursos = array();	
+				$punter = 0;
+				while ($row2 = $stmt2->fetchObject()) {
+					$miscursos[$punter]['answer_text'] = $row2->answer_text;
+					$miscursos[$punter]['is_valid'] =  $row2->is_valid;
+					$punter++;//1
+					
+				}
 				echo json_encode($miscursos);
 			}
 			else{
-				echo "course_not_found";
+				echo "0_answers";
 			}
 		}
 		$conn = null;

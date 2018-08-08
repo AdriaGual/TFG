@@ -35,8 +35,8 @@ class Theory extends React.Component {
 		});
 		
 	}
+	
 	componentDidMount() {
-
 		var that = this;
 		var settings = {
 			type: 'POST',
@@ -50,6 +50,7 @@ class Theory extends React.Component {
 				that.setState({theory_url: jsonData.url});
 				that.setState({theory_title: jsonData.title});
 				that.setState({theory_subtitle: jsonData.subtitle});
+				that.appState({type_component: jsonData.type_component});
 				var canvas = document.getElementById("canvas");
 				var ctx = canvas.getContext("2d");
 

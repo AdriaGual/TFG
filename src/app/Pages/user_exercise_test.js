@@ -47,13 +47,12 @@ class UserExercice extends React.Component {
 	
 	componentDidMount(){
 		var that = this;
-		console.log(that.appState("exercice_name"));
+		
 		var settings = {
 			type: 'POST',
 			data: { 
 				'name': that.appState("exercice_name"), 
 			},
-			async:false,
 			url: 'php/load_exercice.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
@@ -62,11 +61,11 @@ class UserExercice extends React.Component {
 				that.setState({exercice_question: jsonData.question});
 				that.setState({exercice_help: jsonData.help});
 				that.setState({exercice_ntries: jsonData.tries});
-				that.appState({type_component: jsonData.type_component});
+				
 				that.setState({id: jsonData.isql});
 				img = jsonData.img;
 				n = jsonData.type_component;
-				if (that.appState("type_component")==5){
+				if (n==5){
 					var canvas = document.getElementById("canvas");
 					var ctx = canvas.getContext("2d");
 
@@ -83,21 +82,26 @@ class UserExercice extends React.Component {
 		};
 		$.ajax(settings);
 		
-		if (n==0){
-			LoadExercise(0);
-		}
-		else if (n==1){
-			LoadExercise(1);
-		}
-		else if (n==2){
-			LoadExercise(2);
-		}
-		else if (n==3){
-			LoadExercise(3);
-		}
-		else if (n==4){
-			LoadExercise(4);
-		}
+		var settings2 = {
+			type: 'POST',
+			data: { 
+				'name': that.appState("exercice_name"), 
+			},
+			url: 'php/load_questions.php',
+			success: function(response2) {
+				if (response2!="0_answers"){
+					var jsonData2 = JSON.parse(response2);
+					for (var b=0; b<jsonData2.length; b++){
+						$("#formulari").append("<input type='checkbox' name='answer' value='"+jsonData2[b].answer_text+"''/>"+jsonData2[b].answer_text+"<br/>");
+					}
+					$("#formulari").append("<br/>");
+				}
+				else{
+					$("#formulari").append("<p class='size15'>No hi han respostes per aquest test .___. </p><br/><br/>");
+				}
+			}
+		};
+		$.ajax(settings2);
 		
 	}
 
@@ -107,9 +111,35 @@ class UserExercice extends React.Component {
 			$('#unity').appendTo("#unityHide");
 		}	
 	}	
-
-
 	
+	clickcorregir  =()=>{
+		
+		var answers = [];
+		var a = 0;
+		$('input[name=answer]').each(function(index, item) {
+			var id = a;
+			var text = $(item).attr('value');
+			var solution = $(item).is(":checked");
+			answers[id] = {"text": text, "solution": solution};
+			a++;
+		});
+		
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': that.appState("exercice_name"), 
+				'answers': answers,
+			},
+			url: 'php/verify_answers_test.php',
+			success: function(response) {
+				if (response=="OK"){
+					that.props.history.push("/teacher_courses");
+				}
+			}
+		};
+		$.ajax(settings);
+	}	
 	/**
 	 * Renders the register page.
 	 */
@@ -127,7 +157,8 @@ class UserExercice extends React.Component {
 				<hr/>
 				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses</Link>
 				<Grid container>
-					<Grid item xs={5}  className="padding2"> 
+					
+					<Grid item xs={4}  className="padding2"> 
 						<Card className="course_description_form margin2 padding2">
 								<p className="margin1">{this.state.exercice_description}</p>
 						</Card>
@@ -139,9 +170,28 @@ class UserExercice extends React.Component {
 
 					</Grid>
 					<Grid item xs={4}  className="padding2">
+							<div id="image_div">
+								<div id="canvas_div">
+									<canvas id="canvas"></canvas>
+								</div>
+							</div>
 						
-							<div id ="contentID"></div> 
-						
+					</Grid>
+					<Grid item xs={3}  className="padding2">
+						<div className="left_30 down_20 orange size_20"><p>Respostes</p></div>
+						<hr/>
+						<div id="formulari"></div>
+						<hr/>
+						<br/>
+						<Button
+							id="btn-save"
+							className="btn btn-1 white left_30"
+							onClick={() => 	this.clickcorregir()}
+						>
+							Corregir
+						</Button>
+					</Grid>
+					<Grid item xs={1}>
 					</Grid>
 				</Grid>
 

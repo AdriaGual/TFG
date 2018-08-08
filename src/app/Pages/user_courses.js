@@ -111,12 +111,85 @@ class UserCourses extends React.Component {
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
-					that.props.history.push('/user_exercise');
+					
+					var settings = {
+						type: 'POST',
+						data: { 
+							'name': that.appState("exercice_name"), 
+						},
+						async:false,
+						url: 'php/load_exercice.php',
+						success: function(response) {
+							var jsonData = JSON.parse(response);
+							that.appState({type_component: jsonData.type_component});
+							if (that.appState("type_component")<5){
+								that.props.history.push('/user_exercise');
+							}
+							else{
+								that.props.history.push('/user_exercise_test');
+							}
+						}
+					};
+					$.ajax(settings);
+					
 				}
 			}
 		};
 		$.ajax(settings);
 	};
+	
+	clicktopic = (name) => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/is_course_topic.php',
+			success: function(response) {
+				if (response == "course"){
+					that.appState({course_name: name});
+					that.props.history.push('/user_course');
+				}
+				if(response == "topic"){
+					that.appState({topic_name: name});
+					that.props.history.push('/user_topic');
+				}
+				if(response == "theory"){
+					that.appState({theory_name:name});
+					that.props.history.push('/user_theory');
+				}
+				if(response == "exercice"){
+					that.appState({exercice_name:name});
+					var a;
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'name': name, 
+						},
+						async:false,
+						url: 'php/load_exercice.php',
+						success: function(response) {
+							var jsonData = JSON.parse(response);
+							a= jsonData.type_component;
+							
+						}
+					};
+					$.ajax(settings2);
+					console.log(a);
+					if (a<5){
+						that.props.history.push('/user_exercise');
+					}
+					else{
+						that.props.history.push('/user_exercise_test');
+					}
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
 	
 	clicktheory = (name) => {
 		var that = this;
@@ -280,7 +353,7 @@ class UserCourses extends React.Component {
 										buttons: [
 											<Button
 												className="btn btn-1 white"
-												onClick={() => 	this.click(node.name)}
+												onClick={() => 	this.clicktopic(node.name)}
 											>
 												<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 											</Button>,

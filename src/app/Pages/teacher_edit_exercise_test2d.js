@@ -39,9 +39,86 @@ class TeacherEditExerciceTest2d extends React.Component {
 		});
 	}
 	
+	componentDidMount(){
+		var settings = {
+			type: 'GET',
+			url: 'php/load_only_courses_teacher.php',
+			async:false,
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				for (var a=0; a<jsonData.length; a++){
+					$("#formulari").append("<p value='"+jsonData[a].id+"'> "+jsonData[a].name+"</p>");
+					
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'curs': jsonData[a].id,
+						},
+						url: 'php/load_only_topics.php',
+						async:false,
+						success: function(response2) {
+							if (response2!="0_topics"){
+								var jsonData2 = JSON.parse(response2);
+								for (var b=0; b<jsonData2.length; b++){
+									$("#formulari").append("<input type='checkbox' name='topic' value='"+jsonData2[b].id+"' />"+jsonData2[b].name+"<br/>");
+								}
+								$("#formulari").append("<br/>");
+							}
+							else{
+								$("#formulari").append("<p class='size15'>No hi han topics en aquest curs </p><br/><br/>");
+							}
+						}
+					};
+					$.ajax(settings2);
+				}
+			}
+		};
+		$.ajax(settings);
+	}
+	
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
+	
+	click = () => {
+		var canvas = document.getElementById('canvas');
+		var dataURL = canvas.toDataURL("image/png");
+		var topics = $("input[name=topic]:checked").serialize();
+		var answers = [];
+		var a = 0;
+		$('.answer_item').each(function(index, item) {
+			var id = a;
+			var text = $(item).find("input[type=text]").val();
+			var solution = $(item).find("span.input-group-addon > input[type=checkbox]").is(":checked");
+			answers[id] = {"text": text, "solution": solution};
+			a++;
+		});
+			
+		
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'img': dataURL, 
+				'topics':topics,
+				'title': $("#newtitle").val(), 
+				'description': $("#problem_description").val(), 
+				'question': $("#problem_question").val(), 
+				'help': $("#help").val(), 
+				'answers': answers,
+			},
+			url: 'php/save_exercise_test.php',
+			success: function(response) {
+				if (response=="OK"){
+					that.props.history.push("/teacher_courses");
+				}
+			}
+		};
+		$.ajax(settings);
+		
+	}
+	
+	
 	
 	/**
 	 * Renders the register page.
@@ -80,6 +157,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox
+								  id="has_text"
 								  checked={this.state.hasTextSolution}
 								  onChange={this.handleChange('hasTextSolution')}
 								  value="checkedA"
@@ -94,7 +172,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 						</Grid>
 						
 						<p>Help Text:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
+						<textarea value={this.state.value} id="help" onChange={this.handleChange} style={{height:100,width:400}}/>
 						<Grid container>
 							<Grid item xs={6} > 
 								<Select native className="down_30 " id="problem_difficulty_level"> 
@@ -138,92 +216,21 @@ class TeacherEditExerciceTest2d extends React.Component {
 						<Button type="button" id="btn-new-item" className="btn btn-4 white" >Afegir resposta</Button>
 					</Grid>
 					<Grid item xs={2} > 
+						<div className="left_30 down_20 orange size_20"><p>Topics</p></div>
+						<hr/>
+						<div id="formulari"></div>
+						<hr/>
+						<br/>
 						<Button
 							className="btn btn-1 white left_15"
-							onClick={() => 	this.clicktheory(node.name)}
+							onClick={() => 	this.click()}
 						>
-							Preview
+							<Icon className="fa fa-save" style={{ fontSize: 15 }}></Icon>
 						</Button>
 					</Grid>
 
 				</Grid>
-				<Grid container className="down_30 left_30">
-					<Grid item xs={2}> 
-						<Card>
-							<a className="orange size_30 left_30">Categories</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Magnetic Resonance</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Clinical Cases</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Evolution</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Plate in PA or AP</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Diafragmes</ListItemText>
-								</ListItem>
-							</List>
-						</Card>
-						<Grid item xs={1}>
-							<p></p>
-						</Grid>
-					</Grid>
-					<Grid item xs={1}> 
-					</Grid>
-					<Grid item xs={2}> 
-						<Card>
-							<a className="orange size_30 left_30">User Type</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Student</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Radiologist</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Doctor</ListItemText>
-								</ListItem>
-							</List>
-						</Card>
-						<Grid item xs={1}> 
-							<p></p>
-						</Grid>
-						<Card>
-							<a className="orange size_30 left_30">Topics</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 1</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 2</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 3</ListItemText>
-								</ListItem>
-							
-							</List>
-						</Card>
-					</Grid>
-				</Grid>
+				
 			</div>
 		
 		);

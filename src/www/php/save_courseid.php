@@ -1,4 +1,5 @@
 ﻿<?php
 	session_start(); 
-	$_SESSION["courseid"] = $_POST["idsql"];
+	$sql = $_POST["idsql"];
+	$_SESSION["courseid"] = $sql;
 ?>
