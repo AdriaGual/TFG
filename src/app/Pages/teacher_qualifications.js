@@ -23,12 +23,26 @@ class UserQualifications extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			course_name:"",
 		}
 	}
 	appState = this.props.appState;
 	
 	componentDidMount() {
 		var that = this;
+		
+		var settings4 = {
+			type: 'GET',
+			async:false,
+			url: 'php/return_course_id_name.php',
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				that.setState({course_name: jsonData[0].name});
+				that.appState({id_course: jsonData[0].id});
+			}
+		};
+		$.ajax(settings4);
+		
 		var settings3 = {
 			type: 'POST',
 			data: { 
@@ -64,19 +78,24 @@ class UserQualifications extends React.Component {
 									url: 'php/show_student_topic_qualifications.php',
 									success: function(response2) {
 										var jsonData2 = JSON.parse(response2);
-										$("#formulari").append("<table style='width:100%'><tr><th style='width:(100/4)%'>Exercice</th><th style='width:(100/4)%'>Tries</th> <th style='width:(100/4)%'>Puntuation</th><th style='width:(100/4)%'>Finished</th></tr>");
-										for (var b=0; b<jsonData2.length; b++){
-											var color;
-											if (jsonData2[b].finished>0){
-												color = "#91F5AD";
+										if (jsonData2.length>0){
+											$("#formulari").append("<table style='width:100%'><tr><th style='width:(100/4)%'>Exercice</th><th style='width:(100/4)%'>Tries</th> <th style='width:(100/4)%'>Puntuation</th><th style='width:(100/4)%'>Finished</th></tr>");
+											for (var b=0; b<jsonData2.length; b++){
+												var color;
+												if (jsonData2[b].finished>0){
+													color = "#91F5AD";
+												}
+												else{
+													color = "#F49090";
+												}
+												$("#formulari tr:last").after("<tr><td style='width:(100/4)%'>"+jsonData2[b].statement+"</td><td style='width:(100/4)%'>"+jsonData2[b].tries+"</td> <td style='width:(100/4)%'>"+jsonData2[b].puntuation+"</td> <td style='width:(100/4)%' bgcolor = "+color+" >"+jsonData2[b].finished+"</td> </tr>");
 											}
-											else{
-												color = "#F49090";
-											}
-											$("#formulari tr:last").after("<tr><td style='width:(100/4)%'>"+jsonData2[b].statement+"</td><td style='width:(100/4)%'>"+jsonData2[b].tries+"</td> <td style='width:(100/4)%'>"+jsonData2[b].puntuation+"</td> <td style='width:(100/4)%' bgcolor = "+color+" >"+jsonData2[b].finished+"</td> </tr>");
+											$("#formulari tr:last").after("</table>");
+											$("#formulari").append("<br/><br/>");
 										}
-										$("#formulari tr:last").after("</table>");
-										$("#formulari").append("<br/><br/>");
+										else{
+											$("#formulari").append("<p>No hi han exercicis assignats.</p><br/><br/>");
+										}
 									}
 								};
 								$.ajax(settings2);
@@ -105,8 +124,9 @@ class UserQualifications extends React.Component {
 		return (
 			<div>
 				<br/>
-				<div className="left_30 down_20 orange size_30"><p>{this.appState("course_name")}</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{this.state.course_name}</p></div>
 				<hr/>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<form id="formulari"></form>
 				
 			</div>

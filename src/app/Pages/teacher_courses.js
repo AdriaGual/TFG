@@ -78,6 +78,19 @@ class TeacherCourses extends React.Component {
 	
 	clickqualifications = (name,idsql) => {
 		this.appState({course_name: name});
+		var settings2 = {
+			type: 'POST',
+			async:false,
+			data: { 
+				'idsql': idsql, 
+			},
+			url: 'php/save_courseid.php',
+			success: function(response) {
+
+			}
+		};
+		$.ajax(settings2);
+		
 		this.appState({id_course: idsql});
 		this.props.history.push('/teacher_qualifications');
 		

@@ -82,24 +82,25 @@ class Theory extends React.Component {
 				<hr/>
 				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<Grid container>
-					<Grid item xs={1}>
+					<Grid item xs={2}>
 					</Grid>
-					<Grid item xs={5}  className="padding2"> 
+					<Grid item xs={4}  className="padding2"> 
 						<p className="left_30 down_20 black size_12">{this.state.theory_subtitle}</p>
 						<br/>
 						<a className="left_30 down_20 blue size_12" href={this.state.theory_url}>URL: {this.state.theory_url}</a>
 						<br/>
+						<br/>
 						<div className="big_text">{this.state.theory_content}</div>
 						
 					</Grid>
-					<Grid item xs={5}  className="padding2"> 
+					<Grid item xs={4}  className="padding2"> 
 						<div id="image_div">
 							<div id="canvas_div">
 								<canvas id="canvas"></canvas>
 							</div>
 						</div>
 					</Grid>
-					<Grid item xs={1}>
+					<Grid item xs={2}>
 					</Grid>
 				</Grid>
 

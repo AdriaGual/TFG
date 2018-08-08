@@ -14,6 +14,7 @@ import language from "../Utils/language.js"
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import DoneIcon from 'material-ui-icons/Done';
 /** 
  * Register Page
  * @extends React.Component
@@ -27,6 +28,7 @@ class Register extends React.Component {
 		super(props);
 		this.state = {
 			showsnack: false,
+			showsnackcookie: true,
 			snacktext: "",
 		};
 	}
@@ -71,6 +73,10 @@ class Register extends React.Component {
 		  return;
 		}
 		this.setState({ showsnack: false });
+	};
+	
+	handleClosecookie = (event, reason) => {
+		this.setState({ showsnackcookie: false });
 	};
 	
 	
@@ -176,6 +182,26 @@ class Register extends React.Component {
 									  onClick={this.handleClose}
 									>
 									<CloseIcon />
+									</IconButton>,
+								  ]}
+								/>
+								<Snackbar
+								  anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'center',
+								  }}
+								  open={this.state.showsnackcookie}
+								  
+								  message={<span id="message-id">We use cookies to ensure that we give you the best experience on our website. We also use cookies to ensure we show you advertising that is relevant to you. If you continue without changing your settings, we'll assume that you are happy to receive all cookies on the website.</span>}
+								  action={[
+									<IconButton
+									  key="close"
+									  aria-label="Close"
+									  color="inherit"
+									  onClick={this.handleClosecookie}
+									  style={{width:100}}
+									>
+									<DoneIcon /> <p className="size15" >Continue</p>
 									</IconButton>,
 								  ]}
 								/>

@@ -74,9 +74,9 @@ class TeacherEditExerciceTest2d extends React.Component {
 					</Grid>
 					<Grid item xs={3} > 
 						<p>Description:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
+						<textarea value={this.state.value} onChange={this.handleChange} id="problem_description" style={{height:200,width:400}}/>
 						<p>Question:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
+						<textarea value={this.state.value} onChange={this.handleChange} id="problem_question" style={{height:100,width:400}}/>
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox
@@ -89,7 +89,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 								<p>Text Solution:</p>
 							 </Grid>
 							{this.state.hasTextSolution ?
-								<textarea value={this.state.value} onChange={this.handleChange} style={{height:50,width:400}}/>
+								<textarea value={this.state.value} onChange={this.handleChange} id="problem_solution" style={{height:50,width:400}}/>
 							:null}
 						</Grid>
 						
@@ -97,7 +97,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
 						<Grid container>
 							<Grid item xs={6} > 
-								<Select native className="down_30 "> 
+								<Select native className="down_30 " id="problem_difficulty_level"> 
 									<option value="">Difficulty</option>
 									<option value={1}>1</option>
 									<option value={2}>2</option>

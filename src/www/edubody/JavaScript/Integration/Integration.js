@@ -113,7 +113,7 @@ function LoadExercise(i)
                         updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
                         function() // El flux de codi continua per aqui despres de updateExercise.
                         {
-                            LoadPageWithoutHistory("./exerciseSelection.html",
+                            LoadPageWithoutHistory("./edubody/exerciseSelection.html",
                             function()
                             {
                                 $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
@@ -158,7 +158,7 @@ function LoadExercise(i)
                         updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
                         function() // El flux de codi continua per aqui despres de updateExercise.
                         {
-                            LoadPageWithoutHistory("./exerciseNamed.html",
+                            LoadPageWithoutHistory("./edubody/exerciseNamed.html",
                             function()
                             {
                                 $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
@@ -204,7 +204,7 @@ function LoadExercise(i)
                         updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
                         function() // El flux de codi continua per aqui despres de updateExercise.
                         {
-                            LoadPageWithoutHistory("./exerciseSelection.html",
+                            LoadPageWithoutHistory("./edubody/exerciseSelection.html",
                             function()
                             {
                                 $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);
@@ -250,7 +250,7 @@ function LoadExercise(i)
                         updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
                         function() // El flux de codi continua per aqui despres de updateExercise.
                         {
-                            LoadPageWithoutHistory("./exerciseAnimation.html",
+                            LoadPageWithoutHistory("./edubody/exerciseAnimation.html",
                             function()
                             {
                                 $("#questionTittle").html(JSON.parse(JSON.parse(data).webContent).question);
@@ -289,7 +289,7 @@ function LoadExercise(i)
                         updateExercise(data , // Enviem la informació de l'exercici al Unity i esperem 
                         function() // El flux de codi continua per aqui despres de updateExercise.
                         {
-                            LoadPageWithoutHistory("./exerciseNamed.html",
+                            LoadPageWithoutHistory("./edubody/exerciseNamed.html",
                             function()
                             {
                                 $("#subjectTittle").html(JSON.parse(JSON.parse(data).webContent).statement);

@@ -35,6 +35,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		
 		this.props.history.push('/teacher_choose_exercise');	
 	}
+	
 	componentDidMount(){
 		LoadEditorAnimation();
 	}
@@ -50,7 +51,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	 */
 	render(){
 		return (
-			<div className="flex_container">
+			<div>
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>Animation Exercise</p></div>
 				<hr/>

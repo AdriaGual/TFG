@@ -448,7 +448,7 @@ label {
 
 #radius_input_group {
 	float: left;
-	width: 110px;
+	width: 120px;
 	margin-right: 10px;
 }
 
@@ -460,7 +460,7 @@ label {
 	float: left;
 	width: -moz-calc(100% - 130px);
 	width: -webkit-calc(100% - 130px);
-	width: calc(100% - 130px);
+	width: calc(100% - 140px);
 	height: 30px;
 }
 

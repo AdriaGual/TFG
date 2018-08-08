@@ -56,13 +56,11 @@ class UserCourse extends React.Component {
 	componentDidMount() {
 		var that = this;
 		var settings = {
-			type: 'POST',
-			data: { 
-				'name': that.appState("course_name"), 
-			},
+			type: 'GET',
 			url: 'php/load_course_information.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
+				that.appState({course_name: jsonData.name});
 				that.setState({course_description: jsonData.description});
 				that.setState({course_prerequisits: jsonData.prerequisits});
 			}
@@ -303,12 +301,15 @@ class UserCourse extends React.Component {
 						<Card className="course_description_form margin2 ">
 							<CardContent className="bold">
 								Course Description
+								<hr/>
 							</CardContent>
-								<p id="description_text" className="margin1">{this.state.course_description}</p>
+							
+							<p id="description_text" className="margin1">{this.state.course_description}</p>
 						</Card>
 						<Card className="course_description_form margin2 ">
 							<CardContent className="bold">
 								Pre-Requirements
+								<hr/>
 							</CardContent>
 								<p className="margin1">{this.state.course_prerequisits}</p>
 						</Card>

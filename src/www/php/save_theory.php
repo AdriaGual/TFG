@@ -6,6 +6,7 @@
 	$subtitle= $_POST["subtitle"];
 	$content= $_POST["content"];
 	$url= $_POST["url"];
+	$topics[] = $_POST["topics"];
 	$username = "root";
 	$password = "";
 
@@ -20,7 +21,18 @@
 		$stmt->bindParam(':url', $url, PDO::PARAM_STR);
 		$stmt->bindParam(':img', $image, PDO::PARAM_STR);
 		$stmt->execute();
-	
+		$theoryid = $conn->lastInsertId();
+		
+		$explodedtopics = explode('&',$topics[0]);
+		//echo substr($explodedtopics[0],6);
+		for ($i = 0; $i <count($explodedtopics); $i++) {
+			$topicid = substr($explodedtopics[$i],6);
+			$stmt = $conn->prepare("INSERT INTO theory_topic (id_theory_content,id_topic) VALUES (:theoryid,:topicid)");
+			$stmt->bindParam(':theoryid', $theoryid, PDO::PARAM_STR);
+			$stmt->bindParam(':topicid', $topicid, PDO::PARAM_STR);
+			$stmt->execute();
+		}
+		echo "OK";
 		$conn = null;
 	}
 	catch(PDOException $e)

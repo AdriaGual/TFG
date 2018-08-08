@@ -40,6 +40,8 @@ th, td {
     word-wrap:break-word;
     width: 500px;
     white-space: normal;
+	text-align: justify;
+    text-justify: inter-word;
 }
 
 .flex_container{

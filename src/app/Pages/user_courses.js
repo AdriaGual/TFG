@@ -75,11 +75,26 @@ class UserCourses extends React.Component {
 	click = (name,idsql) => {
 		var that = this;
 		this.appState({id_course: idsql});
+		
+		var settings2 = {
+			type: 'POST',
+			async:false,
+			data: { 
+				'idsql': idsql, 
+			},
+			url: 'php/save_courseid.php',
+			success: function(response) {
+
+			}
+		};
+		$.ajax(settings2);
+		
 		var settings = {
 			type: 'POST',
 			data: { 
 				'name': name, 
 			},
+			async:false,
 			url: 'php/is_course_topic.php',
 			success: function(response) {
 				if (response == "course"){

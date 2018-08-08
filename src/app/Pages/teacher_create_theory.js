@@ -36,9 +36,50 @@ class Theory extends React.Component {
 		});
 	}
 	
+	componentDidMount() {
+		var that = this;
+
+		var settings = {
+			type: 'GET',
+			url: 'php/load_only_courses_teacher.php',
+			async:false,
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				for (var a=0; a<jsonData.length; a++){
+					$("#formulari").append("<p value='"+jsonData[a].id+"'> "+jsonData[a].name+"</p>");
+					
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'curs': jsonData[a].id,
+						},
+						url: 'php/load_only_topics.php',
+						async:false,
+						success: function(response2) {
+							if (response2!="0_topics"){
+								var jsonData2 = JSON.parse(response2);
+								for (var b=0; b<jsonData2.length; b++){
+									$("#formulari").append("<input type='checkbox' name='topic' value='"+jsonData2[b].id+"' />"+jsonData2[b].name+"<br/>");
+								}
+								$("#formulari").append("<br/>");
+							}
+							else{
+								$("#formulari").append("<p class='size15'>No hi han topics en aquest curs </p><br/><br/>");
+							}
+						}
+					};
+					$.ajax(settings2);
+				}
+			}
+		};
+		$.ajax(settings);
+	}
+	
 	click = () => {
 		var canvas = document.getElementById('canvas');
 		var dataURL = canvas.toDataURL("image/png");
+		var topics = $("input[name=topic]:checked").serialize();
+		var that = this;
 		var settings = {
 			type: 'POST',
 			data: { 
@@ -47,10 +88,13 @@ class Theory extends React.Component {
 				'subtitle': $("#newsubtitle").val(), 
 				'content': $("#content_text").val(), 
 				'url': $("#url_text").val(), 
+				'topics': topics,
 			},
 			url: 'php/save_theory.php',
 			success: function(response) {
-				console.log(dataURL);
+				if (response=="OK"){
+					that.props.history.push("/teacher_courses");
+				}
 			}
 		};
 		$.ajax(settings);
@@ -101,7 +145,7 @@ class Theory extends React.Component {
 						<textarea id="content_text" value={this.state.value} onChange={this.handleChange} style={{height:400,width:600}}/>
 						<br/>
 						<p>URL:</p>
-						<textarea id="url_text" value={this.state.value} onChange={this.handleChange} style={{height:100,width:600}}/>
+						<textarea id="url_text" value={this.state.value} onChange={this.handleChange} style={{height:50,width:600}}/>
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
@@ -126,6 +170,11 @@ class Theory extends React.Component {
 					<Grid item xs={1}> 
 					</Grid>
 					<Grid item xs={2} > 
+						<div className="left_30 down_20 orange size_20"><p>Topics</p></div>
+						<hr/>
+						<div id="formulari"></div>
+						<hr/>
+						<br/>
 						<Button
 							id="btn-save"
 							className="btn btn-1 white left_30"

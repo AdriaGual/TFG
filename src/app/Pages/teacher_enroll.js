@@ -57,6 +57,7 @@ class UserCourses extends React.Component {
 			}
 		};
 		$.ajax(settings);
+		
 	}
 	
 	clicktoggle= ()=>{
@@ -206,10 +207,9 @@ class UserCourses extends React.Component {
 							<br/><br/>
 							
 							<p style={{marginLeft:20}} className="size_15 ">Load xlsx file</p> 
-							<input style={{marginLeft:20}}type="file" id="input" />
+							<input style={{marginLeft:20}}type="file" id="input" onChange={(event)=> { this.clickshowexcel() }} />
 							<br/>
 							<br/>
-							<Button onClick={() => this.clickshowexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Show Excel Students</Button>
 						</Card>
 						
 					</Grid>

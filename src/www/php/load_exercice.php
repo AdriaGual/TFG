@@ -27,6 +27,7 @@
 				$miscursos['question']=$row->question;
 				$miscursos['help']=$row->help;
 				$miscursos['tries']=$row->n_tries;
+				$miscursos['type_component']=$row->type_component;
 				echo json_encode($miscursos);
 			}
 			else{

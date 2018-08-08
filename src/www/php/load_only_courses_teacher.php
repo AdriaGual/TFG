@@ -1,33 +1,33 @@
 ﻿<?php
 	session_start(); 
-
-	$idcourse = $_SESSION["courseid"];
+	$myid = $_SESSION["userid"];
 	
 	$username = "root";
 	$password = "";
-
+	
 	try {
 		$conn = new PDO("mysql:host=localhost;dbname=elearning", $username, $password);
 		// set the PDO error mode to exception
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-		$stmt = $conn->prepare("SELECT * FROM course WHERE id = :idcourse");
-		$stmt->bindParam(':idcourse', $idcourse, PDO::PARAM_STR);
+	
+		//Buscar els cursos als que esta matriculat lusuari.
+		$stmt = $conn->prepare("SELECT c.id, c.name FROM course AS c INNER JOIN enrollment as en ON c.id = en.id_course WHERE en.id_user=:iduser");
+		$stmt->bindParam(':iduser', $myid, PDO::PARAM_STR);
 		$stmt->execute();
-		
 		$total = $stmt->rowCount();
 		if ($total > 0){
 			$miscursos = array();
-			$row = $stmt->fetchObject();
-			$miscursos['name']=$row->name;
-			$miscursos['description']=$row->description;
-			$miscursos['prerequisits']=$row->prerequisits;
+			$punter = 0;
+			while ($row = $stmt->fetchObject()) {
+				$miscursos[$punter]['id'] = $row->id;
+				$miscursos[$punter]['name'] =  $row->name;
+				$punter++;//1
+			}
 			echo json_encode($miscursos);
 		}
 		else{
-			echo "course_not_found";
+			echo "0_courses";
 		}
-		
 		$conn = null;
 	}
 	catch(PDOException $e)
