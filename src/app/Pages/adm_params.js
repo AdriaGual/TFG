@@ -74,7 +74,44 @@ class UserCourses extends React.Component {
 			  }, (error) => {
 			  	console.error(error)
 		});		
-	}	
+	}
+
+	clickshowexcel = () => {
+		
+		var input = document.getElementById('input')
+		var that = this;
+		var jsonexcel = "";
+		var curs = $("input[name=curs]:checked").val();
+		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
+			   // `data` is an array of rows
+			   // each row being an array of cells.
+			   jsonexcel = JSON.stringify(data, null, 2);
+			   
+			   var settings = {
+					type: 'POST',
+					data: { 
+						'idcurs': curs,
+						'jsonexcel': jsonexcel
+					},
+					url: 'php/show_users_from_admin.php',
+					success: function(response) {
+						that.setState({showinfo: true});
+						var jsonData = JSON.parse(response);
+						$("#formulari2").empty();
+						$("#formulari2").append("<table style='width:100%'><tr><th style='width:(100/5)%'>Username</th><th style='width:(100/5)%'>Name</th> <th style='width:(100/5)%'>Surname</th><th style='width:(100/5)%'>Email</th><th style='width:(100/5)%'>New Student?</th></tr>");
+						for (var a=0; a<jsonData.length; a++){
+							$("#formulari2 tr:last").after("<tr><td style='width:(100/5)%'>"+jsonData[a].username+"</td><td style='width:(100/5)%'>"+jsonData[a].name+"</td> <td style='width:(100/5)%'>"+jsonData[a].surname+"</td> <td style='width:(100/5)%'>"+jsonData[a].email+"</td> <td style='width:(100/5)%'>"+jsonData[a].isnew+"</td> </tr>");
+						}
+						$("#formulari2 tr:last").after("</table>");
+						
+					}
+				};
+				$.ajax(settings);
+			   
+			  }, (error) => {
+			  	console.error(error)
+		});
+	};	
 	
 	/**
 	 * Renders the register page.
@@ -88,27 +125,47 @@ class UserCourses extends React.Component {
 
 		return (
 			<div>
-				<div className="left_30 down_20 orange size_30"><p>Profile</p></div>
+				<br/>
+				<div className="left_30 down_20 orange size_30"><p>Admin</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={1}>
 					</Grid>
 					<Grid item xs={3}>
+						<br/>
+						<p className="orange size_20" style={{marginLeft:95}}>Load Users From Excel</p>
+						<hr/>
+						<br/>
+						<div id="formulari"></div>
+						<br/>
+						<a href="./public/Plantilla.xlsx" style={{color:"#0645AD",marginLeft:20}}>Download Template</a>
+						
+						<br/><br/>
+						
+						<p style={{marginLeft:20}} className="size_15 ">Load xlsx file</p> 
+						<input style={{marginLeft:20}}type="file" id="input" onChange={(event)=> { this.clickshowexcel() }} />
+						<br/><br/>
+						
+					</Grid>
+					<Grid item xs={2}>
 						
 					</Grid>
 					<Grid item xs={4}>
-						<div id="formulari"></div>
-						<br/>
-						<input type="file" id="input" />
-						<br/><br/>
-						<Button
-							className="btn btn-3 white  left_15 "
-							onClick={() => this.click()}
-						>
-							Create Users
-						</Button>
+						{ this.state.showinfo ? 
+							<Card style={{width:700}}>
+								<br/>
+								<p className="orange size_20" style={{marginLeft:300}}>Students</p>
+								<hr/>
+								<br/>
+								<form id="formulari2"></form>
+								<br/>
+								<br/>
+								<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:230,marginBottom:10}}> Enroll Excel Students</Button>		
+							</Card>				
+							: null
+						}
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={2}>
 						
 					</Grid>
 				</Grid>

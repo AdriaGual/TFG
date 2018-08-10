@@ -147,9 +147,8 @@ class TeacherEditExerciceTest2d extends React.Component {
 					</Grid>
 				</Grid>
 				<Grid container>
-					<Grid item xs={1} > 
-					</Grid>
-					<Grid item xs={3} > 
+					
+					<Grid item xs={3} className="left_30" > 
 						<p>Description:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} id="problem_description" style={{height:200,width:400}}/>
 						<p>Question:</p>
@@ -215,8 +214,8 @@ class TeacherEditExerciceTest2d extends React.Component {
 						</div>
 						<Button type="button" id="btn-new-item" className="btn btn-4 white" >Afegir resposta</Button>
 					</Grid>
-					<Grid item xs={2} > 
-						<div className="left_30 down_20 orange size_20"><p>Topics</p></div>
+					<Grid item xs={2} className="left_30" > 
+						<div className="left_50 down_20 orange size_20"><p>Topics</p></div>
 						<hr/>
 						<div id="formulari"></div>
 						<hr/>

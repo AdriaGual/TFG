@@ -217,13 +217,13 @@ class UserCourses extends React.Component {
 						{ this.state.showinfo ? 
 							<Card style={{width:700}}>
 								<br/>
-								<p className="orange size_20" style={{marginLeft:160}}>Students</p>
+								<p className="orange size_20" style={{marginLeft:300}}>Students</p>
 								<hr/>
 								<br/>
 								<form id="formulari2"></form>
 								<br/>
 								<br/>
-								<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:75,marginBottom:10}}> Enroll Excel Students</Button>		
+								<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:230,marginBottom:10}}> Enroll Excel Students</Button>		
 							</Card>				
 							: null
 						}

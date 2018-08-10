@@ -39,6 +39,11 @@ class App extends React.Component {
 			exercice_name:"",
 			id_course:"",
 			type_component:"",
+			theory_image:"",
+			theory_title:"",
+			theory_subtitle:"",
+			theory_content:"",
+			theory_url:"",
 		};
 		
 		var that = this;

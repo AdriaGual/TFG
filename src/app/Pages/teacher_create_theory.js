@@ -38,7 +38,35 @@ class Theory extends React.Component {
 	
 	componentDidMount() {
 		var that = this;
+		$("#newtitle").val(that.appState("theory_title"));
+		$("#newsubtitle").val(that.appState("theory_subtitle"));
+		$("#content_text").val(that.appState("theory_content"));
+		$("#url_text").val(that.appState("theory_url"));
+		
+		if (that.appState("theory_image")!=""){
+			var settings = {
+				type: 'GET',
+				url: 'php/load_image.php',
+				success: function(response) {
+					var canvas = document.getElementById("canvas");
+					var ctx = canvas.getContext("2d");
 
+					function drawMap(imgdata) {
+					  var image = new Image();
+					  image.onload = function() {
+						ctx.drawImage(image, 0, 0);
+					  };
+					  image.src = imgdata;
+					  
+					  
+					}
+					drawMap(that.appState("theory_image"));
+				}
+			};
+			$.ajax(settings);
+		}
+		
+		
 		var settings = {
 			type: 'GET',
 			url: 'php/load_only_courses_teacher.php',
@@ -73,6 +101,28 @@ class Theory extends React.Component {
 			}
 		};
 		$.ajax(settings);
+	}
+	
+	
+	clickPreview = () =>{
+		var canvas = document.getElementById('canvas');
+		var dataURL = canvas.toDataURL("image/png");
+		
+		this.appState({theory_image: dataURL});
+		this.appState({theory_title: $("#newtitle").val()});
+		this.appState({theory_subtitle: $("#newsubtitle").val()});
+		this.appState({theory_content: $("#content_text").val()});
+		this.appState({theory_url: $("#url_text").val()});
+		this.props.history.push("/teacher_preview_theory");
+	}
+	
+	clickback = () =>{
+		
+		this.appState({theory_image: ""});
+		this.appState({theory_title: ""});
+		this.appState({theory_subtitle:""});
+		this.appState({theory_content: ""});
+		this.appState({theory_url: ""});
 	}
 	
 	click = () => {
@@ -112,7 +162,7 @@ class Theory extends React.Component {
 		return (
 			<div>
 				<br/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}} onClick={() => 	this.clickback()}>Courses</Link>
 				<Grid container>
 					<Grid item xs={1}> 
 					</Grid>
@@ -175,13 +225,27 @@ class Theory extends React.Component {
 						<div id="formulari"></div>
 						<hr/>
 						<br/>
-						<Button
-							id="btn-save"
-							className="btn btn-1 white left_30"
-							onClick={() => 	this.click()}
-						>
-							<Icon className="fa fa-save" style={{ fontSize: 15 }}></Icon>
-						</Button>
+						<Grid container>
+							<Grid item xs={6}>
+								<Button
+									id="btn-preview"
+									className="btn btn-4 white left_30"
+									onClick={() => 	this.clickPreview()}
+								>
+									<Icon className="fa fa-eye" style={{ fontSize: 15 }}></Icon>
+								</Button>
+							</Grid>
+						
+							<Grid item xs={6}>
+								<Button
+									id="btn-save"
+									className="btn btn-1 white left_30"
+									onClick={() => 	this.click()}
+								>
+									<Icon className="fa fa-save" style={{ fontSize: 15 }}></Icon>
+								</Button>
+							</Grid>
+						</Grid>
 					</Grid>
 					
 				</Grid>

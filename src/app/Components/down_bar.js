@@ -52,12 +52,12 @@ export default class Authentication extends React.Component {
 	render(){
 		return (
 			<div className="bg_white">
-				<Grid container className="bottom padding0 bg_white">
+				<Grid container className="bottom padding0 bg_white" style={{height:90}}>
 					<hr className="margin0"/>
 					<Grid item xs={1}>
 					</Grid>
 					<Grid item xs={2}>
-						<img src="./img/udg_logo.png" />
+						
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>

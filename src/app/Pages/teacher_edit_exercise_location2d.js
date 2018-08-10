@@ -40,13 +40,50 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked });
 	};
+	
+	componentDidMount(){
+		var settings = {
+			type: 'GET',
+			url: 'php/load_only_courses_teacher.php',
+			async:false,
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				for (var a=0; a<jsonData.length; a++){
+					$("#formulari").append("<p value='"+jsonData[a].id+"'> "+jsonData[a].name+"</p>");
+					
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'curs': jsonData[a].id,
+						},
+						url: 'php/load_only_topics.php',
+						async:false,
+						success: function(response2) {
+							if (response2!="0_topics"){
+								var jsonData2 = JSON.parse(response2);
+								for (var b=0; b<jsonData2.length; b++){
+									$("#formulari").append("<input type='checkbox' name='topic' value='"+jsonData2[b].id+"' />"+jsonData2[b].name+"<br/>");
+								}
+								$("#formulari").append("<br/>");
+							}
+							else{
+								$("#formulari").append("<p class='size15'>No hi han topics en aquest curs </p><br/><br/>");
+							}
+						}
+					};
+					$.ajax(settings2);
+				}
+			}
+		};
+		$.ajax(settings);
+	}
 
 	/**
 	 * Renders the register page.
 	 */
 	render(){
 		return (
-			<div style={{ height: 1500}}>
+			<div>
 				<div className="left_30">	
 					<TextField
 						id="newtitle"
@@ -118,7 +155,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
-					<Grid item xs={6} > 
+					<Grid item xs={4} > 
 						<div id="image_div">
 							<div id="canvas_div">
 								<canvas id="canvas"></canvas>
@@ -148,93 +185,23 @@ class TeacherEditExerciceLocation2d extends React.Component {
 						</div>
 					</Grid>
 					
-					<Grid item xs={1} > 
+					<Grid item xs={2} > 
+						<div className="left_50 down_20 orange size_20"><p>Topics</p></div>
+						<hr/>
+						<div id="formulari"></div>
+						<hr/>
+						<br/>
 						<Button
 							className="btn btn-1 white left_15"
-							onClick={() => 	this.clicktheory(node.name)}
+							onClick={() => 	this.click()}
 						>
-							Preview
+							<Icon className="fa fa-save" style={{ fontSize: 15 }}></Icon>
 						</Button>
 					</Grid>
-
-				</Grid>
-				<Grid container className="down_30 left_30">
-					<Grid item xs={2}> 
-						<Card>
-							<a className="orange size_30 left_30">Categories</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Magnetic Resonance</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Clinical Cases</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Evolution</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Plate in PA or AP</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Diafragmes</ListItemText>
-								</ListItem>
-							</List>
-						</Card>
-						<Grid item xs={1}>
-							<p></p>
-						</Grid>
-					</Grid>
-					<Grid item xs={1}> 
-					</Grid>
-					<Grid item xs={2}> 
-						<Card>
-							<a className="orange size_30 left_30">User Type</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Student</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Radiologist</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Doctor</ListItemText>
-								</ListItem>
-							</List>
-						</Card>
-						<Grid item xs={1}> 
-							<p></p>
-						</Grid>
-						<Card>
-							<a className="orange size_30 left_30">Topics</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 1</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 2</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 3</ListItemText>
-								</ListItem>
-							
-							</List>
-						</Card>
+					<Grid item xs={1} > 
 					</Grid>
 				</Grid>
+				
 			</div>
 		
 		);

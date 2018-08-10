@@ -22,6 +22,7 @@ import TeacherCourses from './Pages/teacher_courses.js';
 import TeacherEditCourse from './Pages/teacher_edit_course.js';
 import TeacherChooseExercise from './Pages/teacher_choose_exercise.js';
 import TeacherCreateTheory from './Pages/teacher_create_theory.js';
+import TeacherPreviewTheory from './Pages/teacher_preview_theory.js';
 import TeacherEditExerciseLocation2d from './Pages/teacher_edit_exercise_location2d.js';
 import TeacherEditExerciseTest2d from './Pages/teacher_edit_exercise_test2d.js';
 import TeacherEditExerciseMPR from './Pages/teacher_edit_exercise_mpr.js';
@@ -84,6 +85,7 @@ export default class Main extends React.Component {
 			<Route path='/teacher_assign_exercise' render={() => (<div><div><TeacherAssignExercise appState={this.appState}></TeacherAssignExercise></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_qualifications' render={() => (<div><div><TeacherQualifications appState={this.appState}></TeacherQualifications></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_create_theory' render={() => (<div><div><TeacherCreateTheory appState={this.appState}></TeacherCreateTheory></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_preview_theory' render={() => (<div><div><TeacherPreviewTheory appState={this.appState}></TeacherPreviewTheory></div><div className="bot_margin"></div></div>)} />
 			<Route path='/adm_params' render={() => (<div><div><AdmParams appState={this.appState}></AdmParams></div><div className="bot_margin"></div></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
