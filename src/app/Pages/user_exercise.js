@@ -29,10 +29,11 @@ class UserExercice extends React.Component {
 			exercice_description:"",
 			exercice_question:"",
 			exercice_help:"",
-			exercice_tries:"",
+			exercice_ntries:"",
 			component:"",
 			id:"",
 			img:"",
+			tries:"",
 		}
 	}
 	
@@ -61,7 +62,8 @@ class UserExercice extends React.Component {
 				that.setState({exercice_description: jsonData.description});
 				that.setState({exercice_question: jsonData.question});
 				that.setState({exercice_help: jsonData.help});
-				that.setState({exercice_ntries: jsonData.tries});
+				that.setState({exercice_ntries: jsonData.ntries});
+				that.setState({tries: jsonData.tries});
 				that.appState({type_component: jsonData.type_component});
 				that.setState({id: jsonData.isql});
 				img = jsonData.img;
@@ -128,14 +130,14 @@ class UserExercice extends React.Component {
 				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses</Link>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
-						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">{this.state.exercice_description}</p>
-						</Card>
-						<p className="left_30 down_20 black size_20">{this.state.exercice_question}</p>
-						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">{this.state.exercice_help}</p>
-						</Card>
-						<p className="left_30 down_20 black size_20">Tries: {this.state.exercice_ntries}</p>
+						<hr/>
+						<div className="margin1 big_text">{this.state.exercice_description}</div>
+						<hr/><br/><br/><hr/>
+						<div className="left_30 down_20 black size_20 big_text">{this.state.exercice_question}</div>
+						<hr/><br/><br/><hr/>
+						<div className="margin1 big_text">{this.state.exercice_help}</div>
+						<hr/><br/><br/>
+						<div className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</div>
 
 					</Grid>
 					<Grid item xs={4}  className="padding2">

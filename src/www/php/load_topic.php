@@ -40,6 +40,7 @@
 					$miscursos[$punter]['id'] = $id;
 					$miscursos[$punter]['name'] = $row4->title;
 					$miscursos[$punter]['parent'] = null;
+					$miscursos[$punter]['istheory'] = true;
 					$punter++;//3
 					$id++;//4
 				}
@@ -54,6 +55,7 @@
 					$miscursos[$punter]['id'] = $id;
 					$miscursos[$punter]['name'] = $row4->statement;
 					$miscursos[$punter]['parent'] = null;
+					$miscursos[$punter]['isexercise'] = true;
 					$punter++;//3
 					$id++;//4
 				}
@@ -80,6 +82,7 @@
 							$miscursos[$punter]['id'] = $id;
 							$miscursos[$punter]['name'] = $row4->title;
 							$miscursos[$punter]['parent'] = $idtopic2;
+							$miscursos[$punter]['istheory'] = true;
 							$punter++;//3
 							$id++;//4
 						}

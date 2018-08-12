@@ -11,7 +11,7 @@ import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
-
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
@@ -49,10 +49,12 @@ class UserExercice extends React.Component {
 	componentDidMount(){
 		var that = this;
 		
+		console.log(STORAGE.getLocalStorageItem("exercise_name"));
+		
 		var settings = {
 			type: 'POST',
 			data: { 
-				'name': that.appState("exercice_name"), 
+				'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name") , 
 			},
 			url: 'php/load_exercice.php',
 			success: function(response) {
@@ -86,7 +88,7 @@ class UserExercice extends React.Component {
 		var settings2 = {
 			type: 'POST',
 			data: { 
-				'name': that.appState("exercice_name"), 
+				'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"), 
 			},
 			url: 'php/load_questions.php',
 			success: function(response2) {
@@ -195,15 +197,14 @@ class UserExercice extends React.Component {
 				<Grid container>
 					
 					<Grid item xs={4}  className="padding2"> 
-						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">{this.state.exercice_description}</p>
-						</Card>
-						<p className="left_30 down_20 black size_20">{this.state.exercice_question}</p>
-						<Card className="course_description_form margin2 padding2">
-								<p className="margin1">{this.state.exercice_help}</p>
-						</Card>
-						<p className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</p>
-
+						<hr/>
+						<div className="margin1 big_text">{this.state.exercice_description}</div>
+						<hr/><br/><br/><hr/>
+						<div className="left_30 down_20 black size_20 big_text">{this.state.exercice_question}</div>
+						<hr/><br/><br/><hr/>
+						<div className="margin1 big_text">{this.state.exercice_help}</div>
+						<hr/><br/><br/>
+						<div className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</div>
 					</Grid>
 					<Grid item xs={4}  className="padding2">
 							<div id="image_div">

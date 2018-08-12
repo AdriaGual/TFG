@@ -167,7 +167,7 @@ class UserTopic extends React.Component {
 						generateNodeProps={({ node, path }) => {
 							return {
 								style: {
-									color: path.length===1 ? "black" : path.length===2 ? "green" : "blue",
+									color: node.istheory ? "green" : node.isexercise ? "red" : "blue",
 								},
 
 								buttons: [<Button

@@ -297,22 +297,18 @@ class UserCourse extends React.Component {
 						
 					</Grid>
 					<Grid item xs={3}>
-					
-						<Card className="course_description_form margin2 ">
-							<CardContent className="bold">
-								Course Description
-								<hr/>
-							</CardContent>
-							
-							<p id="description_text" className="margin1">{this.state.course_description}</p>
-						</Card>
-						<Card className="course_description_form margin2 ">
-							<CardContent className="bold">
-								Pre-Requirements
-								<hr/>
-							</CardContent>
-								<p className="margin1">{this.state.course_prerequisits}</p>
-						</Card>
+						<br/>
+						<p>Course Description</p>
+						<hr/>
+						<div id="description_text" className="margin1 big_text">{this.state.course_description}</div>
+						<hr/>
+						<br/><br/>
+						
+						<p>Pre-Requirements</p>
+						<hr/>
+						<div className="margin1 big_text">{this.state.course_prerequisits}</div>
+						<hr/>
+						
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
