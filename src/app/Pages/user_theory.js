@@ -11,6 +11,7 @@ import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
+import * as STORAGE from '../Utils/Storage.js';
 
 /** 
  * Register Page
@@ -41,7 +42,7 @@ class Theory extends React.Component {
 		var settings = {
 			type: 'POST',
 			data: { 
-				'name': that.appState("theory_name"), 
+				'name': STORAGE.getLocalStorageItem("theory_name") || that.appState("theory_name"), 
 			},
 			url: 'php/load_theory.php',
 			success: function(response) {

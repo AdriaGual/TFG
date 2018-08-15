@@ -158,6 +158,7 @@ class UserCourses extends React.Component {
 				}
 				if(response == "theory"){
 					that.appState({theory_name:name});
+					STORAGE.setLocalStorageItem("theory_name", name);
 					that.props.history.push('/user_theory');
 				}
 				if(response == "exercice"){

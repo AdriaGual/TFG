@@ -14,6 +14,7 @@ import SortableTree, {
   getFlatDataFromTree,
   getTreeFromFlatData,
 } from 'react-sortable-tree';
+import * as STORAGE from '../Utils/Storage.js';
 
 /** 
  * Register Page
@@ -103,10 +104,12 @@ class UserCourse extends React.Component {
 				}
 				if(response == "theory"){
 					that.appState({theory_name:name});
+					STORAGE.setLocalStorageItem("theory_name", name);
 					that.props.history.push('/user_theory');
 				}
 				if(response == "exercice"){
 					that.appState({exercice_name:name});
+					STORAGE.setLocalStorageItem("exercise_name", name);
 					that.props.history.push('/user_exercise');
 				}
 			}

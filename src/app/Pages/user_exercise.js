@@ -11,7 +11,7 @@ import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
-
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
@@ -52,7 +52,7 @@ class UserExercice extends React.Component {
 		var settings = {
 			type: 'POST',
 			data: { 
-				'name': that.appState("exercice_name"), 
+				'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"), 
 			},
 			async:false,
 			url: 'php/load_exercice.php',
