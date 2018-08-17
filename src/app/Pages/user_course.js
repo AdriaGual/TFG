@@ -108,9 +108,36 @@ class UserCourse extends React.Component {
 					that.props.history.push('/user_theory');
 				}
 				if(response == "exercice"){
-					that.appState({exercice_name:name});
 					STORAGE.setLocalStorageItem("exercise_name", name);
-					that.props.history.push('/user_exercise');
+					that.appState({exercice_name:name});
+					var a;
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'name': name, 
+						},
+						async:false,
+						url: 'php/load_exercice.php',
+						success: function(response) {
+							var jsonData = JSON.parse(response);
+							a= jsonData.type_component;
+							
+						}
+					};
+					$.ajax(settings2);
+					
+					if (a<5){
+						that.props.history.push('/user_exercise');
+					}
+					else if (a==5){
+						that.props.history.push('/user_exercise_test');
+					}
+					else if (a==6){
+						that.props.history.push('/user_exercise_location2d');
+					}
+					else if (a==7){
+						that.props.history.push('/user_exercise_location3d');
+					}
 				}
 			}
 		};

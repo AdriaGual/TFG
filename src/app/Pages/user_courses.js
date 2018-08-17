@@ -162,7 +162,6 @@ class UserCourses extends React.Component {
 					that.props.history.push('/user_theory');
 				}
 				if(response == "exercice"){
-					console.log("exercici:");
 					STORAGE.setLocalStorageItem("exercise_name", name);
 					that.appState({exercice_name:name});
 					var a;
@@ -180,12 +179,18 @@ class UserCourses extends React.Component {
 						}
 					};
 					$.ajax(settings2);
-					console.log(a);
+					
 					if (a<5){
 						that.props.history.push('/user_exercise');
 					}
-					else{
+					else if (a==5){
 						that.props.history.push('/user_exercise_test');
+					}
+					else if (a==6){
+						that.props.history.push('/user_exercise_location2d');
+					}
+					else if (a==7){
+						that.props.history.push('/user_exercise_location3d');
 					}
 				}
 			}

@@ -49,9 +49,15 @@ function setImage(image_src) {
 			// render the image
 			render();
 		}
+		
 		image.src = image_src;
 	}
 }
+
+
+
+
+
 
 // Adjust canvas to image size, i.e. fit the image in the canvas
 function adjust_image() {

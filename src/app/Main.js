@@ -17,6 +17,8 @@ import UserTheory from './Pages/user_theory.js';
 import UserTopic from './Pages/user_topic.js';
 import UserExercise from './Pages/user_exercise.js';
 import UserExerciseTest from './Pages/user_exercise_test.js';
+import UserExerciseLocation2D from './Pages/user_exercise_location2d.js';
+import UserExerciseLocation3D from './Pages/user_exercise_location3d.js';
 import UserQualifications from './Pages/user_qualifications.js';
 import TeacherCourses from './Pages/teacher_courses.js';
 import TeacherEditCourse from './Pages/teacher_edit_course.js';
@@ -70,6 +72,8 @@ export default class Main extends React.Component {
 			<Route path='/user_topic' render={() => (<div><div><UserTopic appState={this.appState}></UserTopic></div><div className="bot_margin"></div></div>)} />
 			<Route path='/user_exercise' render={() => (<div><div><UserExercise appState={this.appState}></UserExercise></div><div className="bot_margin"></div></div>)} />
 			<Route path='/user_exercise_test' render={() => (<div><div><UserExerciseTest appState={this.appState}></UserExerciseTest></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_exercise_location2d' render={() => (<div><div><UserExerciseLocation2D appState={this.appState}></UserExerciseLocation2D></div><div className="bot_margin"></div></div>)} />
+			<Route path='/user_exercise_location3d' render={() => (<div><div><UserExerciseLocation3D appState={this.appState}></UserExerciseLocation3D></div><div className="bot_margin"></div></div>)} />
 			<Route path='/user_qualifications' render={() => (<div><div><UserQualifications appState={this.appState}></UserQualifications></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_courses' render={() => (<div><div><TeacherCourses appState={this.appState}></TeacherCourses></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_edit_course' render={() => (<div><div><TeacherEditCourse appState={this.appState}></TeacherEditCourse></div><div className="bot_margin"></div></div>)} />

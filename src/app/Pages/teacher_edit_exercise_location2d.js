@@ -19,6 +19,7 @@ import Select from 'material-ui/Select';
  * Register Page
  * @extends React.Component
  */
+ var original_imageURL="";
 class TeacherEditExerciceLocation2d extends React.Component {
 	constructor(props){
 		super(props);
@@ -76,7 +77,67 @@ class TeacherEditExerciceLocation2d extends React.Component {
 			}
 		};
 		$.ajax(settings);
+		document.getElementById("btn-edit-circle").style.visibility = "hidden";
+		document.getElementById("btn-delete-circle").style.visibility = "hidden";
+		document.getElementById("radius_value").style.visibility = "hidden";
+		document.getElementById("radi").style.visibility = "hidden";
+		document.getElementById("radius_slider").style.visibility = "hidden";
+		document.getElementById("btn-fullscreen").style.visibility = "hidden";
 	}
+
+	clickOriginalImage  =()=>{
+		setTimeout(function(){
+			var canvas = document.getElementById('canvas');
+			original_imageURL = canvas.toDataURL("image/png");
+			document.getElementById("btn-edit-circle").style.visibility = "visible";
+			document.getElementById("btn-delete-circle").style.visibility = "visible";
+			document.getElementById("radius_value").style.visibility = "visible";
+			document.getElementById("radi").style.visibility = "visible";
+			document.getElementById("radius_slider").style.visibility = "visible";
+			document.getElementById("btn-fullscreen").style.visibility = "visible";
+		}, 10);
+	}
+	
+	
+	clickSave  =()=>{
+		var canvas = document.getElementById('canvas');
+		var dataURL = canvas.toDataURL("image/png");
+		var topics = $("input[name=topic]:checked").serialize();
+		var new_circles = [];
+		
+		$.each(location_points, function(index, location_point) {
+			var id = location_point.id;
+			var x = location_point.point.x;
+			var y = location_point.point.y;
+			var radius = location_point.point.r * location_point.point.radius_factor;
+			if (id == -1) new_circles.push({"x": x, "y": y, "radius": radius});
+		});
+		
+		console.log(new_circles[0].x);
+		
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'original_img':original_imageURL,
+				'img': dataURL, 
+				'topics':topics,
+				'title': $("#newtitle").val(), 
+				'description': $("#problem_description").val(), 
+				'question': $("#problem_question").val(), 
+				'help': $("#help").val(), 
+				'points': new_circles,
+			},
+			url: 'php/save_exercise_location2d.php',
+			success: function(response) {
+				if (response=="OK"){
+					that.props.history.push("/teacher_courses");
+				}
+			}
+		};
+		$.ajax(settings);
+		
+	}	
 
 	/**
 	 * Renders the register page.
@@ -110,13 +171,13 @@ class TeacherEditExerciceLocation2d extends React.Component {
 					</Grid>
 					<Grid item xs={3} > 
 						<p>Description:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
+						<textarea value={this.state.value} onChange={this.handleChange} id="problem_description" style={{height:200,width:400}}/>
 						<p>Question:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
-						
+						<textarea value={this.state.value} onChange={this.handleChange} id="problem_question" style={{height:100,width:400}}/>
 						<Grid container>
 							<Grid item xs={1} > 
 								<Checkbox
+								  id="has_text"
 								  checked={this.state.hasTextSolution}
 								  onChange={this.handleChange('hasTextSolution')}
 								  value="checkedA"
@@ -126,15 +187,15 @@ class TeacherEditExerciceLocation2d extends React.Component {
 								<p>Text Solution:</p>
 							 </Grid>
 							{this.state.hasTextSolution ?
-								<textarea value={this.state.value} onChange={this.handleChange} style={{height:50,width:400}}/>
+								<textarea value={this.state.value} onChange={this.handleChange} id="problem_solution" style={{height:50,width:400}}/>
 							:null}
 						</Grid>
 						
 						<p>Help Text:</p>
-						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
+						<textarea value={this.state.value} id="help" onChange={this.handleChange} style={{height:100,width:400}}/>
 						<Grid container>
 							<Grid item xs={6} > 
-								<Select native className="down_30 "> 
+								<Select native className="down_30 " id="problem_difficulty_level"> 
 									<option value="">Difficulty</option>
 									<option value={1}>1</option>
 									<option value={2}>2</option>
@@ -166,7 +227,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 									</div>
 									<div id="radius_div">
 										<div id="radius_input_group" class="input-group">
-											<span class="input-group-addon">Radi</span>
+											<span class="input-group-addon" id="radi">Radi</span>
 											<input type="text" id="radius_value" class="form-control" value="5" />
 										</div>
 										<input id="radius_slider" type="range" min="1" max="10" step="1" value="5" />
@@ -176,7 +237,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 							</div>
 							
 							<div id="image_file_input_group" class="input-group">
-								<input type="file" id="problem_image_input" />
+								<input type="file" id="problem_image_input" onChange={() => this.clickOriginalImage()}/>
 							</div>
 							<div id="current_image_input_group" class="input-group">
 								<input type="hidden" id="problem_image_url" value="" disabled />
@@ -193,7 +254,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 						<br/>
 						<Button
 							className="btn btn-1 white left_15"
-							onClick={() => 	this.click()}
+							onClick={() => 	this.clickSave()}
 						>
 							<Icon className="fa fa-save" style={{ fontSize: 15 }}></Icon>
 						</Button>

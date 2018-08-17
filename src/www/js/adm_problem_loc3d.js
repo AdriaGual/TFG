@@ -12,6 +12,7 @@ $(document).ready(function() {
 	var user_types = [];
 	var topics = [];
 	
+	
 	function showMessage(type, message) {
 		$("#info_span").html(message);
 		

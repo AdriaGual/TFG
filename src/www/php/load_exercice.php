@@ -33,7 +33,7 @@
 				$miscursos['ntries']=$row->n_tries;
 				$miscursos['type_component']=$row->type_component;
 				$miscursos['img']=$row->img;
-				
+				$miscursos['original_img']=$row->original_img;
 				$idsql = $row->id;
 				$stmt2 = $conn->prepare("SELECT * FROM user_exercise WHERE id_user = :myid AND id_exercise = :idexercise");
 				$stmt2->bindParam(':myid', $myid, PDO::PARAM_STR);
