@@ -72,7 +72,7 @@ class UserExercice extends React.Component {
 			}
 		};
 		$.ajax(settings);
-		
+		var fjson;
 		var settings2 = {
 			type: 'POST',
 			async:false,
@@ -83,10 +83,11 @@ class UserExercice extends React.Component {
 			success: function(response2) {
 				var jsonData2 = JSON.parse(response2);
 				//var jsonfinal = JSON.parse(jsonData2[0].matrix)
+
 				//for (var a=0; a<jsonData2.length; a++){
 				var json_n = jsonData2[0].matrix;
-					console.log( JSON.parse(json_n));
-					
+				console.log( JSON.parse(json_n));
+				fjson =JSON.parse(json_n); 
 					
 				//}
 				
@@ -96,13 +97,14 @@ class UserExercice extends React.Component {
 					
 					models_list.push({id: id, path: model.path, filename: model.filename, name: model.name, file: model.file, solution: model.solution, matrix: model.matrix, material: model.material});
 				});*/
-				setTimeout(function(){
-					loadFileModels(JSON.parse(json_n));
-				}, 10);
+				
 				
 			}
 		};
 		$.ajax(settings2);
+		setTimeout(function(){
+			loadModelsRecursive(0, fjson);
+		}, 1000);
 	}
 	
 	/***clickcorregir  =()=>{
@@ -182,7 +184,7 @@ class UserExercice extends React.Component {
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses</Link>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} >Courses</Link>
 				<Grid container>
 					
 					<Grid item xs={4}  className="padding2"> 

@@ -83,6 +83,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 		$.each(models, function(index, model) {
 			var id = parseInt(index);
 			var path = model.path;
+			console.log(path);
 			var filename = model.filename;
 			var name = model.name;
 			var solution = model.solution;
@@ -93,7 +94,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 		});
 		
 		var that = this;
-		var settings = {
+		/***var settings = {
 			type: 'POST',
 			data: { 
 				'topics':topics,
@@ -110,7 +111,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 				}
 			}
 		};
-		$.ajax(settings);
+		$.ajax(settings);*/
 		
 	}	
 	
