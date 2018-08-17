@@ -15,7 +15,7 @@
 		$conn = new PDO("mysql:host=localhost;dbname=elearning", $username, $password);
 		// set the PDO error mode to exception
 		$b = 7;
-		$cleanData = json_decode( html_entity_decode( stripslashes ($new_models ) ),true );
+		
 		//echo implode("|",$cleanData[0]["matrix"]["elements"])," \n",implode("|",$cleanData[0]["material"]["metadata"])," \n",implode("|",$cleanData[0]["material"]),"\n",$cleanData[0]["name"],"\n",$cleanData[0]["path"],"\n",$cleanData[0]["solution"];
 		
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -28,23 +28,24 @@
 		$stmt->execute();
 		$exerciseid = $conn->lastInsertId();
 		
-		
+		/*echo count($cleanData),"\n";
 		for ($i = 0; $i <count($cleanData); $i++) {
+			*/
 			//var_dump($cleanData[$i]["materials"][0]["object"]["uuid"]);
-			$metadatamesh = implode("|",$cleanData[$i]["mesh"]["metadata"]);
+			/*$metadatamesh = implode("|",$cleanData[$i]["mesh"]["metadata"]);
 			$geometriesuuid = "|".$cleanData[$i]["mesh"]["geometries"][0]['uuid'];
 			$geometriestype = "|".$cleanData[$i]["mesh"]["geometries"][0]['type'];
 			$geometriesvertices = implode("|",$cleanData[$i]["mesh"]["geometries"][0]['data']['vertices']);
 			$geometriesfaces = implode("|",$cleanData[$i]["mesh"]["geometries"][0]['data']['faces']);
 			$geometriesnormals = implode("|",$cleanData[$i]["mesh"]["geometries"][0]['data']['normals']);
-			$mesh = $metadatamesh.$geometriesuuid.$geometriestype;
+			$mesh = $metadatamesh.$geometriesuuid.$geometriestype;*/
 			/*$objectuuid = $cleanData[$i]["object"]["uuid"];
 			$objectuuid = $cleanData[$i]["object"]["type"];
 			$objectuuid =  implode("|",$cleanData[$i]["matrix"]);
 			$objectuuid = $cleanData[$i]["object"]["geometry"];
 			$objectuuid = $cleanData[$i]["object"]["material"];*/
 			
-			$metadata = implode("|",$cleanData[$i]["material"]["metadata"]);
+			/*$metadata = implode("|",$cleanData[$i]["material"]["metadata"]);
 			$material = "|".$cleanData[$i]["material"]["uuid"];
 			$material2 = "|".$cleanData[$i]["material"]["type"];
 			$material3= "|".$cleanData[$i]["material"]["color"];
@@ -59,21 +60,22 @@
 			$elements= implode("|",$cleanData[$i]["matrix"]["elements"]);
 			$name = $cleanData[$i]["name"];
 			$path = $cleanData[$i]["path"];
-			$solution = $cleanData[$i]["solution"];
+			$solution = $cleanData[$i]["solution"];*/
 			
-			$stmt = $conn->prepare("INSERT INTO location3d_exercise_answers (id_exercise,matrix,material,path,name,solution,mesh,vertices,normals,faces) VALUES (:exerciseid,:matrix,:material,:path,:name,:solution,:mesh,:vertices,:normals,:faces)");
+			//$stmt = $conn->prepare("INSERT INTO location3d_exercise_answers (id_exercise,matrix,material,path,name,solution,mesh,vertices,normals,faces) VALUES (:exerciseid,:matrix,:material,:path,:name,:solution,:mesh,:vertices,:normals,:faces)");
+			$stmt = $conn->prepare("INSERT INTO location3d_exercise_answers (id_exercise,matrix) VALUES (:exerciseid,:matrix)");
 			$stmt->bindParam(':exerciseid', $exerciseid, PDO::PARAM_STR);
-			$stmt->bindParam(':matrix', $elements, PDO::PARAM_STR);
-			$stmt->bindParam(':material', $matmeta, PDO::PARAM_STR);
+			$stmt->bindParam(':matrix', $new_models, PDO::PARAM_STR);
+			/*$stmt->bindParam(':material', $matmeta, PDO::PARAM_STR);
 			$stmt->bindParam(':mesh', $mesh, PDO::PARAM_STR);
 			$stmt->bindParam(':vertices', $geometriesvertices, PDO::PARAM_STR);
 			$stmt->bindParam(':normals', $geometriesnormals, PDO::PARAM_STR);
 			$stmt->bindParam(':faces', $geometriesfaces, PDO::PARAM_STR);
 			$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 			$stmt->bindParam(':path', $path, PDO::PARAM_STR);
-			$stmt->bindParam(':solution', $solution, PDO::PARAM_STR);
+			$stmt->bindParam(':solution', $solution, PDO::PARAM_STR);*/
 			$stmt->execute();
-		}
+		//}
 		
 		$explodedtopics = explode('&',$topics[0]);
 		//echo substr($explodedtopics[0],6);

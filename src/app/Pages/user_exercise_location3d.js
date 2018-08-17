@@ -13,6 +13,7 @@ import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
 import Select from 'material-ui/Select';
+var loader = new THREE.JSONLoader();
 /** 
  * Register Page
  * @extends React.Component
@@ -81,7 +82,23 @@ class UserExercice extends React.Component {
 			url: 'php/load_exercice_location3d.php',
 			success: function(response2) {
 				var jsonData2 = JSON.parse(response2);
-				loadFileModels(jsonData2);
+				//var jsonfinal = JSON.parse(jsonData2[0].matrix)
+				//for (var a=0; a<jsonData2.length; a++){
+				var json_n = jsonData2[0].matrix;
+					console.log( JSON.parse(json_n));
+					
+					
+				//}
+				
+				/***$.each(initial_models, function(id, model) {
+					model.matrix = buildMatrix4FromJSON(model.matrix);
+					model.material = buildMaterialFromJSON(model.material);
+					
+					models_list.push({id: id, path: model.path, filename: model.filename, name: model.name, file: model.file, solution: model.solution, matrix: model.matrix, material: model.material});
+				});*/
+				setTimeout(function(){
+					loadFileModels(JSON.parse(json_n));
+				}, 10);
 				
 			}
 		};

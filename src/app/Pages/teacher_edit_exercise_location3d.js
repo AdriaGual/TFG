@@ -91,7 +91,6 @@ class TeacherEditExerciceLocation3d extends React.Component {
 			
 			if (id < 0) new_models.push(Object.assign({}, model));
 		});
-		console.log(JSON.stringify(new_models));
 		
 		var that = this;
 		var settings = {

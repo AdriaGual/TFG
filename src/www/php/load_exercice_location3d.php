@@ -28,7 +28,7 @@
 			$punter = 0;
 			if ($total > 0){
 				$miscursos = array();
-				while ($row2 = $stmt2->fetchObject()) {
+				/*while ($row2 = $stmt2->fetchObject()) {
 					$material = explode("|",$row2->material);
 					$elements = explode("|",$row2->matrix);
 					$vertices = explode("|",$row2->vertices);
@@ -57,8 +57,10 @@
 					$miscursos[$punter]['material']['depthWrite'] = $material[11];
 					$miscursos[$punter]['matrix']['elements']= $elements;
 					$punter++;
-				}
-				
+				}*/
+				$row2 = $stmt2->fetchObject();
+				$js = $row2->matrix;
+				$miscursos[0]['matrix'] = $js;
 				echo json_encode($miscursos);
 			}
 			else{
