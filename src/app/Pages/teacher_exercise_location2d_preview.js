@@ -43,7 +43,6 @@ class UserExercice extends React.Component {
 			snacktext: "",
 			showcorrectanswer: false,
 			showwronganswer: false,
-			finished:false,
 		}
 	}
 	
@@ -70,7 +69,7 @@ class UserExercice extends React.Component {
 			data: { 
 				'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name") , 
 			},
-			url: 'php/load_exercice.php',
+			url: 'php/load_exercice_teacher.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
 				that.setState({exercice_statement: jsonData.statement});
@@ -78,10 +77,8 @@ class UserExercice extends React.Component {
 				that.setState({exercice_question: jsonData.question});
 				that.setState({exercice_help: jsonData.help});
 				that.setState({exercice_ntries: jsonData.ntries});
-				that.setState({tries: jsonData.tries});
 				that.setState({id: jsonData.idsql});
 				that.setState({answer: jsonData.answer});
-				that.setState({finished: jsonData.finished});
 				img = jsonData.original_img;
 				n = jsonData.type_component;
 				if (n==6){
@@ -123,57 +120,10 @@ class UserExercice extends React.Component {
 				url: 'php/verify_answers_location2d.php',
 				success: function(response) {
 					if (response=="match"){
-						var settings2 = {
-							type: 'POST',
-							data: { 
-								'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-								'tries': that.state.tries,
-								'puntuation': 10,
-							},
-							url: 'php/save_mark.php',
-							success: function(response2) {
-
-							}
-						};
-						$.ajax(settings2);
-						that.setState({ finished: true });
 						that.setState({ showcorrectanswer: true ,showwronganswer: false});
 					}
 					else if (response=="no_match"){
-						var a = that.state.tries;
-						if (that.state.tries>=that.state.exercice_ntries){
-							var settings2 = {
-								type: 'POST',
-								data: { 
-									'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-									'tries': that.state.tries,
-									'puntuation': 0,
-								},
-								url: 'php/save_mark.php',
-								success: function(response2) {
-
-								}
-							};
-							$.ajax(settings2);
-							that.setState({ finished: true });
-						}
-						else{
-							a++;
-						}
 						that.setState({ showcorrectanswer: false ,showwronganswer: true});
-						that.setState({tries: a});
-						var settings2 = {
-							type: 'POST',
-							data: { 
-								'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-								'tries': that.state.tries,
-							},
-							url: 'php/save_tries.php',
-							success: function(response2) {
-
-							}
-						};
-						$.ajax(settings2);
 					}
 				}
 			};
@@ -195,7 +145,7 @@ class UserExercice extends React.Component {
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} >Courses</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
 				<Grid container>
 					
 					<Grid item xs={4}  className="padding2"> 
@@ -206,7 +156,7 @@ class UserExercice extends React.Component {
 						<hr/><br/><br/><hr/>
 						<div className="margin1 big_text">{this.state.exercice_help}</div>
 						<hr/><br/><br/>
-						<div className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</div>
+						<div className="left_30 down_20 black size_20">Tries: N/{this.state.exercice_ntries}</div>
 					</Grid>
 					<Grid item xs={4}  className="padding2">
 						<div id="image_div">
@@ -232,13 +182,11 @@ class UserExercice extends React.Component {
 					</Grid>
 					<Grid item xs={3}  className="padding2">
 						<br/>
-						{(this.state.tries < this.state.exercice_ntries)  ? this.state.finished==0 ?
-							<Button
-								id="btn-save"
-								className="btn btn-1 white left_30"
-								onClick={() => 	this.clickcorregir()}
-							> Corregir</Button>:null: null
-						}
+						<Button
+							id="btn-save"
+							className="btn btn-1 white left_30"
+							onClick={() => 	this.clickcorregir()}
+						> Corregir</Button>
 						<br/><br/>
 						{this.state.showcorrectanswer ? 
 								this.state.answer!="" ?
@@ -260,6 +208,7 @@ class UserExercice extends React.Component {
 							<p>Incorrecte!</p>
 							</div> : null
 						}
+						
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>

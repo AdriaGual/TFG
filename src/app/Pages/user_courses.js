@@ -54,7 +54,6 @@ class UserCourses extends React.Component {
 
 	componentDidMount() {
 		var that = this;
-
 		var settings = {
 			type: 'GET',
 			url: 'php/load_courses.php',
@@ -63,11 +62,10 @@ class UserCourses extends React.Component {
 				var a = jsonData.map(node => ({ ...node, title: node.name }));
 				that.setState({treeData: getTreeFromFlatData({
 					flatData: a,
-					getKey: node => node.id, // resolve a node's key
-					getParentKey: node => node.parent, // resolve a node's parent's key
-					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+					getKey: node => node.id, 
+					getParentKey: node => node.parent, 
+					rootKey: null, 
 				})});
-				console.log(jsonData);
 			}
 		};
 		$.ajax(settings);
@@ -123,7 +121,7 @@ class UserCourses extends React.Component {
 							var jsonData = JSON.parse(response);
 							that.appState({type_component: jsonData.type_component});
 							if (that.appState("type_component")<5){
-								that.props.history.push('/user_exercise');
+								that.props.history.push('/user_exercise_edubody');
 							}
 							else{
 								that.props.history.push('/user_exercise_test');
@@ -181,7 +179,7 @@ class UserCourses extends React.Component {
 					$.ajax(settings2);
 					
 					if (a<5){
-						that.props.history.push('/user_exercise');
+						that.props.history.push('/user_exercise_edubody');
 					}
 					else if (a==5){
 						that.props.history.push('/user_exercise_test');
@@ -296,8 +294,9 @@ class UserCourses extends React.Component {
 							/>
 						</label>
 
-						<div style={{ height: 1500}}>
+						<div>
 						<SortableTree
+							style = {{height: 700}}
 							treeData={this.state.treeData}
 							onChange={treeData => this.setState({ treeData })}
 							canDrag={false}
@@ -349,6 +348,7 @@ class UserCourses extends React.Component {
 							<hr/>
 							</CardContent>
 							<SortableTree
+								style = {{height: 500}}
 								treeData={this.state.treeDataTopic}
 								onChange={treeData => this.setState({ treeDataTopic })}
 								canDrag={false}
@@ -365,6 +365,13 @@ class UserCourses extends React.Component {
 											>
 												<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 											</Button>,
+											node.finished==1 ? 
+												node.puntuation>5 ? 
+													<div className="circle bg_green left_15 down_5"></div> 
+												: 
+													<div className="circle bg_red left_15 down_5"></div>
+											:
+												<div className="circle bg_yellow left_15 down_5"></div>,
 										],
 									};
 								}}	

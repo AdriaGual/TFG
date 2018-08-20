@@ -10,17 +10,19 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
-import SortableTree, {
-  getFlatDataFromTree,
-  getTreeFromFlatData,
-} from 'react-sortable-tree';
+import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath,getFlatDataFromTree,
+  getTreeFromFlatData, } from 'react-sortable-tree';
+import * as STORAGE from '../Utils/Storage.js';
+import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
+
 /** 
  * Register Page
  * @extends React.Component
  */
- var initialData = [];
+var initialData = [];
+var initialDataTopic = [];
 class TeacherCourses extends React.Component {
-		constructor(props){
+	constructor(props){
 		super(props);
 		this.state = {
 			searchString: '',
@@ -32,6 +34,20 @@ class TeacherCourses extends React.Component {
 				getParentKey: node => node.parent, // resolve a node's parent's key
 				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
 			}),
+			topic_selected:"",
+			type_info_selected:"",
+			showinfo:false,
+			searchStringTopic: '',
+			searchFocusIndexTopic: 0,
+			searchFoundCountTopic: null,
+			treeDataTopic: getTreeFromFlatData({
+				flatData: initialDataTopic.map(node => ({ ...node, title: node.name })),
+				getKey: node => node.id, // resolve a node's key
+				getParentKey: node => node.parent, // resolve a node's parent's key
+				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+			}),
+			name:"",
+			showadvice:false,
 		};
 	}
 	appState = this.props.appState;
@@ -41,9 +57,10 @@ class TeacherCourses extends React.Component {
 
 		var settings = {
 			type: 'GET',
-			url: 'php/load_courses.php',
+			url: 'php/load_courses_teacher.php',
 			success: function(response) {
 				var jsonData = JSON.parse(response);
+				console.log(jsonData);
 				var a = jsonData.map(node => ({ ...node, title: node.name }));
 				that.setState({treeData: getTreeFromFlatData({
 					flatData: a,
@@ -61,19 +78,16 @@ class TeacherCourses extends React.Component {
 		{flatData.map(({ id, name, parent }) => (
             console.log({id,name,parent})
           ))}
-		
 	}
 	
 	clickenroll = (idsql) => {
 		this.appState({id_course: idsql});
 		this.props.history.push('/teacher_enroll');
-		
 	};
 	
 	clickassignexercise = (idsql) => {
 		this.appState({id_course: idsql});
 		this.props.history.push('/teacher_assign_exercise');
-		
 	};
 	
 	clickqualifications = (name,idsql) => {
@@ -90,21 +104,201 @@ class TeacherCourses extends React.Component {
 			}
 		};
 		$.ajax(settings2);
-		
 		this.appState({id_course: idsql});
 		this.props.history.push('/teacher_qualifications');
-		
 	};
+	
+	clicktopic = (name) => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/is_course_topic.php',
+			success: function(response) {
+				if (response == "course"){
+					that.appState({course_name: name});
+					that.props.history.push('/user_course');
+				}
+				if(response == "topic"){
+					that.appState({topic_name: name});
+					that.props.history.push('/user_topic');
+				}
+				if(response == "theory"){
+					that.appState({theory_name:name});
+					STORAGE.setLocalStorageItem("theory_name", name);
+					that.props.history.push('/user_theory');
+				}
+				if(response == "exercice"){
+					STORAGE.setLocalStorageItem("exercise_name", name);
+					that.appState({exercice_name:name});
+					var a;
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'name': name, 
+						},
+						async:false,
+						url: 'php/load_exercice_teacher.php',
+						success: function(response) {
+							var jsonData = JSON.parse(response);
+							a= jsonData.type_component;
+							
+						}
+					};
+					$.ajax(settings2);
+					
+					if (a<5){
+						that.props.history.push('/teacher_exercise_edubody_preview');
+					}
+					else if (a==5){
+						that.props.history.push('/teacher_exercise_test_preview');
+					}
+					else if (a==6){
+						that.props.history.push('/teacher_exercise_location2d_preview');
+					}
+					else if (a==7){
+						that.props.history.push('/user_exercise_location3d');
+					}
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	clicktheory = (name) => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			url: 'php/load_topic_theory.php',
+			success: function(response) {
+				if(response!="topichasnotheory"){
+					var jsonData = JSON.parse(response);
+					var a = jsonData.map(node => ({ ...node, title: node.name }));
+					that.setState({treeDataTopic: getTreeFromFlatData({
+						flatData: a,
+						getKey: node => node.id, // resolve a node's key
+						getParentKey: node => node.parent, // resolve a node's parent's key
+						rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+					})});
+					console.log(jsonData);
+					that.setState({showinfo: true});
+					that.setState({type_info_selected: "Theory"});
+					that.setState({topic_selected: name});
+				}
+				else{
+					that.setState({showinfo: false});
+					
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	clickexercice = (name) => {
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			url: 'php/load_topic_exercice_teacher.php',
+			success: function(response) {
+				if(response!="topichasnoexercice"){
+					var jsonData = JSON.parse(response);
+					var a = jsonData.map(node => ({ ...node, title: node.name }));
+					that.setState({treeDataTopic: getTreeFromFlatData({
+						flatData: a,
+						getKey: node => node.id, // resolve a node's key
+						getParentKey: node => node.parent, // resolve a node's parent's key
+						rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+					})});
+					console.log(jsonData);
+					that.setState({showinfo: true});
+					that.setState({type_info_selected: "Exercice"});
+					that.setState({topic_selected: name});
+				}
+				else{
+					that.setState({showinfo: false});
+					
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	clickshowadvice = (name) =>{
+		this.setState({ name: name });
+		this.setState({ showadvice: true});
+	}
+	
+	handleCloseAdvice = () => {
+		this.setState({ showadvice: false});
+	}
+	
+	clickdeletetopic = (name) =>{
+		var that = this;
+		var settings = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/is_course_topic.php',
+			success: function(response) {
+				if(response == "theory"){
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'name': name, 
+						},
+						async:false,
+						url: 'php/delete_theory.php',
+						success: function(response) {
+						}
+					};
+					$.ajax(settings2);
+				}
+				if(response == "exercice"){
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'name': name, 
+						},
+						async:false,
+						url: 'php/delete_exercise.php',
+						success: function(response) {
+						}
+					};
+					$.ajax(settings2);
+				}
+			}
+		};
+		$.ajax(settings);
+		window.location.reload();
+	}
+	
 
 	
 	/**
 	 * Renders the register page.
 	 */
 	render(){
+		const getNodeKey = ({ treeIndex }) => treeIndex;
 		const {
             treeData,
             searchString,
             searchFoundCount,
+			course_description,
+			course_prerequisits,
+			treeDataTopic,
+            searchStringTopic,
+            searchFoundCountTopic,
         } = this.state;
 		
 		const flatData = getFlatDataFromTree({
@@ -142,10 +336,13 @@ class TeacherCourses extends React.Component {
 						<Link to="/teacher_choose_exercise"><Button className="btn btn-5 down_30 white left_15">Create New Exercice</Button></Link>
 						<Link to="/teacher_create_theory"><Button className="btn btn-1 down_30 white left_15">Create New Theory</Button></Link>
 					</Grid>
-					<Grid item xs={12}>
-						<div style={{ height: 1500}}>
+				</Grid>
+				<Grid container>
+					<Grid item xs={6}>
+						<div>
 						<SortableTree
 						  treeData={this.state.treeData}
+						  style = {{height: 600}}
 						  onChange={treeData => 	this.treeChange(treeData,flatData)}
 						  searchQuery={searchString}
 						  generateNodeProps={({ node, path }) => {
@@ -174,14 +371,88 @@ class TeacherCourses extends React.Component {
 										>
 											<Icon className="fa fa-list-ol" style={{ fontSize: 15 }}></Icon>
 										</Button>:null,
+										node.hastheory ? node.iscourse ? null:  <Button
+											className="btn btn-4 white right_15"
+											onClick={() => 	this.clicktheory(node.name)}
+										>
+											<Icon className="fa fa-book" style={{ fontSize: 15 }}></Icon>
+										</Button>:null,
+										node.hasexercice ? node.iscourse ? null:  <Button
+											className="btn btn-5 white right_15"
+											onClick={() => 	this.clickexercice(node.name)}
+										>
+											<Icon className="fa fa-pencil" style={{ fontSize: 15 }}></Icon>
+										</Button>:null,
 									],
 								};
 							}}
 						/>
 						</div>
 					</Grid>
+					<Grid item xs={6}>
+					{ this.state.showinfo ? 
+						
+						<Card className="topic_info_form margin2">
+							<CardContent className="orange size_30">
+							{this.state.topic_selected} : {this.state.type_info_selected}
+							<Button
+								className="btn btn-5 white left_60"
+								onClick={() =>this.setState({showinfo: false})}
+							>
+								<Icon className="fa fa-times" style={{ fontSize: 15 }}></Icon>
+							</Button>
+							<hr/>
+							</CardContent>
+							<SortableTree
+								style = {{height: 500}}
+								treeData={this.state.treeDataTopic}
+								onChange={treeData => this.setState({ treeDataTopic })}
+								canDrag={false}
+								searchQuery={searchStringTopic}
+								generateNodeProps={({ node, path }) => {
+										return {
+											style: {
+												color: "black",
+											},
+										buttons: [
+											
+											<Button
+												className="btn btn-4 white right_15"
+												onClick={() => 	this.clickedittopic(node.name)}
+											>
+												<Icon className="fa fa-edit" style={{ fontSize: 15 }}></Icon>
+											</Button>,
+											<Button
+												className="btn btn-5 white right_15"
+												onClick={() => 	this.clickshowadvice(node.name)}
+											>
+												<Icon className="fa fa-trash" style={{ fontSize: 15 }}></Icon>
+											</Button>,
+											<Button
+												className="btn btn-1 white right_15"
+												onClick={() => 	this.clicktopic(node.name)}
+											>
+												<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
+											</Button>,
+										],
+									};
+								}}	
+							/>
+						</Card>
+
+				: null 
+					}
+						
+					</Grid>
+				<Dialog
+					open={this.state.showadvice}
+					onClose={this.handleCloseAdvice}
+				>
+				<DialogTitle className="down_15">{"Wanna delete '"+this.state.name +"' item?"}</DialogTitle>
+				<Button className="btn btn-1 white" onClick={() => this.clickdeletetopic(this.state.name)}>Submit</Button>
+			</Dialog>	
 				</Grid>
-				
+
 			</div>
 		
 		);

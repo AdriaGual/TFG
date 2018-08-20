@@ -27,16 +27,26 @@
 				while ($row2 = $stmt2->fetchObject()) {
 					$trobat = false;
 					for ($i = 0; $i <count($points); $i++) {
+						$x = $points[$i]["x"] * 3;
+						$y = $points[$i]["y"] * 2;
+						$d = sqrt( pow(abs(($x-$row2->x)),2)+pow(abs(($y-$row2->y)),2));
 						
-						$d = pow(pow($points[$i]["x"]-$row2->x,2)+pow($points[$i]["y"]-$row2->y,2),0.445);
+						/*echo "points[i][x]: ",$points[$i]["x"], "\n";
+						echo "points[i][y]: ",$points[$i]["y"], "\n";
+						echo "row2->x: ",$row2->x, "\n";
 						
-						if ($d < abs($row2->radius-$points[$i]["radius"])){
-							$trobat = true;
+						echo "row2->y: ",$row2->y, "\n";
+						echo "d: ",$d, "\n";
+						echo "radius: ",$row2->radius, "\n";*/
+						if ($d < $row2->radius){
+							$trobat=true;
 						}
+						//echo "\n","\n";
 					}
 					if (!$trobat){
 						$correcte = 0;
 					}
+					//echo $trobat,"\n","\n";
 				}
 				
 			}

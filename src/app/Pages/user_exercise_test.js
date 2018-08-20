@@ -12,6 +12,10 @@ import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import DoneIcon from 'material-ui-icons/Done';
 /** 
  * Register Page
  * @extends React.Component
@@ -34,6 +38,12 @@ class UserExercice extends React.Component {
 			component:"",
 			id:"",
 			img:"",
+			answer:"",
+			showsnack: false,
+			snacktext: "",
+			showcorrectanswer: false,
+			showwronganswer: false,
+			finished:false,
 		}
 	}
 	
@@ -66,6 +76,8 @@ class UserExercice extends React.Component {
 				that.setState({exercice_ntries: jsonData.ntries});
 				that.setState({tries: jsonData.tries});
 				that.setState({id: jsonData.isql});
+				that.setState({answer: jsonData.answer});
+				that.setState({finished: jsonData.finished});
 				img = jsonData.img;
 				n = jsonData.type_component;
 				if (n==5){
@@ -108,75 +120,93 @@ class UserExercice extends React.Component {
 		
 	}
 
-	click  =()=>{
-		if ($('#unityContent').length) // Si existia el guardem
-		{
-			$('#unity').appendTo("#unityHide");
-		}	
-	}	
-	
 	clickcorregir  =()=>{
 		
 		var answers = [];
 		var a = 0;
+		var onetrue=false;
 		$('input[name=answer]').each(function(index, item) {
 			var id = a;
 			var text = $(item).attr('value');
 			var solution = $(item).is(":checked");
+			if (solution){
+				onetrue=true;
+			}
 			answers[id] = {"text": text, "solution": solution};
 			a++;
 		});
-		
-		var that = this;
-		var settings = {
-			type: 'POST',
-			data: { 
-				'name': that.appState("exercice_name"), 
-				'answers': answers,
-			},
-			url: 'php/verify_answers_test.php',
-			success: function(response) {
-				if (response=="match"){
-					var settings2 = {
-						type: 'POST',
-						data: { 
-							'name': that.appState("exercice_name"),
-							'tries': that.state.tries,
-							'puntuation': 10,
-						},
-						url: 'php/save_test_mark.php',
-						success: function(response2) {
-
-						}
-					};
-					$.ajax(settings2);
-				}
-				else if (response=="no_match"){
-					var a = that.state.tries;
-					if (that.state.tries>=that.state.exercice_ntries){
+		if (!onetrue){
+			document.getElementById('formulari').style.border='solid';
+			document.getElementById('formulari').style.borderColor='#e52213';
+			this.setState({ showsnack: true ,snacktext: "No answers set!"});
+		}
+		else{
+			var that = this;
+			var settings = {
+				type: 'POST',
+				data: { 
+					'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"), 
+					'answers': answers,
+				},
+				url: 'php/verify_answers_test.php',
+				success: function(response) {
+					if (response=="match"){
 						var settings2 = {
 							type: 'POST',
 							data: { 
-								'name': that.appState("exercice_name"),
+								'name':STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
 								'tries': that.state.tries,
-								'puntuation': 0,
+								'puntuation': 10,
 							},
-							url: 'php/save_test_mark.php',
+							url: 'php/save_mark.php',
+							success: function(response2) {
+
+							}
+						};
+						$.ajax(settings2);
+						that.setState({ showcorrectanswer: true ,showwronganswer: false});
+						that.setState({ finished: true });
+					}
+					else if (response=="no_match"){
+						var a = that.state.tries;
+						if (that.state.tries>=that.state.exercice_ntries){
+							var settings2 = {
+								type: 'POST',
+								data: { 
+									'name': that.appState("exercice_name"),
+									'tries': that.state.tries,
+									'puntuation': 0,
+								},
+								url: 'php/save_mark.php',
+								success: function(response2) {
+
+								}
+							};
+							$.ajax(settings2);
+							that.setState({ finished: true });
+						}
+						else{
+							a++;
+						}
+						that.setState({ showcorrectanswer: false ,showwronganswer: true});
+						that.setState({tries: a});
+						var settings2 = {
+							type: 'POST',
+							data: { 
+								'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
+								'tries': that.state.tries,
+							},
+							url: 'php/save_tries.php',
 							success: function(response2) {
 
 							}
 						};
 						$.ajax(settings2);
 					}
-					else{
-						a++;
-					}
-					
-					that.setState({tries: a});
 				}
-			}
-		};
-		$.ajax(settings);
+			};
+			$.ajax(settings);
+		}
 	}	
 	/**
 	 * Renders the register page.
@@ -193,7 +223,7 @@ class UserExercice extends React.Component {
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses</Link>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} >Courses</Link>
 				<Grid container>
 					
 					<Grid item xs={4}  className="padding2"> 
@@ -220,20 +250,58 @@ class UserExercice extends React.Component {
 						<div id="formulari"></div>
 						<hr/>
 						<br/>
-						{this.state.tries < this.state.exercice_ntries ?
+						{(this.state.tries < this.state.exercice_ntries)  ? this.state.finished==0 ?
 							<Button
 								id="btn-save"
 								className="btn btn-1 white left_30"
 								onClick={() => 	this.clickcorregir()}
-							> Corregir</Button>: null
-						
-						
+							> Corregir</Button>:null: null
 						}
-							
+						<br/><br/>
+						{this.state.showcorrectanswer ? 
+								this.state.answer!="" ?
+								<div>
+								<p>Correcte!</p>
+								<br/>
+								<hr/>
+								<p>{this.state.answer}</p>
+								</div> 
+								: 
+								<div>
+								<p>Correcte!</p>
+								<br/>
+								</div> 
+								: null
+						}
+						{this.state.showwronganswer ? 
+							<div>
+							<p>Incorrecte!</p>
+							</div> : null
+						}
 						
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
+					<Snackbar
+					  anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'left',
+					  }}
+					  open={this.state.showsnack}
+					  autoHideDuration={4000}
+					  onClose={this.handleClose}
+					  message={<span id="message-id">{this.state.snacktext}</span>}
+					  action={[
+						<IconButton
+						  key="close"
+						  aria-label="Close"
+						  color="inherit"
+						  onClick={this.handleClose}
+						>
+						<CloseIcon />
+						</IconButton>,
+					  ]}
+					/>
 				</Grid>
 
 			</div>

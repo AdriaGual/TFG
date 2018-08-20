@@ -38,7 +38,7 @@
 					$inserttopic = $thetopics[$topic['parent']];
 				}
 				else{
-					//error!
+					//error
 					$inserttopic = 0;
 				}
 			}

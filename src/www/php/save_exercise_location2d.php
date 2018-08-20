@@ -9,21 +9,29 @@
 	$help= $_POST["help"];
 	$points = $_POST["points"];
 	$topics[] = $_POST["topics"];
+	$difficulty = $_POST["difficulty"];
+	$n_tries = $_POST["max_tries"];
+	$solution = $_POST["solution"];
+	
 	$username = "root";
 	$password = "";
+	
 
 	try {
 		$conn = new PDO("mysql:host=localhost;dbname=elearning", $username, $password);
 		// set the PDO error mode to exception
 		$b = 6;
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $conn->prepare("INSERT INTO exercice_content (statement,description,question,help,original_img,img,type_component) VALUES (:title,:description,:question,:help,:original_img,:img,:type_component)");
+		$stmt = $conn->prepare("INSERT INTO exercice_content (statement,description,question,help,original_img,img,type_component,difficulty,n_tries,answer) VALUES (:title,:description,:question,:help,:original_img,:img,:type_component,:difficulty,:n_tries,:solution)");
 		$stmt->bindParam(':title', $title, PDO::PARAM_STR);
 		$stmt->bindParam(':description', $description, PDO::PARAM_STR);
 		$stmt->bindParam(':question', $question, PDO::PARAM_STR);
 		$stmt->bindParam(':help', $help, PDO::PARAM_STR);
+		$stmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
+		$stmt->bindParam(':n_tries', $n_tries, PDO::PARAM_STR);
 		$stmt->bindParam(':original_img', $original_img, PDO::PARAM_STR);
 		$stmt->bindParam(':img', $image, PDO::PARAM_STR);
+		$stmt->bindParam(':solution', $solution, PDO::PARAM_STR);
 		$stmt->bindParam(':type_component', $b, PDO::PARAM_STR);
 		$stmt->execute();
 		$exerciseid = $conn->lastInsertId();

@@ -55,7 +55,6 @@ class TeacherEditCourse extends React.Component {
 			  // The second to last entry (accessed here) is the parent node's key
 			  parent: path.length > 1 ? path[path.length - 2] : null,
 		}));
-		console.log(flatData);
 		
 		var settings = {
 			type: 'POST',

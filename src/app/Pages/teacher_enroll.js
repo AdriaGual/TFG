@@ -66,15 +66,11 @@ class UserCourses extends React.Component {
 	}
 	
 	clickenrollexcel = () => {
-		
 		var input = document.getElementById('input')
 		var that = this;
 		var jsonexcel = "";
 		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
-			   // `data` is an array of rows
-			   // each row being an array of cells.
 			   jsonexcel = JSON.stringify(data, null, 2);
-			   
 			   var settings = {
 					type: 'POST',
 					data: { 
@@ -89,7 +85,6 @@ class UserCourses extends React.Component {
 					}
 				};
 				$.ajax(settings);
-			   
 			  }, (error) => {
 			  	console.error(error)
 		});

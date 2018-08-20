@@ -14,6 +14,9 @@ import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath } f
 import List,{ListItem,ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Select from 'material-ui/Select';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 
 /** 
  * Register Page
@@ -24,6 +27,8 @@ class TeacherEditExerciceTest2d extends React.Component {
 		super(props);
 		this.state = {
 			hasTextSolution:false,
+			showsnack: false,
+			snacktext: "",
 		};
 	}
 	
@@ -93,31 +98,88 @@ class TeacherEditExerciceTest2d extends React.Component {
 			answers[id] = {"text": text, "solution": solution};
 			a++;
 		});
-			
 		
-		var that = this;
-		var settings = {
-			type: 'POST',
-			data: { 
-				'img': dataURL, 
-				'topics':topics,
-				'title': $("#newtitle").val(), 
-				'description': $("#problem_description").val(), 
-				'question': $("#problem_question").val(), 
-				'help': $("#help").val(), 
-				'answers': answers,
-			},
-			url: 'php/save_exercise_test.php',
-			success: function(response) {
-				if (response=="OK"){
-					that.props.history.push("/teacher_courses");
+		var difficulty = $("#difficulty").val();
+		var max_tries = $("#max_tries").val();
+		var solution = "";
+		if (this.state.hasTextSolution){
+			solution = $("#problem_solution").val();
+		}		
+		if (answers.length != 0 && document.getElementById("problem_image_input").files.length != 0 && difficulty > 0 && difficulty <= 10 && max_tries > 0 && max_tries <= 100 && topics.length > 0 && topics.length > 0 && $("#newtitle").val()!="" && $("#problem_description").val()!="" && $("#problem_question").val()!="" && $("#help").val()!=""){
+			var that = this;
+			var settings = {
+				type: 'POST',
+				data: { 
+					'img': dataURL, 
+					'topics':topics,
+					'title': $("#newtitle").val(), 
+					'description': $("#problem_description").val(), 
+					'question': $("#problem_question").val(), 
+					'help': $("#help").val(), 
+					'answers': answers,
+					'difficulty': difficulty,
+					'max_tries': max_tries,
+					'solution':solution,
+				},
+				url: 'php/save_exercise_test.php',
+				success: function(response) {
+					if (response=="OK"){
+						that.props.history.push("/teacher_courses");
+					}
 				}
+			};
+			$.ajax(settings);
+		}
+		else{
+			if (difficulty < 0 || difficulty > 10 || difficulty == ""){
+				document.getElementById('difficulty').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Difficulty not valid"});
 			}
-		};
-		$.ajax(settings);
-		
+			else if  (max_tries < 0 || max_tries > 100 || max_tries == ""){
+				document.getElementById('max_tries').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Maximum tries not valid"});
+			}
+			else if (topics.length <= 0){
+				document.getElementById('topics').style.border='solid';
+				document.getElementById('topics').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Topics not selected"});
+			}
+			else if ($("#newtitle").val()==""){
+				document.getElementById('title').style.border='solid';
+				document.getElementById('title').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Title not set"});
+			}
+			else if ( $("#problem_description").val()==""){
+				document.getElementById('problem_description').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Description not set"});
+			}
+			else if ($("#problem_question").val()==""){
+				document.getElementById('problem_question').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Question not set"});
+			}
+			else if ($("#help").val()==""){
+				document.getElementById('help').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Help not set"});
+			}
+			else if (document.getElementById("problem_image_input").files.length == 0){
+				document.getElementById('image_file_input_group').style.border='solid';
+				document.getElementById('image_file_input_group').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Image not set"});
+			}
+			else if (answers.length == 0){
+				document.getElementById('ans').style.border='solid';
+				document.getElementById('ans').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Answers not set"});
+			}
+		}
 	}
 	
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		  return;
+		}
+		this.setState({ showsnack: false });
+	};
 	
 	
 	/**
@@ -125,8 +187,8 @@ class TeacherEditExerciceTest2d extends React.Component {
 	 */
 	render(){
 		return (
-			<div style={{ height: 1500}}>
-				<div className="left_30">	
+			<div>
+				<div className="left_30" id ="title">	
 					<TextField
 						id="newtitle"
 						label="Enter Exercise Statement"
@@ -172,24 +234,15 @@ class TeacherEditExerciceTest2d extends React.Component {
 						
 						<p>Help Text:</p>
 						<textarea value={this.state.value} id="help" onChange={this.handleChange} style={{height:100,width:400}}/>
+						<br/><br/><br/>
 						<Grid container>
 							<Grid item xs={6} > 
-								<Select native className="down_30 " id="problem_difficulty_level"> 
-									<option value="">Difficulty</option>
-									<option value={1}>1</option>
-									<option value={2}>2</option>
-									<option value={3}>3</option>
-									<option value={4}>4</option>
-								</Select>
+								<label for="difficulty">Difficulty: </label>
+								<input type="number" id="difficulty" min="1" max="10" step="1"/>
 							</Grid>
 							<Grid item xs={6} > 
-								<Select native className="down_30 "> 
-									<option value="">Maximum Tries</option>
-									<option value={1}>1</option>
-									<option value={2}>2</option>
-									<option value={3}>3</option>
-									<option value={4}>4</option>
-								</Select>
+								<label for="max_tries">Maximum Tries: </label>
+								<input type="number" id="max_tries" min="1" max="100" step="1"/>
 							</Grid>
 						</Grid>
 					</Grid>
@@ -208,17 +261,41 @@ class TeacherEditExerciceTest2d extends React.Component {
 							</div>
 							
 						</div>
+						<Snackbar
+						  anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'left',
+						  }}
+						  open={this.state.showsnack}
+						  autoHideDuration={4000}
+						  onClose={this.handleClose}
+						  message={<span id="message-id">{this.state.snacktext}</span>}
+						  action={[
+							<IconButton
+							  key="close"
+							  aria-label="Close"
+							  color="inherit"
+							  onClick={this.handleClose}
+							>
+							<CloseIcon />
+							</IconButton>,
+						  ]}
+						/>
 					</Grid>
 					<Grid item xs={2} >
 						<div id="items_box">
 						</div>
-						<Button type="button" id="btn-new-item" className="btn btn-4 white" >Afegir resposta</Button>
+						<div id="ans" style={{ width:152 }}>
+							<Button type="button" id="btn-new-item" className="btn btn-4 white" >Afegir resposta</Button>
+						</div>
 					</Grid>
 					<Grid item xs={2} className="left_30" > 
-						<div className="left_50 down_20 orange size_20"><p>Topics</p></div>
-						<hr/>
-						<div id="formulari"></div>
-						<hr/>
+						<div id = "topics">
+							<div className="left_50 down_20 orange size_20"><p>Topics</p></div>
+							<hr/>
+							<div id="formulari"></div>
+							<hr/>
+						</div>
 						<br/>
 						<Button
 							className="btn btn-1 white left_15"

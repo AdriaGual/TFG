@@ -2,7 +2,6 @@
 	session_start(); 
 
 	$name = $_POST["name"];
-	$myid = $_SESSION["userid"];
 	$username = "root";
 	$password = "";
 
@@ -33,13 +32,6 @@
 				$miscursos['img']=$row->img;
 				$miscursos['original_img']=$row->original_img;
 				$idsql = $row->id;
-				$stmt2 = $conn->prepare("SELECT * FROM user_exercise WHERE id_user = :myid AND id_exercise = :idexercise");
-				$stmt2->bindParam(':myid', $myid, PDO::PARAM_STR);
-				$stmt2->bindParam(':idexercise', $idsql, PDO::PARAM_STR);
-				$stmt2->execute();
-				$row2 = $stmt2->fetchObject();
-				$miscursos['tries']=$row2->tries;
-				$miscursos['finished']=$row2->finished;
 				echo json_encode($miscursos);
 			}
 			else{

@@ -127,7 +127,7 @@ class UserCourse extends React.Component {
 					$.ajax(settings2);
 					
 					if (a<5){
-						that.props.history.push('/user_exercise');
+						that.props.history.push('/user_exercise_edubody');
 					}
 					else if (a==5){
 						that.props.history.push('/user_exercise_test');

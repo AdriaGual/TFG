@@ -10,7 +10,7 @@
 		// set the PDO error mode to exception
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
-		//Buscar els cursos als que esta matriculat lusuari.
+		//Buscar els cursos que te el professor associats.
 		$stmt = $conn->prepare("SELECT c.id, c.name FROM course AS c INNER JOIN enrollment as en ON c.id = en.id_course WHERE en.id_user=:iduser");
 		$stmt->bindParam(':iduser', $myid, PDO::PARAM_STR);
 		$stmt->execute();

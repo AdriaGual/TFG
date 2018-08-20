@@ -51,6 +51,14 @@ th, td {
 	
 }
 
+.circle{
+ height: 25px;
+  width: 25px;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 .edubody{
 	border:0;
 	width:100%;
@@ -620,6 +628,10 @@ hr.vr {
 .bg_green {
 	background-color: rgb(0, 255, 0) !important;
 }
+
+.bg_yellow {
+	background-color: rgb(255,255,0) !important;	
+}
 .bg_blue {
 	background-color: rgb(0, 0, 255) !important;
 }
@@ -833,6 +845,10 @@ hr.vr {
 	margin-top: 7px!important;
 }
 
+.down_5{
+	margin-top: 5px!important;
+}
+
 .bold{
 	  font-weight: bold;
 }
@@ -863,7 +879,7 @@ hr.vr {
 .topic_info_form {
 	text-align: center;
 	height: 600px;
-	width: 500px;
+	width: 700px;
 }
 
 .theory_content {

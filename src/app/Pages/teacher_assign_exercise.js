@@ -69,7 +69,6 @@ class UserCourses extends React.Component {
 						
 						for (var b=0; b<jsonData2.length; b++){
 							$("#formulari").append("<hr/><label><input type='checkbox' class='"+b+"' name='students[]' value='"+jsonData2[b].id+"' />"+jsonData2[b].name+" "+jsonData2[b].surname+"</label><br/><br/>");
-							//Now, its showtime!
 							
 							name=jsonData[0].name;
 							$("#formulari").append("<p>"+jsonData[0].name+"</p>");
@@ -85,18 +84,15 @@ class UserCourses extends React.Component {
 							$("#formulari").append("<br/>");
 						}
 						
-						//3. Do magic stuff
 						 $('#formulariexercises input[type=checkbox]').change(function() {
 							 var idproblema = $(this).prop("id");
 							 								 
-							//We are going to mark
 							if ($(this).prop("checked")) $(this).prop("checked",true);
 							else $(this).prop("checked",false);
 										
 							$("#formulari > label input[type=checkbox]:checked").each(function() {
 								var laclase = $(this).prop("class");
 								
-								//Now, mark or unmark
 								var selected = $("#"+idproblema+"."+laclase);
 								selected.prop("checked", !selected.prop("checked"));
 							});

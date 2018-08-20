@@ -15,7 +15,9 @@ import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath } f
 import List,{ListItem,ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Select from 'material-ui/Select';
-
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 /** 
  * Register Page
  * @extends React.Component
@@ -42,6 +44,119 @@ class TeacherEditExerciceMPR extends React.Component {
 		});
 	}
 	
+	componentDidMount(){
+		var settings = {
+			type: 'GET',
+			url: 'php/load_only_courses_teacher.php',
+			async:false,
+			success: function(response) {
+				var jsonData = JSON.parse(response);
+				for (var a=0; a<jsonData.length; a++){
+					$("#formulari").append("<p value='"+jsonData[a].id+"'> "+jsonData[a].name+"</p>");
+					
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'curs': jsonData[a].id,
+						},
+						url: 'php/load_only_topics.php',
+						async:false,
+						success: function(response2) {
+							if (response2!="0_topics"){
+								var jsonData2 = JSON.parse(response2);
+								for (var b=0; b<jsonData2.length; b++){
+									$("#formulari").append("<input type='checkbox' name='topic' value='"+jsonData2[b].id+"' />"+jsonData2[b].name+"<br/>");
+								}
+								$("#formulari").append("<br/>");
+							}
+							else{
+								$("#formulari").append("<p class='size15'>No hi han topics en aquest curs </p><br/><br/>");
+							}
+						}
+					};
+					$.ajax(settings2);
+				}
+			}
+		};
+		$.ajax(settings);
+	}
+
+	clickSave  =()=>{
+		var topics = $("input[name=topic]:checked").serialize();
+		
+		var difficulty = $("#difficulty").val();
+		var max_tries = $("#max_tries").val();
+		var solution = "";
+		if (this.state.hasTextSolution){
+			solution = $("#problem_solution").val();
+		}				
+		
+		if (difficulty > 0 && difficulty <= 10 && max_tries > 0 && max_tries <= 100 && topics.length > 0 && topics.length > 0 && $("#newtitle").val()!="" && $("#problem_description").val()!="" && $("#problem_question").val()!="" && $("#help").val()!=""){
+			var that = this;
+			var settings = {
+				type: 'POST',
+				data: { 
+					'topics':topics,
+					'title': $("#newtitle").val(), 
+					'description': $("#problem_description").val(), 
+					'question': $("#problem_question").val(), 
+					'help': $("#help").val(), 
+					'points': new_circles,
+					'difficulty': difficulty,
+					'max_tries': max_tries,
+					'solution':solution,
+				},
+				url: 'php/save_exercise_mpr.php',
+				success: function(response) {
+					if (response=="OK"){
+						that.props.history.push("/teacher_courses");
+					}
+				}
+			};
+			$.ajax(settings);
+		}
+		else{
+			if (difficulty < 0 || difficulty > 10 || difficulty == ""){
+				document.getElementById('difficulty').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Difficulty not valid"});
+			}
+			else if  (max_tries < 0 || max_tries > 100 || max_tries == ""){
+				document.getElementById('max_tries').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Maximum tries not valid"});
+			}
+			else if (topics.length <= 0){
+				document.getElementById('topics').style.border='solid';
+				document.getElementById('topics').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Topics not selected"});
+			}
+			else if ($("#newtitle").val()==""){
+				document.getElementById('title').style.border='solid';
+				document.getElementById('title').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Title not set"});
+			}
+			else if ( $("#problem_description").val()==""){
+				document.getElementById('problem_description').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Description not set"});
+			}
+			else if ($("#problem_question").val()==""){
+				document.getElementById('problem_question').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Question not set"});
+			}
+			else if ($("#help").val()==""){
+				document.getElementById('help').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: "Help not set"});
+			}
+		}
+	}	
+	
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		  return;
+		}
+		this.setState({ showsnack: false });
+	};
+	
+	
 	appState = this.props.appState;
 
 	handleChange = name => event => {
@@ -53,8 +168,8 @@ class TeacherEditExerciceMPR extends React.Component {
 	 */
 	render(){
 		return (
-			<div style={{ height: 1500}}>
-				<div className="left_30">	
+			<div>
+				<div className="left_30" id = "title">	
 					<TextField
 						id="newtitle"
 						label="Enter Exercise Statement"
@@ -101,198 +216,120 @@ class TeacherEditExerciceMPR extends React.Component {
 						
 						<p>Help Text:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
+						<br/><br/><br/>
 						<Grid container>
 							<Grid item xs={6} > 
-								<Select native className="down_30 "> 
-									<option value="">Difficulty</option>
-									<option value={1}>1</option>
-									<option value={2}>2</option>
-									<option value={3}>3</option>
-									<option value={4}>4</option>
-								</Select>
+								<label for="difficulty">Difficulty: </label>
+								<input type="number" id="difficulty" min="1" max="10" step="1"/>
 							</Grid>
 							<Grid item xs={6} > 
-								<Select native className="down_30 "> 
-									<option value="">Maximum Tries</option>
-									<option value={1}>1</option>
-									<option value={2}>2</option>
-									<option value={3}>3</option>
-									<option value={4}>4</option>
-								</Select>
+								<label for="max_tries">Maximum Tries: </label>
+								<input type="number" id="max_tries" min="1" max="100" step="1"/>
 							</Grid>
 						</Grid>
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
-					<Grid item xs={6} > 
+					<Grid item xs={4} > 
 						<Grid container>
-						<Grid item xs={1}>
-						</Grid>
-						<Grid item>
-						<div class="tab-content">
-							<div id="mpr" class="tab-pane fade in active">
-								<div id="canvas_div">
-									<span id="canvas" class="canvas">
-									
-									</span>
-									<div id="canvas_button_group" class="part">
-										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
-									</div>
-								</div>
-								
-								<div id="select_set_input_group" className="down_10">
-									<span class="input-group-btn">
-										<Button type="button" id="btn-choose-set" className="btn btn-1 right_15 white">Escull de la biblioteca</Button>
-									</span>
-									<Input type="text" id="set-input-text" className="left_15 border_grey" value="" disabled=""/>
-									
-									<div id="library_div" style={{display:'none'}} className="border_black down_10">
-										<div id="library_content">
-											<Grid container>
-												<Grid item xs={6}>
-													<div id="library_title" className="orange size_30 left_15">Biblioteca</div>
-												</Grid>
-												<Grid item xs={4}>
-												<div id="library_button_group">
-												
-												<Button type="button" id="btn-open-library-item" className="btn btn-4 white down_10" disabled="">Obrir conjunt</Button>
+							<Grid item xs={1}>
+							</Grid>
+							<Grid item>
+								<div class="tab-content">
+									<div id="mpr" class="tab-pane fade in active">
+										<div id="canvas_div">
+											<span id="canvas" class="canvas">
+											</span>
+											<div id="canvas_button_group" class="part">
+												<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
 											</div>
-												</Grid>
-												<Grid item xs={2}>
-													<Button type="button" id="btn-close-library" className="btn btn-5 white down_10"><Icon className="fa fa-times" style={{ fontSize: 15 }}></Icon></Button>
-												</Grid>	
-											</Grid>
-											
-											<div id="library_items" className="left_15">
-												<div class="library_item" data-id="1" title="PIG_AGG061" >
-													<img src="img/IMG0093.jpg" style={{width:100,height:100}}/>
-													<div>PIG_AGG061</div>
+										</div>
+									
+										<div id="select_set_input_group" className="down_10">
+											<span class="input-group-btn">
+												<Button type="button" id="btn-choose-set" className="btn btn-1 right_15 white">Escull de la biblioteca</Button>
+											</span>
+											<Input type="text" id="set-input-text" className="left_15 border_grey" value="" disabled=""/>
+										
+											<div id="library_div" style={{display:'none'}} className="border_black down_10">
+												<div id="library_content">
+													<Grid container>
+														<Grid item xs={6}>
+															<div id="library_title" className="orange size_30 left_15">Biblioteca</div>
+														</Grid>
+														<Grid item xs={4}>
+															<div id="library_button_group">
+																<Button type="button" id="btn-open-library-item" className="btn btn-4 white down_10" disabled="">Obrir conjunt</Button>
+															</div>
+														</Grid>
+														<Grid item xs={2}>
+															<Button type="button" id="btn-close-library" className="btn btn-5 white down_10"><Icon className="fa fa-times" style={{ fontSize: 15 }}></Icon></Button>
+														</Grid>	
+													</Grid>
+												
+													<div id="library_items" className="left_15">
+														<div class="library_item" data-id="1" title="PIG_AGG061" >
+															<img src="img/IMG0093.jpg" style={{width:100,height:100}}/>
+															<div>PIG_AGG061</div>
+														</div>
+													</div>
+												
+												
 												</div>
 											</div>
-											
-											
 										</div>
-									</div>
-								</div>
-								
-								<div id="anatomical_planes_group" className="down_10">
-									<div id="axial_input_group">
-										<span id="axial_label" >Axial</span>
-										<input type="number" id="axial-number" style={{width:100,marginLeft:34}} className="border_grey" aria-describedby="axial_label" value="0" min="0" max="0" disabled=""/>
-									</div>
 									
-									<div id="sagittal_input_group" className="down_10">
-										<span id="sagittal_label" >Sagital</span>
-										<input type="number" id="sagittal-number" style={{width:100,marginLeft:20}} className="border_grey" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
-									</div>
+										<div id="anatomical_planes_group" className="down_10">
+											<div id="axial_input_group">
+												<span id="axial_label" >Axial</span>
+												<input type="number" id="axial-number" style={{width:100,marginLeft:34}} className="border_grey" aria-describedby="axial_label" value="0" min="0" max="0" disabled=""/>
+											</div>
+										
+											<div id="sagittal_input_group" className="down_10">
+												<span id="sagittal_label" >Sagital</span>
+												<input type="number" id="sagittal-number" style={{width:100,marginLeft:20}} className="border_grey" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
+											</div>
+										
+											<div id="coronal_input_group" className="down_10">
+												<span id="coronal_label" >Coronal</span>
+												<input type="number" id="coronal-number" style={{width:100,marginLeft:14}} className="border_grey" aria-describedby="coronal_label" value="0" min="0" max="0" disabled=""/>
+											</div>
+										</div>
 									
-									<div id="coronal_input_group" className="down_10">
-										<span id="coronal_label" >Coronal</span>
-										<input type="number" id="coronal-number" style={{width:100,marginLeft:14}} className="border_grey" aria-describedby="coronal_label" value="0" min="0" max="0" disabled=""/>
+										<div id="centre_radius_group" style={{width:700}} className="down_10">
+											<div id="centre_input_group">
+												<span id="centre_label" >Centre</span>
+												<input type="text" className="border_grey" aria-describedby="centre_label" style={{width:160,marginLeft:22}} value="" readonly=""/>
+											</div>
+											<div id="radius_input_group" className="down_10" style={{width:200}}>
+												<span id="radius_label" >Radi</span>
+												<input type="number" className="border_grey" id="radius-number" style={{width:100,marginLeft:38}} aria-describedby="radius_label" value="0" min="1" disabled=""/>
+											</div>
+										</div>
+										<br/><br/>
 									</div>
 								</div>
-								
-								<div id="centre_radius_group" style={{width:700}} className="down_10">
-									<div id="centre_input_group">
-										<span id="centre_label" >Centre</span>
-										<input type="text" className="border_grey" aria-describedby="centre_label" style={{width:160,marginLeft:22}} value="" readonly=""/>
-									</div>
-									<div id="radius_input_group" className="down_10" style={{width:200}}>
-										<span id="radius_label" >Radi</span>
-										<input type="number" className="border_grey" id="radius-number" style={{width:100,marginLeft:38}} aria-describedby="radius_label" value="0" min="1" disabled=""/>
-									</div>
-								</div>
-							</div>
-						</div>
-						</Grid>
+							</Grid>
 						</Grid>
 					</Grid>
-					
-					<Grid item xs={1} > 
+					<Grid item xs={2}> 
+						<div id = "topics">
+							<div className="left_50 down_20 orange size_20"  >
+								<p>Topics</p>
+							</div>
+							<hr/>
+							<div id="formulari"></div>
+							<hr/>
+						</div>
+						<br/>
 						<Button
 							className="btn btn-1 white left_15"
-							onClick={() => 	this.clicktheory(node.name)}
+							onClick={() => 	this.clickSave()}
 						>
-							Preview
+						<Icon className="fa fa-save" style={{ fontSize: 15 }}></Icon>
 						</Button>
 					</Grid>
-
-				</Grid>
-				<Grid container className="down_30 left_30">
-					<Grid item xs={2}> 
-						<Card>
-							<a className="orange size_30 left_30">Categories</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Magnetic Resonance</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Clinical Cases</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Evolution</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Plate in PA or AP</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Diafragmes</ListItemText>
-								</ListItem>
-							</List>
-						</Card>
-						<Grid item xs={1}>
-							<p></p>
-						</Grid>
-					</Grid>
-					<Grid item xs={1}> 
-					</Grid>
-					<Grid item xs={2}> 
-						<Card>
-							<a className="orange size_30 left_30">User Type</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Student</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Radiologist</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Doctor</ListItemText>
-								</ListItem>
-							</List>
-						</Card>
-						<Grid item xs={1}> 
-							<p></p>
-						</Grid>
-						<Card>
-							<a className="orange size_30 left_30">Topics</a>
-							<hr/>
-							<List>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 1</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 2</ListItemText>
-								</ListItem>
-								<ListItem>
-									<Checkbox/>
-									<ListItemText>Topic 3</ListItemText>
-								</ListItem>
-							
-							</List>
-						</Card>
+					<Grid item xs={1} > 
 					</Grid>
 				</Grid>
 			</div>

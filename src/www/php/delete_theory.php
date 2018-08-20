@@ -1,8 +1,7 @@
 ﻿<?php
 	session_start(); 
+	$name= $_POST["name"];
 
-	$name = $_POST["name"];
-	$myid = $_SESSION["userid"];
 	$username = "root";
 	$password = "";
 
@@ -14,7 +13,7 @@
 		   echo "empty_name";
 		}
 		else{
-			$stmt = $conn->prepare("SELECT * FROM exercice_content WHERE statement = :name");
+			$stmt = $conn->prepare("SELECT * FROM theory_content WHERE title = :name");
 			$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 			$stmt->execute();
 			
@@ -23,23 +22,20 @@
 				$miscursos = array();
 				$row = $stmt->fetchObject();
 				$miscursos['idsql']=$row->id;
-				$miscursos['statement']=$row->statement;
+				$miscursos['statement']=$row->title;
 				$miscursos['description']=$row->description;
 				$miscursos['question']=$row->question;
 				$miscursos['help']=$row->help;
 				$miscursos['ntries']=$row->n_tries;
-				$miscursos['answer']=$row->answer;
 				$miscursos['type_component']=$row->type_component;
 				$miscursos['img']=$row->img;
 				$miscursos['original_img']=$row->original_img;
 				$idsql = $row->id;
-				$stmt2 = $conn->prepare("SELECT * FROM user_exercise WHERE id_user = :myid AND id_exercise = :idexercise");
-				$stmt2->bindParam(':myid', $myid, PDO::PARAM_STR);
-				$stmt2->bindParam(':idexercise', $idsql, PDO::PARAM_STR);
-				$stmt2->execute();
-				$row2 = $stmt2->fetchObject();
-				$miscursos['tries']=$row2->tries;
-				$miscursos['finished']=$row2->finished;
+				
+				$stmt = $conn->prepare("DELETE FROM theory_content WHERE title = :name");
+				$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+				$stmt->execute();
+				
 				echo json_encode($miscursos);
 			}
 			else{
