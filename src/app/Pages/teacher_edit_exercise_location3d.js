@@ -78,6 +78,25 @@ class TeacherEditExerciceLocation3d extends React.Component {
 			}
 		};
 		$.ajax(settings);
+		
+		$('#model_input').change(function() {
+			const files = document.querySelector('[type=file]').files;
+			const formData = new FormData();
+
+			for (let i = 0; i < files.length; i++) {
+				let file = files[i];
+
+				formData.append('files[]', file);
+			}
+
+			fetch('php/uploadfiles.php', {
+				method: 'POST',
+				body: formData
+			}).then(response => {
+				console.log(response);
+			});
+		});
+		
 	}
 	
 	clickSave  =()=>{
@@ -86,7 +105,8 @@ class TeacherEditExerciceLocation3d extends React.Component {
 		
 		$.each(models, function(index, model) {
 			var id = parseInt(index);
-			var path = model.path;
+			var path = "http://localhost/models/"+model.filename;
+			console.log(path);
 			var filename = model.filename;
 			var name = model.name;
 			var solution = model.solution;
@@ -114,6 +134,9 @@ class TeacherEditExerciceLocation3d extends React.Component {
 					'question': $("#problem_question").val(), 
 					'help': $("#help").val(), 
 					'new_models': JSON.stringify(new_models),
+					'difficulty': difficulty,
+					'max_tries': max_tries,
+					'solution':solution,
 				},
 				url: 'php/save_exercise_location3d.php',
 				success: function(response) {

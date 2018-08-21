@@ -14,6 +14,10 @@ import SortableTree from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
 import Select from 'material-ui/Select';
 var loader = new THREE.JSONLoader();
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import DoneIcon from 'material-ui-icons/Done';
 /** 
  * Register Page
  * @extends React.Component
@@ -22,7 +26,8 @@ var loader = new THREE.JSONLoader();
 var n;
 var img;
 var tries;
-
+var solucions =[];
+var fjson;
 class UserExercice extends React.Component {
 	constructor(props){
 		super(props);
@@ -36,6 +41,12 @@ class UserExercice extends React.Component {
 			component:"",
 			id:"",
 			img:"",
+			answer:"",
+			showsnack: false,
+			snacktext: "",
+			showcorrectanswer: false,
+			showwronganswer: false,
+			finished:false,
 		}
 	}
 	
@@ -68,11 +79,13 @@ class UserExercice extends React.Component {
 				that.setState({exercice_ntries: jsonData.ntries});
 				that.setState({tries: jsonData.tries});
 				that.setState({id: jsonData.idsql});
+				that.setState({answer: jsonData.answer});
+				that.setState({finished: jsonData.finished});
 				n = jsonData.type_component;
 			}
 		};
 		$.ajax(settings);
-		var fjson;
+		
 		var settings2 = {
 			type: 'POST',
 			async:false,
@@ -82,93 +95,118 @@ class UserExercice extends React.Component {
 			url: 'php/load_exercice_location3d.php',
 			success: function(response2) {
 				var jsonData2 = JSON.parse(response2);
-				//var jsonfinal = JSON.parse(jsonData2[0].matrix)
-
-				//for (var a=0; a<jsonData2.length; a++){
-				var json_n = jsonData2[0].matrix;
-				console.log( JSON.parse(json_n));
+				var json_n = jsonData2[0].matrix;	
 				fjson =JSON.parse(json_n); 
-					
-				//}
-				
-				/***$.each(initial_models, function(id, model) {
-					model.matrix = buildMatrix4FromJSON(model.matrix);
-					model.material = buildMaterialFromJSON(model.material);
-					
-					models_list.push({id: id, path: model.path, filename: model.filename, name: model.name, file: model.file, solution: model.solution, matrix: model.matrix, material: model.material});
-				});*/
-				
-				
+				for (var a=0; a<fjson.length; a++){
+					solucions[a] = fjson[a].name.concat(','+fjson[a].solution);
+				}
 			}
 		};
 		$.ajax(settings2);
+		
 		setTimeout(function(){
-			loadModelsRecursive(0, fjson);
-		}, 1000);
+			loadFileModels(fjson);
+		}, 200);
+		
 	}
 	
-	/***clickcorregir  =()=>{
-		var new_circles = [];
-		
-		$.each(location_points, function(index, location_point) {
-			var id = location_point.id;
-			var x = location_point.point.x;
-			var y = location_point.point.y;
-			var radius = location_point.point.r * location_point.point.radius_factor;
-			if (id == -1) new_circles.push({"x": x, "y": y, "radius": radius});
-		});
-		
+	clickcorregir  =()=>{	
 		var that = this;
-		var settings = {
-			type: 'POST',
-			data: { 
-				'name': that.appState("exercice_name"), 
-				'points': new_circles,
-			},
-			url: 'php/verify_answers_location2d.php',
-			success: function(response) {
-				if (response=="match"){
+		var correcte = true;
+		
+		if ($('#list_models_solution_select option').length==0){
+			document.getElementById('btn-add-model-solution').style.border='solid';
+			document.getElementById('btn-add-model-solution').style.borderColor='#e52213';
+			this.setState({ showsnack: true ,snacktext: "No answers set!"});
+		}
+		else{
+			for (var a=0; a<solucions.length; a++){
+				var array = solucions[a].split(",");
+				if (array[1]==1){
+					var b = 0;
+					$('#list_models_solution_select option').each(function() {
+						if (array[0] == $(this).text()){
+							
+							b=b+1;
+						}
+					});
+					if (b==0){
+						correcte = false;
+					}
+				}
+				else{
+					$('#list_models_solution_select option').each(function() {
+						if (array[0] == $(this).text()){
+							correcte=false;
+						}
+					});
+				}
+			}
+			
+			if (correcte){
+				var settings2 = {
+					type: 'POST',
+					data: { 
+						'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
+						'tries': that.state.tries,
+						'puntuation': 10,
+					},
+					url: 'php/save_mark.php',
+					success: function(response2) {
+
+					}
+				};
+				$.ajax(settings2);
+				that.setState({ finished: true });
+				that.setState({ showcorrectanswer: true ,showwronganswer: false});
+			}
+			else{
+				var a = that.state.tries;
+				if (that.state.tries>=that.state.exercice_ntries){
 					var settings2 = {
 						type: 'POST',
 						data: { 
-							'name': that.appState("exercice_name"),
+							'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
 							'tries': that.state.tries,
-							'puntuation': 10,
+							'puntuation': 0,
 						},
-						url: 'php/save_location2d_mark.php',
+						url: 'php/save_mark.php',
 						success: function(response2) {
 
 						}
 					};
 					$.ajax(settings2);
+					that.setState({ finished: true });
 				}
-				else if (response=="no_match"){
-					var a = that.state.tries;
-					if (that.state.tries>=that.state.exercice_ntries){
-						var settings2 = {
-							type: 'POST',
-							data: { 
-								'name': that.appState("exercice_name"),
-								'tries': that.state.tries,
-								'puntuation': 0,
-							},
-							url: 'php/save_location2d_mark.php',
-							success: function(response2) {
+				else{
+					a++;
+				}
+				that.setState({ showcorrectanswer: false ,showwronganswer: true});
+				that.setState({tries: a});
+				var settings2 = {
+					type: 'POST',
+					data: { 
+						'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
+						'tries': that.state.tries,
+					},
+					url: 'php/save_tries.php',
+					success: function(response2) {
 
-							}
-						};
-						$.ajax(settings2);
 					}
-					else{
-						a++;
-					}
-					
-					that.setState({tries: a});
-				}
+				};
+				$.ajax(settings2);
 			}
-		};
-		$.ajax(settings);
-	}	*/
+		}
+		
+	}	
+	
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		  return;
+		}
+		this.setState({ showsnack: false });
+	};
+	
 	/**
 	 * Renders the register page.
 	 */
@@ -232,16 +270,56 @@ class UserExercice extends React.Component {
 					</Grid>
 					<Grid item xs={3}  className="padding2">
 						<br/>
-						{this.state.tries < this.state.exercice_ntries ?
+						{(this.state.tries < this.state.exercice_ntries)  ? this.state.finished==0 ?
 							<Button
-								id="btn-save"
 								className="btn btn-1 white left_30"
 								onClick={() => 	this.clickcorregir()}
-							> Corregir</Button>: null
+							> Corregir</Button>:null: null
+						}
+						<br/><br/>
+						{this.state.showcorrectanswer ? 
+								this.state.answer!="" ?
+								<div>
+								<p>Correcte!</p>
+								<br/>
+								<hr/>
+								<p>{this.state.answer}</p>
+								</div> 
+								: 
+								<div>
+								<p>Correcte!</p>
+								<br/>
+								</div> 
+								: null
+						}
+						{this.state.showwronganswer ? 
+							<div>
+							<p>Incorrecte!</p>
+							</div> : null
 						}
 					</Grid>
 					<Grid item xs={1}>
 					</Grid>
+					<Snackbar
+					  anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'left',
+					  }}
+					  open={this.state.showsnack}
+					  autoHideDuration={4000}
+					  onClose={this.handleClose}
+					  message={<span id="message-id">{this.state.snacktext}</span>}
+					  action={[
+						<IconButton
+						  key="close"
+						  aria-label="Close"
+						  color="inherit"
+						  onClick={this.handleClose}
+						>
+						<CloseIcon />
+						</IconButton>,
+					  ]}
+					/>
 				</Grid>
 
 			</div>

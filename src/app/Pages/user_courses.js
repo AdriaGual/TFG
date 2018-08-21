@@ -250,7 +250,7 @@ class UserCourses extends React.Component {
 					})});
 					console.log(jsonData);
 					that.setState({showinfo: true});
-					that.setState({type_info_selected: "Exercice"});
+					that.setState({type_info_selected: "Exercise"});
 					that.setState({topic_selected: name});
 				}
 				else{
@@ -365,13 +365,14 @@ class UserCourses extends React.Component {
 											>
 												<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 											</Button>,
+											this.state.type_info_selected == "Exercise" ?
 											node.finished==1 ? 
 												node.puntuation>5 ? 
 													<div className="circle bg_green left_15 down_5"></div> 
 												: 
 													<div className="circle bg_red left_15 down_5"></div>
 											:
-												<div className="circle bg_yellow left_15 down_5"></div>,
+												<div className="circle bg_yellow left_15 down_5"></div>:null,
 										],
 									};
 								}}	

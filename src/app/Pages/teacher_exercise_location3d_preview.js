@@ -16,6 +16,8 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import DoneIcon from 'material-ui-icons/Done';
+import Select from 'material-ui/Select';
+var loader = new THREE.JSONLoader();
 /** 
  * Register Page
  * @extends React.Component
@@ -24,7 +26,8 @@ import DoneIcon from 'material-ui-icons/Done';
 var n;
 var img;
 var tries;
-
+var solucions =[];
+var fjson;
 class UserExercice extends React.Component {
 	constructor(props){
 		super(props);
@@ -50,23 +53,19 @@ class UserExercice extends React.Component {
 	appState = this.props.appState;
 	componentWillMount(){
 		var loadjs = require('loadjs');
-		loadjs('js/canvas_viewer_loc.js',function (){
+		loadjs('js/OrbitControls.js',function (){
 		});
-		loadjs('js/viewer2d.js',function (){
+		loadjs('js/canvas_viewer_loc3d.js',function (){
+		});
+		loadjs('js/adm_problem_loc3d.js',function (){
 		});
 	}
-	
-	handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-		  return;
-		}
-		this.setState({ showsnack: false });
-	};
 	
 	componentDidMount(){
 		var that = this;
 		var settings = {
 			type: 'POST',
+			async:false,
 			data: { 
 				'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name") , 
 			},
@@ -82,104 +81,132 @@ class UserExercice extends React.Component {
 				that.setState({id: jsonData.idsql});
 				that.setState({answer: jsonData.answer});
 				that.setState({finished: jsonData.finished});
-				img = jsonData.original_img;
 				n = jsonData.type_component;
-				if (n==6){
-					setImage(img);
-				}
 			}
 		};
 		$.ajax(settings);
+		
+		var settings2 = {
+			type: 'POST',
+			async:false,
+			data: { 
+				'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name") , 
+			},
+			url: 'php/load_exercice_location3d.php',
+			success: function(response2) {
+				var jsonData2 = JSON.parse(response2);
+				var json_n = jsonData2[0].matrix;	
+				fjson =JSON.parse(json_n); 
+				for (var a=0; a<fjson.length; a++){
+					solucions[a] = fjson[a].name.concat(','+fjson[a].solution);
+				}
+			}
+		};
+		$.ajax(settings2);
+		
+		setTimeout(function(){
+			loadFileModels(fjson);
+		}, 200);
+		
 	}
 	
-	clickcorregir  =()=>{
-		var new_circles = [];
+	clickcorregir  =()=>{	
+		var that = this;
+		var correcte = true;
 		
-		$.each(location_points, function(index, location_point) {
-			var id = location_point.id;
-			var canvas = document.getElementById("canvas");
-			var bounds = canvas.getBoundingClientRect();
-			
-			var x = location_point.point.x;
-			var y = location_point.point.y;
-			var radius = location_point.point.r * location_point.point.radius_factor;
-			
-			if (id == -1) new_circles.push({"x": x, "y": y, "radius": radius});
-		});
-		
-		if (new_circles.length==0){
-			document.getElementById('btn-edit-circle').style.border='solid';
-			document.getElementById('btn-edit-circle').style.borderColor='#e52213';
+		if ($('#list_models_solution_select option').length==0){
+			document.getElementById('btn-add-model-solution').style.border='solid';
+			document.getElementById('btn-add-model-solution').style.borderColor='#e52213';
 			this.setState({ showsnack: true ,snacktext: "No answers set!"});
 		}
 		else{
-			var that = this;
-			var settings = {
-				type: 'POST',
-				data: { 
-					'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"), 
-					'points': new_circles,
-				},
-				url: 'php/verify_answers_location2d.php',
-				success: function(response) {
-					if (response=="match"){
-						var settings2 = {
-							type: 'POST',
-							data: { 
-								'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-								'tries': that.state.tries,
-								'puntuation': 10,
-							},
-							url: 'php/save_mark.php',
-							success: function(response2) {
-
-							}
-						};
-						$.ajax(settings2);
-						that.setState({ finished: true });
-						that.setState({ showcorrectanswer: true ,showwronganswer: false});
-					}
-					else if (response=="no_match"){
-						var a = that.state.tries;
-						if (that.state.tries>=that.state.exercice_ntries){
-							var settings2 = {
-								type: 'POST',
-								data: { 
-									'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-									'tries': that.state.tries,
-									'puntuation': 0,
-								},
-								url: 'php/save_mark.php',
-								success: function(response2) {
-
-								}
-							};
-							$.ajax(settings2);
-							that.setState({ finished: true });
+			for (var a=0; a<solucions.length; a++){
+				var array = solucions[a].split(",");
+				if (array[1]==1){
+					var b = 0;
+					$('#list_models_solution_select option').each(function() {
+						if (array[0] == $(this).text()){
+							
+							b=b+1;
 						}
-						else{
-							a++;
-						}
-						that.setState({ showcorrectanswer: false ,showwronganswer: true});
-						that.setState({tries: a});
-						var settings2 = {
-							type: 'POST',
-							data: { 
-								'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-								'tries': that.state.tries,
-							},
-							url: 'php/save_tries.php',
-							success: function(response2) {
-
-							}
-						};
-						$.ajax(settings2);
+					});
+					if (b==0){
+						correcte = false;
 					}
 				}
-			};
-			$.ajax(settings);
+				else{
+					$('#list_models_solution_select option').each(function() {
+						if (array[0] == $(this).text()){
+							correcte=false;
+						}
+					});
+				}
+			}
+			
+			if (correcte){
+				var settings2 = {
+					type: 'POST',
+					data: { 
+						'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
+						'tries': that.state.tries,
+						'puntuation': 10,
+					},
+					url: 'php/save_mark.php',
+					success: function(response2) {
+
+					}
+				};
+				$.ajax(settings2);
+				that.setState({ finished: true });
+				that.setState({ showcorrectanswer: true ,showwronganswer: false});
+			}
+			else{
+				var a = that.state.tries;
+				if (that.state.tries>=that.state.exercice_ntries){
+					var settings2 = {
+						type: 'POST',
+						data: { 
+							'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
+							'tries': that.state.tries,
+							'puntuation': 0,
+						},
+						url: 'php/save_mark.php',
+						success: function(response2) {
+
+						}
+					};
+					$.ajax(settings2);
+					that.setState({ finished: true });
+				}
+				else{
+					a++;
+				}
+				that.setState({ showcorrectanswer: false ,showwronganswer: true});
+				that.setState({tries: a});
+				var settings2 = {
+					type: 'POST',
+					data: { 
+						'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
+						'tries': that.state.tries,
+					},
+					url: 'php/save_tries.php',
+					success: function(response2) {
+
+					}
+				};
+				$.ajax(settings2);
+			}
 		}
+		
 	}	
+	
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		  return;
+		}
+		this.setState({ showsnack: false });
+	};
+	
 	/**
 	 * Renders the register page.
 	 */
@@ -210,21 +237,32 @@ class UserExercice extends React.Component {
 					</Grid>
 					<Grid item xs={4}  className="padding2">
 						<div id="image_div">
-							<div id="canvas_div">
-								<canvas id="canvas"></canvas>
-								<div id="canvas_button_group" class="part">
-									<div id="btn-group-location">
-										<button type="button" id="btn-edit-circle" title="Afegir o editar punt" class="btn-location selected"></button>
-										<button type="button" id="btn-delete-circle" title="Eliminar punt" class="btn-location"></button>
+							<div id="3d" class="tab-pane fade in active">
+								<div id="canvas_div">
+									<span id="canvas" class="canvas">
+										
+									</span>
+									<div id="canvas_button_group" class="part">
+										<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
 									</div>
-									<div id="radius_div">
-										<div id="radius_input_group" class="input-group">
-											<span class="input-group-addon">Radi</span>
-											<input type="text" id="radius_value" class="form-control" value="5" />
-										</div>
-										<input id="radius_slider" type="range" min="1" max="10" step="1" value="5" />
-									</div>
-									<button type="button" id="btn-fullscreen" title="Pantalla completa"></button>
+								</div>
+								
+								<div id="displayed_models_input_group" style={{width:700}} className="down_15">
+									<span id="displayed_models_select_label" >Models</span>
+									<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label"  style={{width:200,marginLeft:71}}></Select>
+									
+									<span class="input-group-btn">
+										<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">Afegir a solució</Button>
+									</span>
+								</div>
+								
+								<div id="list_models_solution_input_group" style={{width:700}} className="down_15">
+									<span id="list_models_solution_select_label" >Models solució</span>
+									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
+									
+									<span class="input-group-btn">
+										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
+									</span>
 								</div>
 							</div>
 						</div>

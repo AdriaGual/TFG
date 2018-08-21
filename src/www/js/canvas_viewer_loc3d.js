@@ -102,7 +102,7 @@ function setModels() {
 function loadModelsRecursive(index, models_list) {
 	if (index < models_list.length) {
 		var id = models_list[index].id;
-		var path = "http://localhost/vertebrae_sacral.json";
+		var path = "http://localhost/models/"+models_list[index].filename;
 		var filename = models_list[index].filename;
 		var name = models_list[index].name;
 		var file = models_list[index].file;

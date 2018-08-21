@@ -117,10 +117,14 @@ $(document).ready(function() {
 			}
 		}
 		
-		if (file_models.length > 0) loadFileModels(file_models);
+		if (file_models.length > 0){ 
+			setTimeout(function() {
+				loadFileModels(file_models);
+			}, 200);
+		}
 		
-		if (added_models.length > 1) showMessage(0, lang['ADM_PROBLEM_LOCATION_3D_MODELS_ALREADY_ADDED_ERROR'].replace("%s", added_models[0]));
-		else if (added_models.length > 0) showMessage(0, lang['ADM_PROBLEM_LOCATION_3D_MODEL_ALREADY_ADDED_ERROR'].replace("%s", added_models[0]));
+		if (added_models.length > 1) console.log("File already uploaded!");
+		else if (added_models.length > 0) console.log("File already uploaded!");
 	});
 	
 	$(document).on('change', '.btn-file :file', function() {

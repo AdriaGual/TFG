@@ -415,13 +415,6 @@ class TeacherCourses extends React.Component {
 												color: "black",
 											},
 										buttons: [
-											
-											<Button
-												className="btn btn-4 white right_15"
-												onClick={() => 	this.clickedittopic(node.name)}
-											>
-												<Icon className="fa fa-edit" style={{ fontSize: 15 }}></Icon>
-											</Button>,
 											<Button
 												className="btn btn-5 white right_15"
 												onClick={() => 	this.clickshowadvice(node.name)}
