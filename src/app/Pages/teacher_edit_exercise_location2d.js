@@ -133,51 +133,53 @@ class TeacherEditExerciceLocation2d extends React.Component {
 		
 		if (document.getElementById("problem_image_input").files.length != 0 && difficulty > 0 && difficulty <= 10 && max_tries > 0 && max_tries <= 100 && topics.length > 0 && topics.length > 0 && $("#newtitle").val()!="" && $("#problem_description").val()!="" && $("#problem_question").val()!="" && $("#help").val()!=""){
 			var that = this;
-			var titleok = false;
 			var settings = {
 				type: 'POST',
+				async:false,
 				data: { 
 					'name': $("#newtitle").val(), 
 				},
 				url: 'php/istitleok.php',
 				success: function(response) {
 					if (response=="OK"){
-						titleok = true;
+						var settings2 = {
+							type: 'POST',
+							async:false,
+							data: { 
+								'original_img':original_imageURL,
+								'img': dataURL, 
+								'topics':topics,
+								'title': $("#newtitle").val(), 
+								'description': $("#problem_description").val(), 
+								'question': $("#problem_question").val(), 
+								'help': $("#help").val(), 
+								'points': new_circles,
+								'difficulty': difficulty,
+								'max_tries': max_tries,
+								'solution':solution,
+							},
+							url: 'php/save_exercise_location2d.php',
+							success: function(response) {
+								if (response=="OK"){
+									that.props.history.push("/teacher_courses");
+								}
+							}
+						};
+						$.ajax(settings2);
+
+				
+			
+					}
+					else{
+						document.getElementById('title').style.border='solid';
+						document.getElementById('title').style.borderColor='#e52213';
+						this.setState({ showsnack: true ,snacktext: language[lng].titlealreadyexists});
 					}
 				}
 			};
 			$.ajax(settings);
 			
-			if (titleok){
-				var settings2 = {
-					type: 'POST',
-					data: { 
-						'original_img':original_imageURL,
-						'img': dataURL, 
-						'topics':topics,
-						'title': $("#newtitle").val(), 
-						'description': $("#problem_description").val(), 
-						'question': $("#problem_question").val(), 
-						'help': $("#help").val(), 
-						'points': new_circles,
-						'difficulty': difficulty,
-						'max_tries': max_tries,
-						'solution':solution,
-					},
-					url: 'php/save_exercise_location2d.php',
-					success: function(response) {
-						if (response=="OK"){
-							that.props.history.push("/teacher_courses");
-						}
-					}
-				};
-				$.ajax(settings2);
-			}
-			else{
-				document.getElementById('title').style.border='solid';
-				document.getElementById('title').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: language[lng].titlealreadyexists});
-			}
+			
 		}
 		else{
 			if (difficulty < 0 || difficulty > 10 || difficulty == ""){
