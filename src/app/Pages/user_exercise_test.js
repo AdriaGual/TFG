@@ -27,7 +27,7 @@ import language from "../Utils/language.js";
 var n;
 var img;
 var tries;
-
+var lng;
 class UserExercice extends React.Component {
 	constructor(props){
 		super(props);

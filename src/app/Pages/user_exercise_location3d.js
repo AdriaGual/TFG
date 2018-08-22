@@ -159,6 +159,7 @@ class UserExercice extends React.Component {
 			if (correcte){
 				var settings2 = {
 					type: 'POST',
+					async:false,
 					data: { 
 						'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
 						'tries': that.state.tries,
@@ -175,12 +176,14 @@ class UserExercice extends React.Component {
 			}
 			else{
 				var a = that.state.tries;
-				if (that.state.tries>=that.state.exercice_ntries){
+				a++
+				if (a==that.state.exercice_ntries){
 					var settings2 = {
 						type: 'POST',
+						async:false,
 						data: { 
 							'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-							'tries': that.state.tries,
+							'tries': a,
 							'puntuation': 0,
 						},
 						url: 'php/save_mark.php',
@@ -191,16 +194,14 @@ class UserExercice extends React.Component {
 					$.ajax(settings2);
 					that.setState({ finished: true });
 				}
-				else{
-					a++;
-				}
 				that.setState({ showcorrectanswer: false ,showwronganswer: true});
 				that.setState({tries: a});
 				var settings2 = {
 					type: 'POST',
+					async:false,
 					data: { 
 						'name': STORAGE.getLocalStorageItem("exercise_name") || that.appState("exercice_name"),
-						'tries': that.state.tries,
+						'tries': a,
 					},
 					url: 'php/save_tries.php',
 					success: function(response2) {
