@@ -18,10 +18,13 @@ import Select from 'material-ui/Select';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
  */
+ var lng;
 class TeacherEditExerciceMPR extends React.Component {
 	constructor(props){
 		super(props);
@@ -70,7 +73,7 @@ class TeacherEditExerciceMPR extends React.Component {
 								$("#formulari").append("<br/>");
 							}
 							else{
-								$("#formulari").append("<p class='size15'>No hi han topics en aquest curs </p><br/><br/>");
+								$("#formulari").append("<p class='size15'>"+language[lng].notopicsincourse+"</p><br/><br/>");
 							}
 						}
 					};
@@ -93,58 +96,81 @@ class TeacherEditExerciceMPR extends React.Component {
 		
 		if (difficulty > 0 && difficulty <= 10 && max_tries > 0 && max_tries <= 100 && topics.length > 0 && topics.length > 0 && $("#newtitle").val()!="" && $("#problem_description").val()!="" && $("#problem_question").val()!="" && $("#help").val()!=""){
 			var that = this;
+			
+			var titleok = false;
 			var settings = {
 				type: 'POST',
 				data: { 
-					'topics':topics,
-					'title': $("#newtitle").val(), 
-					'description': $("#problem_description").val(), 
-					'question': $("#problem_question").val(), 
-					'help': $("#help").val(), 
-					'points': new_circles,
-					'difficulty': difficulty,
-					'max_tries': max_tries,
-					'solution':solution,
+					'name': $("#newtitle").val(), 
 				},
-				url: 'php/save_exercise_mpr.php',
+				url: 'php/istitleok.php',
 				success: function(response) {
 					if (response=="OK"){
-						that.props.history.push("/teacher_courses");
+						titleok = true;
 					}
 				}
 			};
 			$.ajax(settings);
+			
+			if (titleok){
+				var settings2 = {
+					type: 'POST',
+					data: { 
+						'topics':topics,
+						'title': $("#newtitle").val(), 
+						'description': $("#problem_description").val(), 
+						'question': $("#problem_question").val(), 
+						'help': $("#help").val(), 
+						'points': new_circles,
+						'difficulty': difficulty,
+						'max_tries': max_tries,
+						'solution':solution,
+					},
+					url: 'php/save_exercise_mpr.php',
+					success: function(response) {
+						if (response=="OK"){
+							that.props.history.push("/teacher_courses");
+						}
+					}
+				};
+				$.ajax(settings2);
+			}
+			else{
+				document.getElementById('title').style.border='solid';
+				document.getElementById('title').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: language[lng].titlealreadyexists});
+			}
 		}
 		else{
 			if (difficulty < 0 || difficulty > 10 || difficulty == ""){
 				document.getElementById('difficulty').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Difficulty not valid"});
+				this.setState({ showsnack: true ,snacktext: language[lng].difficultynotvalid});
 			}
 			else if  (max_tries < 0 || max_tries > 100 || max_tries == ""){
 				document.getElementById('max_tries').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Maximum tries not valid"});
+				this.setState({ showsnack: true ,snacktext: language[lng].maximumtriesnotvalid});
 			}
 			else if (topics.length <= 0){
 				document.getElementById('topics').style.border='solid';
 				document.getElementById('topics').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Topics not selected"});
+				this.setState({ showsnack: true ,snacktext: language[lng].topicsnotselected});
 			}
 			else if ($("#newtitle").val()==""){
 				document.getElementById('title').style.border='solid';
 				document.getElementById('title').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Title not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].titlenotset});
 			}
 			else if ( $("#problem_description").val()==""){
 				document.getElementById('problem_description').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Description not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].descriptionnotset});
 			}
 			else if ($("#problem_question").val()==""){
 				document.getElementById('problem_question').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Question not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].questionnotset});
 			}
 			else if ($("#help").val()==""){
 				document.getElementById('help').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Help not set"});
+				this.setState({ showsnack: true ,snacktext:language[lng].helpnotset});
 			}
 		}
 	}	
@@ -167,12 +193,13 @@ class TeacherEditExerciceMPR extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		return (
 			<div>
 				<div className="left_30" id = "title">	
 					<TextField
 						id="newtitle"
-						label="Enter Exercise Statement"
+						label={language[lng].enterexercisestatement}
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>
@@ -183,7 +210,7 @@ class TeacherEditExerciceMPR extends React.Component {
 					/>
 				</div>
 				<hr/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" >Choose Exercise</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses}></Link><Link to={"/teacher_choose_exercise"} className="blue" >{language[lng].chooseexercise}</Link>
 				<Grid container>
 					<Grid item xs={12} >
 						<p></p>				
@@ -193,9 +220,9 @@ class TeacherEditExerciceMPR extends React.Component {
 					<Grid item xs={1} > 
 					</Grid>
 					<Grid item xs={3} > 
-						<p>Description:</p>
+						<p>{language[lng].description}:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:200,width:400}}/>
-						<p>Question:</p>
+						<p>{language[lng].question}:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} style={{height:100,width:400}}/>
 						
 						<Grid container>
@@ -207,7 +234,7 @@ class TeacherEditExerciceMPR extends React.Component {
 								/>
 							</Grid>
 							<Grid item xs={3} > 
-								<p>Text Solution:</p>
+								<p>{language[lng].textsolution}:</p>
 							 </Grid>
 							{this.state.hasTextSolution ?
 								<textarea value={this.state.value} onChange={this.handleChange} style={{height:50,width:400}}/>
@@ -219,11 +246,11 @@ class TeacherEditExerciceMPR extends React.Component {
 						<br/><br/><br/>
 						<Grid container>
 							<Grid item xs={6} > 
-								<label for="difficulty">Difficulty: </label>
+								<label for="difficulty">{language[lng].difficulty}: </label>
 								<input type="number" id="difficulty" min="1" max="10" step="1"/>
 							</Grid>
 							<Grid item xs={6} > 
-								<label for="max_tries">Maximum Tries: </label>
+								<label for="max_tries">{language[lng].maximumtries}: </label>
 								<input type="number" id="max_tries" min="1" max="100" step="1"/>
 							</Grid>
 						</Grid>
@@ -247,7 +274,7 @@ class TeacherEditExerciceMPR extends React.Component {
 									
 										<div id="select_set_input_group" className="down_10">
 											<span class="input-group-btn">
-												<Button type="button" id="btn-choose-set" className="btn btn-1 right_15 white">Escull de la biblioteca</Button>
+												<Button type="button" id="btn-choose-set" className="btn btn-1 right_15 white">{language[lng].selectfromlibrary}</Button>
 											</span>
 											<Input type="text" id="set-input-text" className="left_15 border_grey" value="" disabled=""/>
 										
@@ -255,11 +282,11 @@ class TeacherEditExerciceMPR extends React.Component {
 												<div id="library_content">
 													<Grid container>
 														<Grid item xs={6}>
-															<div id="library_title" className="orange size_30 left_15">Biblioteca</div>
+														<div id="library_title" className="orange size_30 left_15">{language[lng].library}</div>
 														</Grid>
 														<Grid item xs={4}>
 															<div id="library_button_group">
-																<Button type="button" id="btn-open-library-item" className="btn btn-4 white down_10" disabled="">Obrir conjunt</Button>
+																<Button type="button" id="btn-open-library-item" className="btn btn-4 white down_10" disabled="">{language[lng].openset}</Button>
 															</div>
 														</Grid>
 														<Grid item xs={2}>
@@ -286,7 +313,7 @@ class TeacherEditExerciceMPR extends React.Component {
 											</div>
 										
 											<div id="sagittal_input_group" className="down_10">
-												<span id="sagittal_label" >Sagital</span>
+												<span id="sagittal_label" >{language[lng].sagital}</span>
 												<input type="number" id="sagittal-number" style={{width:100,marginLeft:20}} className="border_grey" aria-describedby="sagittal_label" value="0" min="0" max="0" disabled=""/>
 											</div>
 										
@@ -298,11 +325,11 @@ class TeacherEditExerciceMPR extends React.Component {
 									
 										<div id="centre_radius_group" style={{width:700}} className="down_10">
 											<div id="centre_input_group">
-												<span id="centre_label" >Centre</span>
+												<span id="centre_label" >{language[lng].center}</span>
 												<input type="text" className="border_grey" aria-describedby="centre_label" style={{width:160,marginLeft:22}} value="" readonly=""/>
 											</div>
 											<div id="radius_input_group" className="down_10" style={{width:200}}>
-												<span id="radius_label" >Radi</span>
+												<span id="radius_label" >{language[lng].radius}</span>
 												<input type="number" className="border_grey" id="radius-number" style={{width:100,marginLeft:38}} aria-describedby="radius_label" value="0" min="1" disabled=""/>
 											</div>
 										</div>
@@ -315,7 +342,7 @@ class TeacherEditExerciceMPR extends React.Component {
 					<Grid item xs={2}> 
 						<div id = "topics">
 							<div className="left_50 down_20 orange size_20"  >
-								<p>Topics</p>
+								<p>{language[lng].topics}</p>
 							</div>
 							<hr/>
 							<div id="formulari"></div>

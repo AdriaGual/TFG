@@ -792,6 +792,22 @@ hr.vr {
 	);
 }
 
+.btn-6:hover {
+	background-image: linear-gradient(
+		to right,
+		#cac531 0%,
+		#cac531 100%
+	);
+}
+
+.btn-6 {
+	background-image: linear-gradient(
+		to right,
+		#f3f9a7 0%,
+		#cac531 100%
+	);
+}
+
 .left_15{
 	margin-left: 15px!important;
 }

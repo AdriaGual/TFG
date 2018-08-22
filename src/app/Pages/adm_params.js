@@ -14,13 +14,15 @@ import SortableTree, {
   getFlatDataFromTree,
   getTreeFromFlatData,
 } from 'react-sortable-tree';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
  */
  
- var initialData = [];
-  var initialDataTopic = [];
+var initialData = [];
+var initialDataTopic = [];
 class UserCourses extends React.Component {
 
 	constructor(props){
@@ -113,10 +115,39 @@ class UserCourses extends React.Component {
 		});
 	};	
 	
+	clickenrollexcel = () => {
+		var input = document.getElementById('input')
+		var that = this;
+		var jsonexcel = "";
+		var curs = $("input[name=curs]:checked").val();
+		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
+			   jsonexcel = JSON.stringify(data, null, 2);
+			   var settings = {
+					type: 'POST',
+					data: { 
+						'idcurs': curs,
+						'jsonexcel': jsonexcel
+					},
+					url: 'php/create_users_from_admin.php',
+					success: function(response) {
+						if (response=="OK"){
+							that.setState({ showsnack: true ,snacktext: "Enrolled users!"});
+							that.props.history.push("/teacher_courses");
+						}
+					}
+				};
+				$.ajax(settings);
+			  }, (error) => {
+			  	console.error(error)
+		});
+	};
+	
+	
 	/**
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             searchString,
             searchFoundCount,
@@ -126,7 +157,7 @@ class UserCourses extends React.Component {
 		return (
 			<div>
 				<br/>
-				<div className="left_30 down_20 orange size_30"><p>Admin</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{language[lng].admin}</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={1}>

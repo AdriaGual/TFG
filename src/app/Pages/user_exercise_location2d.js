@@ -16,6 +16,8 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import DoneIcon from 'material-ui-icons/Done';
+import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
+import language from "../Utils/language.js";
 /** 
  * Register Page
  * @extends React.Component
@@ -24,7 +26,7 @@ import DoneIcon from 'material-ui-icons/Done';
 var n;
 var img;
 var tries;
-
+var lng;
 class UserExercice extends React.Component {
 	constructor(props){
 		super(props);
@@ -44,6 +46,7 @@ class UserExercice extends React.Component {
 			showcorrectanswer: false,
 			showwronganswer: false,
 			finished:false,
+			showhelp:false,
 		}
 	}
 	
@@ -62,6 +65,14 @@ class UserExercice extends React.Component {
 		}
 		this.setState({ showsnack: false });
 	};
+	
+	handleCloseAdvice = () => {
+		this.setState({ showhelp: false});
+	}
+	
+	clickshowhelp = () => {
+		this.setState({ showhelp: true});
+	}
 	
 	componentDidMount(){
 		var that = this;
@@ -110,7 +121,7 @@ class UserExercice extends React.Component {
 		if (new_circles.length==0){
 			document.getElementById('btn-edit-circle').style.border='solid';
 			document.getElementById('btn-edit-circle').style.borderColor='#e52213';
-			this.setState({ showsnack: true ,snacktext: "No answers set!"});
+			this.setState({ showsnack: true ,snacktext: language[lng].answersnotset});
 		}
 		else{
 			var that = this;
@@ -189,13 +200,14 @@ class UserExercice extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
-		
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
+
 		return (
 			<div>
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} >Courses</Link>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} >{language[lng].courses}</Link>
 				<Grid container>
 					
 					<Grid item xs={4}  className="padding2"> 
@@ -203,10 +215,11 @@ class UserExercice extends React.Component {
 						<div className="margin1 big_text">{this.state.exercice_description}</div>
 						<hr/><br/><br/><hr/>
 						<div className="left_30 down_20 black size_20 big_text">{this.state.exercice_question}</div>
-						<hr/><br/><br/><hr/>
-						<div className="margin1 big_text">{this.state.exercice_help}</div>
 						<hr/><br/><br/>
 						<div className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</div>
+						<br/><br/><br/>
+						<button type="button"  className="btn btn-6 white" style={{border:'none',width:40,height:36,borderRadius: 50,fontWeight: 700}} onClick={() => this.clickshowhelp()}> <Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon></button>
+						
 					</Grid>
 					<Grid item xs={4}  className="padding2">
 						<div id="image_div">
@@ -236,27 +249,27 @@ class UserExercice extends React.Component {
 							<Button
 								className="btn btn-1 white left_30"
 								onClick={() => 	this.clickcorregir()}
-							> Corregir</Button>:null: null
+							> {language[lng].verify}</Button>:null: null
 						}
 						<br/><br/>
 						{this.state.showcorrectanswer ? 
 								this.state.answer!="" ?
 								<div>
-								<p>Correcte!</p>
+								<p>{language[lng].correct}</p>
 								<br/>
 								<hr/>
 								<p>{this.state.answer}</p>
 								</div> 
 								: 
 								<div>
-								<p>Correcte!</p>
+								<p>{language[lng].correct}</p>
 								<br/>
 								</div> 
 								: null
 						}
 						{this.state.showwronganswer ? 
 							<div>
-							<p>Incorrecte!</p>
+							<p>{language[lng].incorrect}</p>
 							</div> : null
 						}
 					</Grid>
@@ -282,6 +295,17 @@ class UserExercice extends React.Component {
 						</IconButton>,
 					  ]}
 					/>
+					<Dialog
+						open={this.state.showhelp}
+						onClose={this.handleCloseAdvice}
+					>
+					<DialogTitle className="down_15">{STORAGE.getLocalStorageItem("exercise_name") + " help"}</DialogTitle>
+						 <DialogContent>
+							<DialogContentText>
+							 {this.state.exercice_help}
+							</DialogContentText>
+						</DialogContent>
+					</Dialog>	
 				</Grid>
 
 			</div>

@@ -14,6 +14,7 @@ import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath,get
   getTreeFromFlatData, } from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
 import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
+import language from "../Utils/language.js"
 
 /** 
  * Register Page
@@ -160,7 +161,7 @@ class TeacherCourses extends React.Component {
 						that.props.history.push('/teacher_exercise_location2d_preview');
 					}
 					else if (a==7){
-						that.props.history.push('/user_exercise_location3d');
+						that.props.history.push('/teacher_exercise_location3d_preview');
 					}
 				}
 			}
@@ -289,6 +290,7 @@ class TeacherCourses extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const getNodeKey = ({ treeIndex }) => treeIndex;
 		const {
             treeData,
@@ -317,7 +319,7 @@ class TeacherCourses extends React.Component {
 		return (
 			<div>
 				<br/>
-				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{language[lng].currentcourses}</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={3}  className="margin3"> 
@@ -332,9 +334,9 @@ class TeacherCourses extends React.Component {
 						</label>
 					</Grid>
 					<Grid item xs={5}> 
-						<Link to="/teacher_edit_course"><Button className="btn btn-2 down_30 white">Create New Course</Button></Link>
-						<Link to="/teacher_choose_exercise"><Button className="btn btn-5 down_30 white left_15">Create New Exercice</Button></Link>
-						<Link to="/teacher_create_theory"><Button className="btn btn-1 down_30 white left_15">Create New Theory</Button></Link>
+						<Link to="/teacher_edit_course"><Button className="btn btn-2 down_30 white">{language[lng].createnewcourse}</Button></Link>
+						<Link to="/teacher_choose_exercise"><Button className="btn btn-5 down_30 white left_15">{language[lng].createnewexercise}</Button></Link>
+						<Link to="/teacher_create_theory"><Button className="btn btn-1 down_30 white left_15">{language[lng].createnewtheory}</Button></Link>
 					</Grid>
 				</Grid>
 				<Grid container>
@@ -437,13 +439,13 @@ class TeacherCourses extends React.Component {
 					}
 						
 					</Grid>
-				<Dialog
-					open={this.state.showadvice}
-					onClose={this.handleCloseAdvice}
-				>
-				<DialogTitle className="down_15">{"Wanna delete '"+this.state.name +"' item?"}</DialogTitle>
-				<Button className="btn btn-1 white" onClick={() => this.clickdeletetopic(this.state.name)}>Submit</Button>
-			</Dialog>	
+					<Dialog
+						open={this.state.showadvice}
+						onClose={this.handleCloseAdvice}
+					>
+						<DialogTitle className="down_15">{"Wanna delete '"+this.state.name +"' item?"}</DialogTitle>
+						<Button className="btn btn-1 white" onClick={() => this.clickdeletetopic(this.state.name)}>Delete</Button>
+					</Dialog>	
 				</Grid>
 
 			</div>

@@ -17,7 +17,8 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Icon from 'material-ui/Icon';
 import Menu,{MenuItem} from 'material-ui/Menu';
-
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 /**
  * Header of the app.
  * @extends React.Component
@@ -108,7 +109,7 @@ export default class LoggedHeader extends React.Component {
 	 * Renders the Header app.
 	 */
 	render() {
-		var LoginText = "Login"
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const { anchorEl } = this.state;
 		const toolbarStyle = {
 			backgroundColor: "#022140",
@@ -145,9 +146,9 @@ export default class LoggedHeader extends React.Component {
 									  open={Boolean(anchorEl)}
 									  onClose={this.handleCloseMenu}
 									>
-										<Link to="/user_profile"><MenuItem onClick={this.handleAccount}>Profile</MenuItem></Link>
-										{this.appState("is_student")?<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>:<Link to="/teacher_courses"><MenuItem onClick={this.handleCourses}>Courses</MenuItem></Link>}
-										<Link to="/"><MenuItem onClick={this.handleClose}>Logout</MenuItem></Link>
+										<Link to="/user_profile"><MenuItem onClick={this.handleAccount}>{language[lng].profile}</MenuItem></Link>
+										{this.appState("is_student")?<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>{language[lng].courses}</MenuItem></Link>:<Link to="/teacher_courses"><MenuItem onClick={this.handleCourses}>{language[lng].courses}</MenuItem></Link>}
+										<Link to="/"><MenuItem onClick={this.handleClose}>{language[lng].logout}</MenuItem></Link>
 									</Menu>
 								</Grid>
 							</Grid>

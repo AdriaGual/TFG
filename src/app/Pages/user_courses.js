@@ -15,6 +15,7 @@ import SortableTree, {
   getTreeFromFlatData,
 } from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
+import language from "../Utils/language.js";
 /** 
  * Register Page
  * @extends React.Component
@@ -266,6 +267,7 @@ class UserCourses extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             treeData,
             searchString,
@@ -280,7 +282,7 @@ class UserCourses extends React.Component {
 		return (
 			<div>
 				<br/>
-				<div className="left_30 down_20 orange size_30"><p>Current Courses</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{language[lng].currentcourses}</p></div>
 				<hr/>
 				<Grid container>
 					<Grid item xs={4}  className="margin3"> 
@@ -290,7 +292,7 @@ class UserCourses extends React.Component {
 								type="text"
 								value={searchString}
 								onChange={event => this.setState({ searchString: event.target.value })}
-								label="Search"
+								label={language[lng].search}
 							/>
 						</label>
 

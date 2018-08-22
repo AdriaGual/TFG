@@ -11,11 +11,14 @@ import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 
 /** 
  * Register Page
  * @extends React.Component
  */
+var lng;
 class Theory extends React.Component {
 	constructor(props){
 		super(props);
@@ -92,7 +95,7 @@ class Theory extends React.Component {
 								$("#formulari").append("<br/>");
 							}
 							else{
-								$("#formulari").append("<p class='size15'>No hi han topics en aquest curs </p><br/><br/>");
+								$("#formulari").append("<p class='size15'>"+language[lng].notopicsincourse+"</p><br/><br/>");
 							}
 						}
 					};
@@ -154,6 +157,7 @@ class Theory extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             treeData,
             searchString,
@@ -162,14 +166,14 @@ class Theory extends React.Component {
 		return (
 			<div>
 				<br/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}} onClick={() => 	this.clickback()}>Courses</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}} onClick={() => 	this.clickback()}>{language[lng].courses}</Link>
 				<Grid container>
 					<Grid item xs={1}> 
 					</Grid>
 					<Grid item xs={3}> 
 						<TextField
 							id="newtitle"
-							label="Enter Theory Title"
+							label={language[lng].entertheorytitle}
 							className="text_field "
 							style = {{width: 600}}
 							onChange={(event, newValue) =>
@@ -181,7 +185,7 @@ class Theory extends React.Component {
 						<br/>
 						<TextField
 							id="newsubtitle"
-							label="Enter Theory Subtitle"
+							label={language[lng].entertheorysubtitle}
 							className="text_field "
 							style = {{width: 600}}
 							onChange={(event, newValue) =>
@@ -191,10 +195,10 @@ class Theory extends React.Component {
 							}
 						/>
 						<br/><br/>
-						<p>Content:</p>
+						<p>{language[lng].content}:</p>
 						<textarea id="content_text" value={this.state.value} onChange={this.handleChange} style={{height:400,width:600}}/>
 						<br/>
-						<p>URL:</p>
+						<p>{language[lng].url}:</p>
 						<textarea id="url_text" value={this.state.value} onChange={this.handleChange} style={{height:50,width:600}}/>
 					</Grid>
 					<Grid item xs={1}>
@@ -213,14 +217,14 @@ class Theory extends React.Component {
 							</div>
 							<div id="current_image_input_group" class="input-group">
 								<input type="hidden" id="problem_image_url" value="" disabled />
-								<button type="button" id="btn-delete-image">Eliminar imatge</button>
+								<button type="button" id="btn-delete-image">{language[lng].deleteimage}</button>
 							</div>
 						</div>
 					</Grid>
 					<Grid item xs={1}> 
 					</Grid>
 					<Grid item xs={2} > 
-						<div className="left_30 down_20 orange size_20"><p>Topics</p></div>
+						<div className="left_30 down_20 orange size_20"><p>{language[lng].topics}</p></div>
 						<hr/>
 						<div id="formulari"></div>
 						<hr/>
@@ -247,9 +251,7 @@ class Theory extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-					
 				</Grid>
-
 			</div>
 		
 		);

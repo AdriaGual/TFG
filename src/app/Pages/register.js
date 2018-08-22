@@ -14,6 +14,7 @@ import language from "../Utils/language.js"
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import * as STORAGE from '../Utils/Storage.js';
 import DoneIcon from 'material-ui-icons/Done';
 /** 
  * Register Page
@@ -84,7 +85,7 @@ class Register extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
-		var lng = this.appState("currentLanguage");
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		return (
 		<div>
 			<div>
@@ -125,7 +126,7 @@ class Register extends React.Component {
 							<Grid container className="left_30pc">	
 								<TextField
 									id="register_username"
-									label="Enter your Username"
+									label={language[lng].enterusername}
 									className="text_field "
 									onChange={(event, newValue) =>
 										this.setState({
@@ -135,7 +136,7 @@ class Register extends React.Component {
 								/>
 								<TextField
 									id="register_email"
-									label="Enter your E-mail"
+									label={language[lng].enteremail}
 									className="text_field "
 									onChange={(event, newValue) =>
 										this.setState({
@@ -145,7 +146,7 @@ class Register extends React.Component {
 								/>
 								<TextField
 									id="register_password"
-									label="Enter your Password"
+									label={language[lng].enterpassword}
 									className="text_field"
 									type="password"
 									onChange={(event, newValue) =>
@@ -156,7 +157,7 @@ class Register extends React.Component {
 								/>
 								<TextField
 									id="register_repeatpassword"
-									label="Repeat your Password"
+									label={language[lng].enterrepeatpassword}
 									className="text_field"
 									type="password"
 									onChange={(event, newValue) =>
@@ -192,7 +193,7 @@ class Register extends React.Component {
 								  }}
 								  open={this.state.showsnackcookie}
 								  
-								  message={<span id="message-id">We use cookies to ensure that we give you the best experience on our website. We also use cookies to ensure we show you advertising that is relevant to you. If you continue without changing your settings, we'll assume that you are happy to receive all cookies on the website.</span>}
+								  message={<span id="message-id">{language[lng].cookies}</span>}
 								  action={[
 									<IconButton
 									  key="close"
@@ -201,28 +202,22 @@ class Register extends React.Component {
 									  onClick={this.handleClosecookie}
 									  style={{width:100}}
 									>
-									<DoneIcon /> <p className="size15" >Continue</p>
+									<DoneIcon /> <p className="size15" >{language[lng].continue}</p>
 									</IconButton>,
 								  ]}
 								/>
 							</Grid>
 							<Grid item>
-								<Button onClick={() => this.click()} className="btn btn-1 down_30 white " id="accept">Register Now</Button>
+								<Button onClick={() => this.click()} className="btn btn-1 down_30 white " id="accept">{language[lng].registernow}</Button>
 							</Grid>
 						</Card>
 					</Grid>
 				</Grid>
 				<Grid item xs={3}  className="margin2">
-					<h1  className="register_title white ">E-Learning Platform</h1>
+					<h1  className="register_title white ">{language[lng].elearningplatform}</h1>
 					<hr/>
 					<p  className="register_text white">
-						This is a platform made with the purpouse of
-						teaching topics as Radiology, CPR and anatomy
-						among others. GILAB, is a research group of the
-						University of Girona (with code GRCT0081) and
-						all researchers of the GIlab are from the
-						Computer Science, Applied Mathematics and
-						Statistics Department at the same university.
+						{language[lng].registerintro}
 					</p>
 				</Grid>
 				<Grid item xs={3}>

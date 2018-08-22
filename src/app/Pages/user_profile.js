@@ -17,13 +17,16 @@ import SortableTree, {
   getFlatDataFromTree,
   getTreeFromFlatData,
 } from 'react-sortable-tree';
+import language from "../Utils/language.js";
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
  */
  
- var initialData = [];
-  var initialDataTopic = [];
+var initialData = [];
+var initialDataTopic = [];
+var lng;
 class UserCourses extends React.Component {
 
 	constructor(props){
@@ -70,14 +73,14 @@ class UserCourses extends React.Component {
 			url: 'php/changeusername.php',
 			success: function(response) {
 				if (response == "OK"){
-					that.setState({ showsnack: true ,snacktext: "Username updated correctly!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].usernameupdatedcorrectly});
 					that.appState({username: $("#newusername").val()});
 				}
 				else if (response =="empty_inputfields"){
-					that.setState({ showsnack: true ,snacktext: "Empty input fields in Username!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].emptyinputfieldsinusername});
 				}
 				else if (response =="fields_not_equal"){
-					that.setState({ showsnack: true ,snacktext: "Fields not equal in Username!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].fieldsnotequalinusername});
 				}
 				
 			}
@@ -103,13 +106,13 @@ class UserCourses extends React.Component {
 			url: 'php/changephonenumber.php',
 			success: function(response) {
 				if (response == "OK"){
-					that.setState({ showsnack: true ,snacktext: "Phone number updated correctly!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].phonenumberupdatedcorrectly});
 				}
 				else if (response =="empty_inputfields"){
-					that.setState({ showsnack: true ,snacktext: "Empty input fields in Phone Number!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].emptyinputfieldsinphonenumber});
 				}
 				else if (response =="fields_not_equal"){
-					that.setState({ showsnack: true ,snacktext: "Fields not equal in Phone Number!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].fieldsnotequalinphonenumber});
 				}
 				
 			}
@@ -128,13 +131,13 @@ class UserCourses extends React.Component {
 			url: 'php/changeemail.php',
 			success: function(response) {
 				if (response == "OK"){
-					that.setState({ showsnack: true ,snacktext: "E-mail updated correctly!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].emailupdatedcorrectly});
 				}
 				else if (response =="empty_inputfields"){
-					that.setState({ showsnack: true ,snacktext: "Empty input fields in E-mail!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].emptyinputfieldsinemail});
 				}
 				else if (response =="fields_not_equal"){
-					that.setState({ showsnack: true ,snacktext: "Fields not equal in E-mail!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].fieldsnotequalinemail});
 				}
 				
 			}
@@ -154,16 +157,16 @@ class UserCourses extends React.Component {
 			url: 'php/changepassword.php',
 			success: function(response) {
 				if (response == "OK"){
-					that.setState({ showsnack: true ,snacktext: "Password updated correctly!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].passwordupdatedcorrectly});
 				}
 				else if (response =="empty_inputfields"){
-					that.setState({ showsnack: true ,snacktext: "Empty input fields in Password!"});
+					that.setState({ showsnack: true ,snacktext:language[lng].emptyinputfieldsinpassword });
 				}
 				else if (response =="fields_not_equal"){
-					that.setState({ showsnack: true ,snacktext: "Fields not equal in Password!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].fieldsnotequalinpassword});
 				}
 				else if (response="old_password_not_correct"){
-					that.setState({ showsnack: true ,snacktext: "Old Password not correct!"});
+					that.setState({ showsnack: true ,snacktext:language[lng].oldpasswordnotcorrect});
 				}
 			}
 		};
@@ -175,6 +178,7 @@ class UserCourses extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             searchString,
             searchFoundCount,
@@ -184,7 +188,7 @@ class UserCourses extends React.Component {
 		return (
 			<div>
 				<br/>
-				<div className="left_30 down_20 orange size_30"><p>Profile</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{language[lng].profile}</p></div>
 				<hr/>
 				<br/>
 				<Grid container>
@@ -192,13 +196,13 @@ class UserCourses extends React.Component {
 					</Grid>
 					<Grid item xs={3}>
 						<Card style={{width:300,height:300}}>
-							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Username</p>
+							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>{language[lng].changeusername}</p>
 							<hr/>
 							<br/>
 							<TextField
 								id="newusername"
 								style={{width:200,marginLeft:50}}
-								label="Enter your New Username"
+								label={language[lng].enteryournewusername}
 								onChange={(event, newValue) =>
 									this.setState({
 										newusername: newValue
@@ -209,7 +213,7 @@ class UserCourses extends React.Component {
 							<TextField
 								id="repeatnewusername"
 								style={{width:200,marginLeft:50}}
-								label="Repeat your New Username"
+								label={language[lng].repeatyournewusername}
 								onChange={(event, newValue) =>
 									this.setState({
 										repeatnewusername: newValue
@@ -217,16 +221,16 @@ class UserCourses extends React.Component {
 								}
 							/>
 							<br/>
-							<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Username</Button>
+							<Button onClick={() => this.clickusername()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> {language[lng].changeusername}</Button>
 						</Card>
 						<Card style={{width:300,height:300,marginTop:70}}>
-							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Phone Number</p>
+							<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>{language[lng].changephonenumber}</p>
 							<hr/>
 							<br/>
 							<TextField
 								id="newphonenumber"
 								style={{width:220,marginLeft:40}}
-								label="Enter your New Phone Number"
+								label={language[lng].enteryournewphonenumber}
 								onChange={(event, newValue) =>
 									this.setState({
 										newphonenumber: newValue
@@ -237,7 +241,7 @@ class UserCourses extends React.Component {
 							<TextField
 								id="repeatnewphonenumber"
 								style={{width:240,marginLeft:30}}
-								label="Repeat your New Phone Number"
+								label={language[lng].repeatyournewphonenumber}
 								onChange={(event, newValue) =>
 									this.setState({
 										repeatnewphonenumber: newValue
@@ -245,19 +249,19 @@ class UserCourses extends React.Component {
 								}
 							/>
 							<br/>
-							<Button onClick={() => this.clickphonenumber()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> Change Phone Number</Button>
+							<Button onClick={() => this.clickphonenumber()} style={{marginLeft:65,marginTop:50}} className="btn btn-1 white"> {language[lng].changephonenumber}</Button>
 						</Card>
 					</Grid>
 					
 					<Grid item xs={3}>
 						<Card style={{width:300,height:300}}>
-						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>Change Password</p>
+						<p className="orange size_20" style={{marginLeft:60,marginTop:10}}>{language[lng].changepassword}</p>
 						<hr/>
 						<TextField
 							id="oldpass"
 							type="password"
 							style={{width:200,marginLeft:50}}
-							label="Enter your Old Password"
+							label={language[lng].enteryouroldpassword}
 							onChange={(event, newValue) =>
 								this.setState({
 									oldpass: newValue
@@ -269,7 +273,7 @@ class UserCourses extends React.Component {
 							id="newpass"
 							type="password"
 							style={{width:200,marginLeft:50}}
-							label="Enter your New Password"
+							label={language[lng].enteryournewpassword}
 							onChange={(event, newValue) =>
 								this.setState({
 									newpass: newValue
@@ -281,7 +285,7 @@ class UserCourses extends React.Component {
 							id="repeatnewpass"
 							type="password"
 							style={{width:200,marginLeft:50}}
-							label="Repeat your New Password"
+							label={language[lng].repeatyournewpassword}
 							onChange={(event, newValue) =>
 								this.setState({
 									repeatnewpass: newValue
@@ -289,18 +293,18 @@ class UserCourses extends React.Component {
 							}
 						/>
 						<br/>
-						<Button onClick={() => this.clickpassword()} style={{marginLeft:68,marginTop:20}} className="btn btn-1 white"> Change Password</Button>
+						<Button onClick={() => this.clickpassword()} style={{marginLeft:68,marginTop:20}} className="btn btn-1 white">{language[lng].changepassword}</Button>
 						</Card>
 					</Grid>
 					<Grid item xs={3}>
 						<Card style={{width:300,height:300}}>
-						<p className="orange size_20" style={{marginLeft:80,marginTop:10}}>Change E-mail</p>
+						<p className="orange size_20" style={{marginLeft:80,marginTop:10}}>{language[lng].changeemail}</p>
 						<hr/>
 						<br/>
 						<TextField
 							id="newemail"
 							style={{width:200,marginLeft:50}}
-							label="Enter your New E-mail"
+							label={language[lng].enteryournewemail}
 							onChange={(event, newValue) =>
 								this.setState({
 									newemail: newValue
@@ -311,7 +315,7 @@ class UserCourses extends React.Component {
 						<TextField
 							id="repeatnewemail"
 							style={{width:200,marginLeft:50}}
-							label="Repeat your New E-mail"
+							label={language[lng].repeatyournewemail}
 							onChange={(event, newValue) =>
 								this.setState({
 									repeatnewemail: newValue
@@ -319,7 +323,7 @@ class UserCourses extends React.Component {
 							}
 						/>
 						<br/>
-						<Button onClick={() => this.clickemail()} style={{marginLeft:85,marginTop:50}} className="btn btn-1 white"> Change E-mail</Button>
+						<Button onClick={() => this.clickemail()} style={{marginLeft:85,marginTop:50}} className="btn btn-1 white"> {language[lng].changeemail}</Button>
 						</Card>
 					</Grid>
 				</Grid>

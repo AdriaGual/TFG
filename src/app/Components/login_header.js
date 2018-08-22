@@ -21,11 +21,14 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 
 /**
  * Header of the app.
  * @extends React.Component
  */
+ var lng;
  class LoginHeader extends React.Component {
 	/**
 	 * Creates the Header component of the app.
@@ -65,10 +68,10 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 					that.appState({logged: true,username:$("#username").val()});
 				}
 				else if(response == "bad_login"){
-					that.setState({ showsnack: true ,snacktext: "Username or Password invalid!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].usernameorpasswordinvalid});
 				}
 				else if(response == "empty_inputfields"){
-					that.setState({ showsnack: true ,snacktext: "Empty input fields in login!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].emptyinputfieldsinlogin});
 				}
 			}
 		};
@@ -111,7 +114,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 					that.appState({logged: true,username:$("#username").val()});
 				}
 				else if(response == "empty_inputfields"){
-					that.setState({ showsnack: true ,snacktext: "Empty input fields in password recovery!"});
+					that.setState({ showsnack: true ,snacktext: language[lng].emptyinputfieldsinpasswordrecovery});
 				}
 			}
 		};
@@ -138,7 +141,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 	 * Renders the Header app.
 	 */
 	render() {
-		var LoginText = "Login"
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const toolbarStyle = {
 			backgroundColor: "#022140",
 			height: "80px"
@@ -158,7 +161,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 								<Grid item xs={12} className="centerVertical">
 									<TextField
 										id="username"
-										label="Enter your Username"
+										label={language[lng].enterusername}
 										className="text_field"
 										InputLabelProps={{
 										 className: "white" 
@@ -176,7 +179,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 								<Grid item className="down_15"> 
 									<a className="white size12 linkhover">
 										<Icon className="fa fa-eye" style={{ fontSize: 15 }}></Icon>
-										Enter as Guest
+										{language[lng].enterasguest}
 									</a>
 								</Grid>
 							</Grid>
@@ -186,7 +189,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 								<Grid item xs={12} className="centerVertical">
 									<TextField
 										id="password"
-										label="Enter your Password"
+										label={language[lng].enterpassword}
 										className="text_field"
 										type="password"
 										InputLabelProps={{
@@ -205,7 +208,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 								<Grid item className="down_15">
 									<a className="white size12 linkhover" onClick={this.handleClickOpenFPassword}>
 									<Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon>
-										Forgot Password?
+										{language[lng].forgotpassword}
 									</a>
 								</Grid>
 							</Grid>
@@ -241,7 +244,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 									<TextField
 										autoFocus
 										id="forgot_email"
-										label="Enter your E-mail"
+										label={language[lng].enteremail}
 										className="text_field "
 										onChange={(event, newValue) =>
 											this.setState({
@@ -255,7 +258,7 @@ import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from '
 							</Dialog>
 						</Grid>
 						<Grid item xs={2} className="centerVertical">
-							<Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {LoginText}</Button>
+							<Button onClick={() => this.click()} className="btn btn-1 white" id="accept"> {language[lng].login}</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>

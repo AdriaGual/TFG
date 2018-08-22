@@ -27,6 +27,7 @@ import TeacherCreateTheory from './Pages/teacher_create_theory.js';
 import TeacherPreviewTheory from './Pages/teacher_preview_theory.js';
 import TeacherEditExerciseLocation2d from './Pages/teacher_edit_exercise_location2d.js';
 import TeacherExerciseLocation2DPreview from './Pages/teacher_exercise_location2d_preview.js';
+import TeacherExerciseLocation3DPreview from './Pages/teacher_exercise_location3d_preview.js';
 import TeacherExerciseTestPreview from './Pages/teacher_exercise_test_preview.js';
 import TeacherExerciseEdubodyPreview from './Pages/teacher_exercise_edubody_preview.js';
 import TeacherEditExerciseTest2d from './Pages/teacher_edit_exercise_test2d.js';
@@ -83,6 +84,7 @@ export default class Main extends React.Component {
 			<Route path='/teacher_edit_course' render={() => (<div><div><TeacherEditCourse appState={this.appState}></TeacherEditCourse></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_choose_exercise' render={() => (<div><div><TeacherChooseExercise appState={this.appState}></TeacherChooseExercise></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_exercise_location2d_preview' render={() => (<div><div><TeacherExerciseLocation2DPreview appState={this.appState}></TeacherExerciseLocation2DPreview></div><div className="bot_margin"></div></div>)} />
+			<Route path='/teacher_exercise_location3d_preview' render={() => (<div><div><TeacherExerciseLocation3DPreview appState={this.appState}></TeacherExerciseLocation3DPreview></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_exercise_test_preview' render={() => (<div><div><TeacherExerciseTestPreview appState={this.appState}></TeacherExerciseTestPreview></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_exercise_edubody_preview' render={() => (<div><div><TeacherExerciseEdubodyPreview appState={this.appState}></TeacherExerciseEdubodyPreview></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_edit_exercise_location2d' render={() => (<div><div><TeacherEditExerciseLocation2d appState={this.appState}></TeacherEditExerciseLocation2d></div><div className="bot_margin"></div></div>)} />

@@ -15,7 +15,8 @@ import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath,get
 import List,{ListItem,ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Select from 'material-ui/Select';
-
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
@@ -99,7 +100,8 @@ class TeacherEditCourse extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
-		 const getNodeKey = ({ treeIndex }) => treeIndex;
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
+		const getNodeKey = ({ treeIndex }) => treeIndex;
 		const {
             treeData,
             searchString,
@@ -110,7 +112,7 @@ class TeacherEditCourse extends React.Component {
 				<div className="left_30">	
 					<TextField
 						id="newtitle"
-						label="Enter Course Title"
+						label={language[lng].entercoursetitle}
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>
@@ -121,23 +123,22 @@ class TeacherEditCourse extends React.Component {
 					/>
 				</div>
 				<hr/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses}</Link>
 				<br/>
 				<Grid container>
 					<Grid item xs={5} > 
-						<a className="orange size_30 left_30">Topics</a>
+						<a className="orange size_30 left_30">{language[lng].topics}</a>
 						<label htmlFor="find-box" className="left_30">
 							<TextField
 								id="find-box"
 								type="text"
 								value={searchString}
 								onChange={event => this.setState({ searchString: event.target.value })}
-								label="Search"
+								label={language[lng].search}
 							/>
 						</label>
 						<div style={{height:'150%'}}>
 							<SortableTree
-
 							  treeData={this.state.treeData}
 							  onChange={treeData => this.setState({ treeData })}
 							  searchQuery={searchString}
@@ -190,7 +191,7 @@ class TeacherEditCourse extends React.Component {
 						
 					</Grid>
 					<Grid item xs={3}> 
-						<a className="orange size_30 left_30">Categories</a>
+						<a className="orange size_30 left_30">{language[lng].categories}</a>
 						<List>
 							<ListItem>
 								<Checkbox/>
@@ -216,7 +217,7 @@ class TeacherEditCourse extends React.Component {
 					</Grid>
 					<Grid item xs={4}> 
 						<Grid item xs={12}> 
-							<a className="orange size_30">Description</a>
+							<a className="orange size_30">{language[lng].description}</a>
 						</Grid>
 						<Card className="course_description_form down_30">
 							<TextField
@@ -225,7 +226,7 @@ class TeacherEditCourse extends React.Component {
 							/>
 						</Card>
 						<Grid item xs={12}> 
-							<a className="orange size_30">Pre-Requisits</a>
+							<a className="orange size_30">{language[lng].prerequisits}</a>
 						</Grid>
 						<Card className="course_description_form down_30">
 							<TextField
@@ -235,13 +236,13 @@ class TeacherEditCourse extends React.Component {
 						</Card>
 						<Grid item xs={12}> 
 							<Select native className="down_30 "> 
-								<option value="">Course Type</option>
+								<option value="">{language[lng].coursetype}</option>
 								<option value={0}>Tòrax</option>
 								<option value={1}>Nefro</option>
 							</Select>
 						</Grid>
 						<Select native className="down_30"> 
-							<option value="">Difficulty</option>
+							<option value="">{language[lng].difficulty}</option>
 							<option value={0}>1</option>
 							<option value={1}>2</option>
 							<option value={0}>3</option>
@@ -255,7 +256,7 @@ class TeacherEditCourse extends React.Component {
 							className="btn btn-3 white  left_15 "
 							onClick={() =>this.click()}
 						>
-							Create Course
+							{language[lng].createcourse}
 						</Button>
 					</Grid>
 				</Grid>

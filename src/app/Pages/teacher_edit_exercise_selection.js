@@ -14,6 +14,8 @@ import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath } f
 import List,{ListItem,ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Select from 'material-ui/Select';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 
 /** 
  * Register Page
@@ -50,12 +52,13 @@ class TeacherEditExerciceLocation2d extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		return (
 			<div  style={{ height: 1500}}>
 				<br/>
-				<div className="left_30 down_20 orange size_30"><p>Selection Exercise</p></div>
+				<div className="left_30 down_20 orange size_30"><p>{language[lng].selectionexercise}</p></div>
 				<hr/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" onClick={() => this.click()}>Choose Exercise</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>{language[lng].courses}></Link><Link to={"/teacher_choose_exercise"} className="blue" onClick={() => this.click()}>{language[lng].chooseexercise}</Link>
 				<br/>
 				<Grid container>
 					<Grid item xs={1}> 

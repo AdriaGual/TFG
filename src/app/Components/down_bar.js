@@ -4,7 +4,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Redirect, Link } from 'react-router-dom';
-
+import * as STORAGE from '../Utils/Storage.js';
 // Material-UI imports
 import Grid from "material-ui/Grid";
 import Select from 'material-ui/Select';
@@ -44,6 +44,7 @@ export default class Authentication extends React.Component {
 	
 	handleLanguage = name => event => {
 		this.appState({currentLanguage:event.target.value});
+		STORAGE.setLocalStorageItem("currentLanguage", event.target.value);
 	};
 	
 	/**
@@ -65,8 +66,8 @@ export default class Authentication extends React.Component {
 					</Grid>
 					<Grid item xs={1} className="down_15">
 						  <Select native  
-						  onChange={this.handleLanguage('value')}
-						  value={this.state.lang}
+							onChange={this.handleLanguage('value')}
+							value={STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage")}
 						  > 
 							<option value={0}>English</option>
 							<option value={1}>Català</option>

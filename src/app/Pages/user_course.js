@@ -15,6 +15,7 @@ import SortableTree, {
   getTreeFromFlatData,
 } from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
+import language from "../Utils/language.js";
 
 /** 
  * Register Page
@@ -197,7 +198,7 @@ class UserCourse extends React.Component {
 					})});
 					console.log(jsonData);
 					that.setState({showinfo: true});
-					that.setState({type_info_selected: "Exercice"});
+					that.setState({type_info_selected: "Exercise"});
 					that.setState({topic_selected: name});
 				}
 				else{
@@ -214,6 +215,7 @@ class UserCourse extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             treeData,
             searchString,
@@ -232,12 +234,12 @@ class UserCourse extends React.Component {
 					<p>{this.appState("course_name")}</p>
 				</div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses}</Link>
 				<Grid container>
 				<Grid item xs={10}>
 				</Grid>
 					<Grid item xs={2} className="down_20"> 
-						<Link to="/user_qualifications" className="blue"> Qualifications</Link>
+						<Link to="/user_qualifications" className="blue"> {language[lng].qualifications}</Link>
 					</Grid>
 				</Grid>
 				<Grid container>
@@ -248,16 +250,16 @@ class UserCourse extends React.Component {
 								type="text"
 								value={searchString}
 								onChange={event => this.setState({ searchString: event.target.value })}
-								label="Search"
+								label={language[lng].search}
 							/>
 						</label>
 						<div style={{ height: 1500}}>
 						<SortableTree
-						treeData={this.state.treeData}
-						onChange={treeData => this.setState({ treeData })}
-						canDrag={false}
-						searchQuery={searchString}
-						generateNodeProps={({ node, path }) => {
+							treeData={this.state.treeData}
+							onChange={treeData => this.setState({ treeData })}
+							canDrag={false}
+							searchQuery={searchString}
+							generateNodeProps={({ node, path }) => {
 								return {
 									style: {
 										color: "black",
@@ -290,7 +292,8 @@ class UserCourse extends React.Component {
 						</div>
 					</Grid>
 					<Grid item xs={4}>
-					{ this.state.showinfo ? <Card className="topic_info_form margin2">
+					{ this.state.showinfo ? 
+						<Card className="topic_info_form margin2" style={{width:500}}>
 							<CardContent className="orange size_30">
 							{this.state.topic_selected} : {this.state.type_info_selected}
 							<Button
@@ -318,6 +321,14 @@ class UserCourse extends React.Component {
 											>
 												<Icon className="fa fa-sign-in" style={{ fontSize: 15 }}></Icon>
 											</Button>,
+											this.state.type_info_selected == "Exercise" ?
+											node.finished==1 ? 
+												node.puntuation>5 ? 
+													<div className="circle bg_green left_15 down_5"></div> 
+												: 
+													<div className="circle bg_red left_15 down_5"></div>
+											:
+												<div className="circle bg_yellow left_15 down_5"></div>:null,
 										],
 									};
 								}}	
@@ -328,13 +339,13 @@ class UserCourse extends React.Component {
 					</Grid>
 					<Grid item xs={3}>
 						<br/>
-						<p>Course Description</p>
+						<p>{language[lng].coursedescription}</p>
 						<hr/>
 						<div id="description_text" className="margin1 big_text">{this.state.course_description}</div>
 						<hr/>
 						<br/><br/>
 						
-						<p>Pre-Requirements</p>
+						<p>{language[lng].prerequisits}</p>
 						<hr/>
 						<div className="margin1 big_text">{this.state.course_prerequisits}</div>
 						<hr/>

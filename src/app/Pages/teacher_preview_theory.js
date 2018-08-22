@@ -11,6 +11,8 @@ import Button from "material-ui/Button";
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 
 /** 
  * Register Page
@@ -75,6 +77,7 @@ class Theory extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             treeData,
             searchString,
@@ -85,15 +88,15 @@ class Theory extends React.Component {
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.theory_title}</p></div>
 				<hr/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses ></Link>
-				<Link to={"/teacher_create_theory"} className="blue" style={{marginLeft:20}}>Create Theory</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses} ></Link>
+				<Link to={"/teacher_create_theory"} className="blue" style={{marginLeft:20}}>{language[lng].createtheory}</Link>
 				<Grid container>
 					<Grid item xs={2}>
 					</Grid>
 					<Grid item xs={4}  className="padding2"> 
 						<p className="left_30 down_20 black size_12">{this.state.theory_subtitle}</p>
 						<br/>
-						<a className="left_30 down_20 blue size_12" href={this.state.theory_url}>URL: {this.state.theory_url}</a>
+						<a className="left_30 down_20 blue size_12" href={this.state.theory_url}>{language[lng].url}: {this.state.theory_url}</a>
 						<br/>
 						<br/>
 						<div className="big_text">{this.state.theory_content}</div>

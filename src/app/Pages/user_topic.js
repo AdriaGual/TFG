@@ -15,11 +15,12 @@ import SortableTree, {
   getTreeFromFlatData,
 } from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
+import language from "../Utils/language.js";
 /** 
  * Register Page
  * @extends React.Component
  */
- var initialData = [];
+var initialData = [];
 class UserTopic extends React.Component {
 	constructor(props){
 		super(props);
@@ -140,6 +141,7 @@ class UserTopic extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             treeData,
             searchString,
@@ -163,7 +165,7 @@ class UserTopic extends React.Component {
 				<div className="left_30 down_20 orange size_30"><p>{this.appState("topic_name")}
 				</p></div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>Courses</Link><Link to={"/user_course"} className="blue" >>{this.appState("course_name")}</Link>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses}></Link><Link to={"/user_course"} className="blue" >{this.appState("course_name")}</Link>
 				<Grid container>
 					<Grid item xs={10}  className="padding2"> 
 						<label htmlFor="find-box">
@@ -172,12 +174,12 @@ class UserTopic extends React.Component {
 								type="text"
 								value={searchString}
 								onChange={event => this.setState({ searchString: event.target.value })}
-								label="Search"
+								label={language[lng].search}
 							/>
 						</label>
 					</Grid>
 					<Grid item xs={2} className="down_20"> 
-						<Link to="/user_qualifications" className="blue"> Qualifications</Link>
+						<Link to="/user_qualifications" className="blue"> {language[lng].qualifications}</Link>
 					</Grid>
 				</Grid>
 				<Grid container>

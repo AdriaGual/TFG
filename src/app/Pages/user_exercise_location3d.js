@@ -18,6 +18,8 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import DoneIcon from 'material-ui-icons/Done';
+import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
+import language from "../Utils/language.js";
 /** 
  * Register Page
  * @extends React.Component
@@ -28,6 +30,7 @@ var img;
 var tries;
 var solucions =[];
 var fjson;
+var lng;
 class UserExercice extends React.Component {
 	constructor(props){
 		super(props);
@@ -47,10 +50,20 @@ class UserExercice extends React.Component {
 			showcorrectanswer: false,
 			showwronganswer: false,
 			finished:false,
+			showhelp:false,
 		}
 	}
 	
 	appState = this.props.appState;
+	
+	handleCloseAdvice = () => {
+		this.setState({ showhelp: false});
+	}
+	
+	clickshowhelp = () => {
+		this.setState({ showhelp: true});
+	}
+	
 	componentWillMount(){
 		var loadjs = require('loadjs');
 		loadjs('js/OrbitControls.js',function (){
@@ -117,7 +130,7 @@ class UserExercice extends React.Component {
 		if ($('#list_models_solution_select option').length==0){
 			document.getElementById('btn-add-model-solution').style.border='solid';
 			document.getElementById('btn-add-model-solution').style.borderColor='#e52213';
-			this.setState({ showsnack: true ,snacktext: "No answers set!"});
+			this.setState({ showsnack: true ,snacktext:language[lng].answersnotset});
 		}
 		else{
 			for (var a=0; a<solucions.length; a++){
@@ -216,13 +229,13 @@ class UserExercice extends React.Component {
             searchString,
             searchFoundCount,
         } = this.state;
-		
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		return (
 			<div>
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} >Courses</Link>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} >{language[lng].courses}</Link>
 				<Grid container>
 					
 					<Grid item xs={4}  className="padding2"> 
@@ -230,10 +243,11 @@ class UserExercice extends React.Component {
 						<div className="margin1 big_text">{this.state.exercice_description}</div>
 						<hr/><br/><br/><hr/>
 						<div className="left_30 down_20 black size_20 big_text">{this.state.exercice_question}</div>
-						<hr/><br/><br/><hr/>
-						<div className="margin1 big_text">{this.state.exercice_help}</div>
 						<hr/><br/><br/>
 						<div className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</div>
+						<br/><br/><br/>
+						<button type="button"  className="btn btn-6 white" style={{border:'none',width:40,height:36,borderRadius: 50,fontWeight: 700}} onClick={() => this.clickshowhelp()}> <Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon></button>
+						
 					</Grid>
 					<Grid item xs={4}  className="padding2">
 						<div id="image_div">
@@ -252,16 +266,16 @@ class UserExercice extends React.Component {
 									<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label"  style={{width:200,marginLeft:71}}></Select>
 									
 									<span class="input-group-btn">
-										<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">Afegir a solució</Button>
+										<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">{language[lng].addtosolution}</Button>
 									</span>
 								</div>
 								
 								<div id="list_models_solution_input_group" style={{width:700}} className="down_15">
-									<span id="list_models_solution_select_label" >Models solució</span>
+									<span id="list_models_solution_select_label" >{language[lng].solutionmodels}</span>
 									<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
 									
 									<span class="input-group-btn">
-										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
+										<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">{language[lng].deletee}</Button>
 									</span>
 								</div>
 							</div>
@@ -274,27 +288,27 @@ class UserExercice extends React.Component {
 							<Button
 								className="btn btn-1 white left_30"
 								onClick={() => 	this.clickcorregir()}
-							> Corregir</Button>:null: null
+							> {language[lng].verify}</Button>:null: null
 						}
 						<br/><br/>
 						{this.state.showcorrectanswer ? 
 								this.state.answer!="" ?
 								<div>
-								<p>Correcte!</p>
+								<p>{language[lng].correct}</p>
 								<br/>
 								<hr/>
 								<p>{this.state.answer}</p>
 								</div> 
 								: 
 								<div>
-								<p>Correcte!</p>
+								<p>{language[lng].correct}</p>
 								<br/>
 								</div> 
 								: null
 						}
 						{this.state.showwronganswer ? 
 							<div>
-							<p>Incorrecte!</p>
+							<p>{language[lng].incorrect}</p>
 							</div> : null
 						}
 					</Grid>
@@ -320,6 +334,17 @@ class UserExercice extends React.Component {
 						</IconButton>,
 					  ]}
 					/>
+					<Dialog
+						open={this.state.showhelp}
+						onClose={this.handleCloseAdvice}
+					>
+					<DialogTitle className="down_15">{STORAGE.getLocalStorageItem("exercise_name") + " help"}</DialogTitle>
+						 <DialogContent>
+							<DialogContentText>
+							 {this.state.exercice_help}
+							</DialogContentText>
+						</DialogContent>
+					</Dialog>	
 				</Grid>
 
 			</div>

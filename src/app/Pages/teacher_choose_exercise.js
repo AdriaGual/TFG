@@ -14,7 +14,8 @@ import SortableTree, { addNodeUnderParent, removeNodeAtPath,changeNodeAtPath } f
 import List,{ListItem,ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Select from 'material-ui/Select';
-
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
@@ -70,7 +71,8 @@ class TeacherChooseExercice extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
-		 const getNodeKey = ({ treeIndex }) => treeIndex;
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
+		const getNodeKey = ({ treeIndex }) => treeIndex;
 		const {
             treeData,
             searchString,
@@ -80,7 +82,7 @@ class TeacherChooseExercice extends React.Component {
 			<div style={{ height: 1500}}>
 				<br/>
 				<div className="left_30">	
-					<p className="orange size_30">Choose Exercise Type</p>
+					<p className="orange size_30">{language[lng].chooseexercisetype}</p>
 				</div>
 				<hr/>
 				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
@@ -96,14 +98,14 @@ class TeacherChooseExercice extends React.Component {
 								onClick={() => 	this.click("2D")}
 								style={{width:100}}
 							>
-								2D Image
+								{language[lng].image2d}
 							</Button>
 							<Button
 								className="btn btn-1 white left_15"
 								onClick={() => 	this.click("Test")}
 								style={{width:100}}
 							>
-								Test 2D
+								{language[lng].test2d}
 							</Button>
 							
 							<br/><br/>
@@ -113,14 +115,14 @@ class TeacherChooseExercice extends React.Component {
 								onClick={() => 	this.click("MPR")}
 								style={{width:100}}
 							>
-							MPR
+							{language[lng].mpr}
 							</Button>
 							<Button
 								className="btn btn-1 white"
 								onClick={() => 	this.click("3D")}
 								style={{width:100,marginLeft:15}}
 							>
-							3D Image
+							{language[lng].image3d}
 							</Button>
 							<br/><br/>
 							<Button
@@ -128,14 +130,14 @@ class TeacherChooseExercice extends React.Component {
 								onClick={() => 	this.click("Animation")}
 								style={{width:100}}
 							>
-								Animation
+								{language[lng].animation}
 							</Button>
 							<Button
 								className="btn btn-1 white"
 								style={{width:100,marginLeft:15}}
 								onClick={() => 	this.click("Labelling")}
 							>
-								Labelling
+								{language[lng].labelling}
 							</Button>
 							
 							<br/><br/>
@@ -144,7 +146,7 @@ class TeacherChooseExercice extends React.Component {
 								onClick={() => 	this.click("Selection")}
 								style={{width:100}}
 							>
-								Selection
+								{language[lng].selection}
 							</Button>
 						</Grid>
 					</Grid>

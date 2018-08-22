@@ -14,11 +14,14 @@ import SortableTree from 'react-sortable-tree';
 import Table,{TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import {BarChart} from 'react-easy-chart';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 
 /** 
  * Register Page
  * @extends React.Component
  */
+ var lng;
 class UserQualifications extends React.Component {
 	constructor(props){
 		super(props);
@@ -79,7 +82,7 @@ class UserQualifications extends React.Component {
 									success: function(response2) {
 										var jsonData2 = JSON.parse(response2);
 										if (jsonData2.length>0){
-											$("#formulari").append("<table style='width:100%'><tr><th style='width:(100/4)%'>Exercice</th><th style='width:(100/4)%'>Tries</th> <th style='width:(100/4)%'>Puntuation</th><th style='width:(100/4)%'>Finished</th></tr>");
+											$("#formulari").append("<table style='width:100%'><tr><th style='width:(100/4)%'>"+language[lng].exercise+"</th><th style='width:(100/4)%'>"+language[lng].Tries+"</th> <th style='width:(100/4)%'>"+language[lng].puntuation+"</th><th style='width:(100/4)%'>"+language[lng].finished+"</th></tr>");
 											for (var b=0; b<jsonData2.length; b++){
 												var color;
 												if (jsonData2[b].finished>0){
@@ -94,7 +97,7 @@ class UserQualifications extends React.Component {
 											$("#formulari").append("<br/><br/>");
 										}
 										else{
-											$("#formulari").append("<p>No hi han exercicis assignats.</p><br/><br/>");
+											$("#formulari").append("<p>"+language[lng].noexercisesassigned+"</p><br/><br/>");
 										}
 									}
 								};
@@ -115,6 +118,7 @@ class UserQualifications extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             treedades,
             searchString,
@@ -126,7 +130,7 @@ class UserQualifications extends React.Component {
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.course_name}</p></div>
 				<hr/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses}</Link>
 				<form id="formulari"></form>
 				
 			</div>

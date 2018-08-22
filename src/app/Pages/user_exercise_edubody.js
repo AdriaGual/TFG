@@ -12,6 +12,8 @@ import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import SortableTree from 'react-sortable-tree';
 import * as STORAGE from '../Utils/Storage.js';
+import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
+import language from "../Utils/language.js";
 /** 
  * Register Page
  * @extends React.Component
@@ -34,10 +36,21 @@ class UserExercice extends React.Component {
 			id:"",
 			img:"",
 			tries:"",
+			showhelp:false,
 		}
 	}
 	
 	appState = this.props.appState;
+	
+	handleCloseAdvice = () => {
+		this.setState({ showhelp: false});
+	}
+	
+	clickshowhelp = () => {
+		this.setState({ showhelp: true});
+	}
+	
+	
 	componentWillMount(){
 		var loadjs = require('loadjs');
 		loadjs('js/canvas_viewer_loc.js',function (){
@@ -116,6 +129,7 @@ class UserExercice extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
             treeData,
             searchString,
@@ -127,17 +141,18 @@ class UserExercice extends React.Component {
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.exercice_statement}</p></div>
 				<hr/>
-				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>Courses</Link>
+				<Link to={"/user_courses"} className="blue" style={{marginLeft:20}} onClick={() => this.click()}>{language[lng].courses}</Link>
 				<Grid container>
 					<Grid item xs={5}  className="padding2"> 
 						<hr/>
 						<div className="margin1 big_text">{this.state.exercice_description}</div>
 						<hr/><br/><br/><hr/>
 						<div className="left_30 down_20 black size_20 big_text">{this.state.exercice_question}</div>
-						<hr/><br/><br/><hr/>
-						<div className="margin1 big_text">{this.state.exercice_help}</div>
 						<hr/><br/><br/>
 						<div className="left_30 down_20 black size_20">Tries: {this.state.tries}/{this.state.exercice_ntries}</div>
+						<br/><br/><br/>
+						<button type="button"  className="btn btn-6 white" style={{border:'none',width:40,height:36,borderRadius: 50,fontWeight: 700}} onClick={() => this.clickshowhelp()}> <Icon className="fa fa-question" style={{ fontSize: 15 }}></Icon></button>
+						
 
 					</Grid>
 					<Grid item xs={4}  className="padding2">
@@ -145,6 +160,17 @@ class UserExercice extends React.Component {
 							<div id ="contentID"></div> 
 						
 					</Grid>
+					<Dialog
+						open={this.state.showhelp}
+						onClose={this.handleCloseAdvice}
+					>
+					<DialogTitle className="down_15">{STORAGE.getLocalStorageItem("exercise_name") + " help"}</DialogTitle>
+						 <DialogContent>
+							<DialogContentText>
+							 {this.state.exercice_help}
+							</DialogContentText>
+						</DialogContent>
+					</Dialog>	
 				</Grid>
 
 			</div>

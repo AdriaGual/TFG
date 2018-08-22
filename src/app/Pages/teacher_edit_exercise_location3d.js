@@ -17,10 +17,13 @@ import Select from 'material-ui/Select';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import language from "../Utils/language.js"
+import * as STORAGE from '../Utils/Storage.js';
 /** 
  * Register Page
  * @extends React.Component
  */
+var lng;
 class TeacherEditExerciceLocation3d extends React.Component {
 	constructor(props){
 		super(props);
@@ -69,7 +72,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 								$("#formulari").append("<br/>");
 							}
 							else{
-								$("#formulari").append("<p class='size15'>No hi han topics en aquest curs </p><br/><br/>");
+								$("#formulari").append("<p class='size15'>"+language[lng].notopicsincourse+"</p><br/><br/>");
 							}
 						}
 					};
@@ -125,67 +128,89 @@ class TeacherEditExerciceLocation3d extends React.Component {
 		
 		if (document.getElementById("model_input").files.length != 0 && difficulty > 0 && difficulty <= 10 && max_tries > 0 && max_tries <= 100 && topics.length > 0 && topics.length > 0 && $("#newtitle").val()!="" && $("#problem_description").val()!="" && $("#problem_question").val()!="" && $("#help").val()!=""){
 			var that = this;
+			
+			var titleok = false;
 			var settings = {
 				type: 'POST',
 				data: { 
-					'topics':topics,
-					'title': $("#newtitle").val(), 
-					'description': $("#problem_description").val(), 
-					'question': $("#problem_question").val(), 
-					'help': $("#help").val(), 
-					'new_models': JSON.stringify(new_models),
-					'difficulty': difficulty,
-					'max_tries': max_tries,
-					'solution':solution,
+					'name': $("#newtitle").val(), 
 				},
-				url: 'php/save_exercise_location3d.php',
+				url: 'php/istitleok.php',
 				success: function(response) {
 					if (response=="OK"){
-						that.props.history.push("/teacher_courses");
+						titleok = true;
 					}
 				}
 			};
 			$.ajax(settings);
+			
+			if (titleok){
+			
+				var settings2 = {
+					type: 'POST',
+					data: { 
+						'topics':topics,
+						'title': $("#newtitle").val(), 
+						'description': $("#problem_description").val(), 
+						'question': $("#problem_question").val(), 
+						'help': $("#help").val(), 
+						'new_models': JSON.stringify(new_models),
+						'difficulty': difficulty,
+						'max_tries': max_tries,
+						'solution':solution,
+					},
+					url: 'php/save_exercise_location3d.php',
+					success: function(response) {
+						if (response=="OK"){
+							that.props.history.push("/teacher_courses");
+						}
+					}
+				};
+				$.ajax(settings2);
+			}
+			else{
+				document.getElementById('title').style.border='solid';
+				document.getElementById('title').style.borderColor='#e52213';
+				this.setState({ showsnack: true ,snacktext: language[lng].titlealreadyexists});
+			}
 		}
 		else{
 			if (difficulty < 0 || difficulty > 10 || difficulty == ""){
 				document.getElementById('difficulty').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Difficulty not valid"});
+				this.setState({ showsnack: true ,snacktext: language[lng].difficultynotvalid});
 			}
 			else if  (max_tries < 0 || max_tries > 100 || max_tries == ""){
 				document.getElementById('max_tries').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Maximum tries not valid"});
+				this.setState({ showsnack: true ,snacktext: language[lng].maximumtriesnotvalid});
 			}
 			else if (topics.length <= 0){
 				document.getElementById('topics').style.border='solid';
 				document.getElementById('topics').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Topics not selected"});
+				this.setState({ showsnack: true ,snacktext: language[lng].topicsnotselected});
 			}
 			else if ($("#newtitle").val()==""){
 				document.getElementById('title').style.border='solid';
 				document.getElementById('title').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Title not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].titlenotset});
 			}
 			else if ( $("#problem_description").val()==""){
 				document.getElementById('problem_description').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Description not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].descriptionnotset});
 			}
 			else if ($("#problem_question").val()==""){
 				document.getElementById('problem_question').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Question not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].questionnotset});
 			}
 			else if ($("#help").val()==""){
 				document.getElementById('help').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Help not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].helpnotset});
 			}
 			else if (document.getElementById("model_input").files.length == 0){
 				document.getElementById('btn-add-model').style.border='solid';
 				document.getElementById('btn-add-model').style.borderColor='#e52213';
-				this.setState({ showsnack: true ,snacktext: "Model not set"});
+				this.setState({ showsnack: true ,snacktext: language[lng].modelnotset});
 			}
 		}
-		
-		
 	}	
 	
 	handleClose = (event, reason) => {
@@ -203,12 +228,13 @@ class TeacherEditExerciceLocation3d extends React.Component {
 	 * Renders the register page.
 	 */
 	render(){
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		return (
 			<div>
 				<div className="left_30" id = "title">	
 					<TextField
 						id="newtitle"
-						label="Enter Exercise Statement"
+						label={language[lng].enterexercisestatement}
 						className="text_field "
 						style = {{width: 1000}}
 						onChange={(event, newValue) =>
@@ -219,7 +245,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 					/>
 				</div>
 				<hr/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>Courses></Link><Link to={"/teacher_choose_exercise"} className="blue" >Choose Exercise</Link>
+				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses}></Link><Link to={"/teacher_choose_exercise"} className="blue" >{language[lng].chooseexercise}</Link>
 				<Grid container>
 					<Grid item xs={12} >
 						<p></p>				
@@ -229,9 +255,9 @@ class TeacherEditExerciceLocation3d extends React.Component {
 					<Grid item xs={1} > 
 					</Grid>
 					<Grid item xs={3} > 
-						<p>Description:</p>
+						<p>{language[lng].description}:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} id="problem_description" style={{height:200,width:400}}/>
-						<p>Question:</p>
+						<p>{language[lng].question}:</p>
 						<textarea value={this.state.value} onChange={this.handleChange} id="problem_question" style={{height:100,width:400}}/>
 						
 						<Grid container>
@@ -243,23 +269,23 @@ class TeacherEditExerciceLocation3d extends React.Component {
 								/>
 							</Grid>
 							<Grid item xs={3} > 
-								<p>Text Solution:</p>
+								<p>{language[lng].textsolution}:</p>
 							 </Grid>
 							{this.state.hasTextSolution ?
 								<textarea value={this.state.value} onChange={this.handleChange} id="problem_solution" style={{height:50,width:400}}/>
 							:null}
 						</Grid>
 						
-						<p>Help Text:</p>
+						<p>{language[lng].helptext}:</p>
 						<textarea value={this.state.value} id="help" onChange={this.handleChange} style={{height:100,width:400}}/>
 						<br/><br/><br/>
 						<Grid container>
 							<Grid item xs={6} > 
-								<label for="difficulty">Difficulty: </label>
+								<label for="difficulty">{language[lng].difficulty}: </label>
 								<input type="number" id="difficulty" min="1" max="10" step="1"/>
 							</Grid>
 							<Grid item xs={6} > 
-								<label for="max_tries">Maximum Tries: </label>
+								<label for="max_tries">{language[lng].maximumtries}: </label>
 								<input type="number" id="max_tries" min="1" max="100" step="1"/>
 							</Grid>
 						</Grid>
@@ -283,24 +309,24 @@ class TeacherEditExerciceLocation3d extends React.Component {
 										<span type="button" id="btn-add-model" >
 											<input type="file" id="model_input" multiple=""/>
 										</span>
-										<Button type="button" id="btn-delete-model" style={{marginLeft:31}} className="btn btn-5 white down_15">Eliminar</Button>
+										<Button type="button" id="btn-delete-model" style={{marginLeft:31}} className="btn btn-5 white down_15">{language[lng].deletee}</Button>
 									</div>
 									
 									<div id="displayed_models_input_group" style={{width:700}} className="down_15">
-										<span id="displayed_models_select_label" >Models</span>
+										<span id="displayed_models_select_label" >{language[lng].models}</span>
 										<Select native  id="displayed_models_select" aria-describedby="displayed_models_select_label"  style={{width:200,marginLeft:71}}></Select>
 										
 										<span class="input-group-btn">
-											<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">Afegir a solució</Button>
+											<Button type="button" id="btn-add-model-solution" style={{marginLeft:14}} className="btn btn-4 white">{language[lng].addtosolution}</Button>
 										</span>
 									</div>
 									
 									<div id="list_models_solution_input_group" style={{width:700}} className="down_15">
-										<span id="list_models_solution_select_label" >Models solució</span>
+										<span id="list_models_solution_select_label" >{language[lng].solutionmodels}</span>
 										<select id="list_models_solution_select" aria-describedby="list_models_solution_select_label" size="3" style={{width:200}} className="left_15" ></select>
 										
 										<span class="input-group-btn">
-											<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">Eliminar</Button>
+											<Button type="button" id="btn-remove-selected-model" className="btn btn-5 white left_15">{language[lng].deletee}</Button>
 										</span>
 									</div>
 								</div>
@@ -330,7 +356,7 @@ class TeacherEditExerciceLocation3d extends React.Component {
 					
 					<Grid item xs={2} > 
 						<div id = "topics">
-							<div className="left_50 down_20 orange size_20"><p>Topics</p></div>
+							<div className="left_50 down_20 orange size_20"><p>{language[lng].topics}</p></div>
 							<hr/>
 							<div id="formulari"></div>
 							<hr/>
