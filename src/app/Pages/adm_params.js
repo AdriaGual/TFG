@@ -14,8 +14,13 @@ import SortableTree, {
   getFlatDataFromTree,
   getTreeFromFlatData,
 } from 'react-sortable-tree';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import language from "../Utils/language.js"
 import * as STORAGE from '../Utils/Storage.js';
+import Dialog,{DialogActions,DialogContent,DialogContentText,DialogTitle} from 'material-ui/Dialog';
+
 /** 
  * Register Page
  * @extends React.Component
@@ -23,137 +28,264 @@ import * as STORAGE from '../Utils/Storage.js';
  
 var initialData = [];
 var initialDataTopic = [];
+var lng;
 class UserCourses extends React.Component {
-
 	constructor(props){
 		super(props);
 		this.state = {
 			searchString: '',
 			searchFocusIndex: 0,
 			searchFoundCount: null,
+			treeData: getTreeFromFlatData({
+				flatData: initialData.map(node => ({ ...node, title: node.name })),
+				getKey: node => node.id, // resolve a node's key
+				getParentKey: node => node.parent, // resolve a node's parent's key
+				rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+			}),
+			showinfo:false,
+			showadvice:false,
+			showcreatetopic:false,
+			type:"",
 		};
 	}
 	appState = this.props.appState;
 
 	componentDidMount() {
 		var that = this;
-
+	}
+	
+	createcourse = () => {
+		this.props.history.push('/admin_edit_course');
+	};
+	
+	enroll = () => {
+		this.props.history.push('/admin_enroll');
+	}
+	
+	createtopic = () => {
+		this.setState({showcreatetopic: true});
+		this.setState({showinfo: true});
+	};
+	
+	createtheory = () => {
+		this.props.history.push('/admin_create_theory');
+	};
+	
+	createexercise = () => {
+		this.props.history.push('/admin_choose_exercise');
+	}
+	
+	deletecourse = () => {
+		var that = this;
 		var settings = {
 			type: 'GET',
-			url: 'php/load_only_courses.php',
+			url: 'php/load_all_courses.php',
 			success: function(response) {
-				var jsonData = JSON.parse(response);
-				for (var a=0; a<jsonData.length; a++){
-					$("#formulari").append("<input type='radio' name='curs' value='"+jsonData[a].id+"' />"+jsonData[a].name+"<br/>");
+				if(response!="nocourses"){
+					var jsonData = JSON.parse(response);
+					var a = jsonData.map(node => ({ ...node, title: node.name }));
+					that.setState({treeData: getTreeFromFlatData({
+						flatData: a,
+						getKey: node => node.id, // resolve a node's key
+						getParentKey: node => node.parent, // resolve a node's parent's key
+						rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+					})});
+					console.log(jsonData);
+					that.setState({showinfo: true});
+					that.setState({type: language[lng].courses});
+				}
+				else{
+					that.setState({showinfo: false});
 				}
 			}
 		};
 		$.ajax(settings);
-	}
-	
-	click = () => {
-		var curs = $("input[name=curs]:checked").val();
-		var input = document.getElementById('input')
-		var jsonexcel = "";
-		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
-			   // `data` is an array of rows
-			   // each row being an array of cells.
-			   jsonexcel = JSON.stringify(data, null, 2);
-			   
-			   var settings = {
-					type: 'POST',
-					data: { 
-						'curs': curs,
-						'jsonexcel': jsonexcel
-					},
-					url: 'php/create_users.php',
-					success: function(response) {
-						
-					}
-				};
-				$.ajax(settings);
-			   
-			  }, (error) => {
-			  	console.error(error)
-		});		
-	}
-
-	clickshowexcel = () => {
-		
-		var input = document.getElementById('input')
-		var that = this;
-		var jsonexcel = "";
-		var curs = $("input[name=curs]:checked").val();
-		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
-			   // `data` is an array of rows
-			   // each row being an array of cells.
-			   jsonexcel = JSON.stringify(data, null, 2);
-			   
-			   var settings = {
-					type: 'POST',
-					data: { 
-						'idcurs': curs,
-						'jsonexcel': jsonexcel
-					},
-					url: 'php/show_users_from_admin.php',
-					success: function(response) {
-						that.setState({showinfo: true});
-						var jsonData = JSON.parse(response);
-						$("#formulari2").empty();
-						$("#formulari2").append("<table style='width:100%'><tr><th style='width:(100/5)%'>Username</th><th style='width:(100/5)%'>Name</th> <th style='width:(100/5)%'>Surname</th><th style='width:(100/5)%'>Email</th><th style='width:(100/5)%'>New Student?</th></tr>");
-						for (var a=0; a<jsonData.length; a++){
-							$("#formulari2 tr:last").after("<tr><td style='width:(100/5)%'>"+jsonData[a].username+"</td><td style='width:(100/5)%'>"+jsonData[a].name+"</td> <td style='width:(100/5)%'>"+jsonData[a].surname+"</td> <td style='width:(100/5)%'>"+jsonData[a].email+"</td> <td style='width:(100/5)%'>"+jsonData[a].isnew+"</td> </tr>");
-						}
-						$("#formulari2 tr:last").after("</table>");
-						
-					}
-				};
-				$.ajax(settings);
-			   
-			  }, (error) => {
-			  	console.error(error)
-		});
-	};	
-	
-	clickenrollexcel = () => {
-		var input = document.getElementById('input')
-		var that = this;
-		var jsonexcel = "";
-		var curs = $("input[name=curs]:checked").val();
-		readXlsxFile(input.files[0], { dateFormat: 'MM/DD/YY' }).then(function(data) {
-			   jsonexcel = JSON.stringify(data, null, 2);
-			   var settings = {
-					type: 'POST',
-					data: { 
-						'idcurs': curs,
-						'jsonexcel': jsonexcel
-					},
-					url: 'php/create_users_from_admin.php',
-					success: function(response) {
-						if (response=="OK"){
-							that.setState({ showsnack: true ,snacktext: "Enrolled users!"});
-							that.props.history.push("/teacher_courses");
-						}
-					}
-				};
-				$.ajax(settings);
-			  }, (error) => {
-			  	console.error(error)
-		});
 	};
 	
+	deletetopic = () => {
+		var that = this;
+		var settings = {
+			type: 'GET',
+			url: 'php/load_all_topics.php',
+			success: function(response) {
+				if(response!="notopics"){
+					var jsonData = JSON.parse(response);
+					var a = jsonData.map(node => ({ ...node, title: node.name }));
+					that.setState({treeData: getTreeFromFlatData({
+						flatData: a,
+						getKey: node => node.id, // resolve a node's key
+						getParentKey: node => node.parent, // resolve a node's parent's key
+						rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+					})});
+					console.log(jsonData);
+					that.setState({showinfo: true});
+					that.setState({type: language[lng].topics});
+				}
+				else{
+					that.setState({showinfo: false});
+				}
+			}
+		};
+		$.ajax(settings);
+	};
 	
+	deleteexercise = () => {
+		var that = this;
+		var settings = {
+			type: 'GET',
+			url: 'php/load_all_exercises.php',
+			success: function(response) {
+				if(response!="noexercises"){
+					var jsonData = JSON.parse(response);
+					var a = jsonData.map(node => ({ ...node, title: node.name }));
+					that.setState({treeData: getTreeFromFlatData({
+						flatData: a,
+						getKey: node => node.id, // resolve a node's key
+						getParentKey: node => node.parent, // resolve a node's parent's key
+						rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+					})});
+					console.log(jsonData);
+					that.setState({showinfo: true});
+					that.setState({type: language[lng].exercises});
+				}
+				else{
+					that.setState({showinfo: false});
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	deletetheory = () => {
+		var that = this;
+		var settings = {
+			type: 'GET',
+			url: 'php/load_all_theory.php',
+			success: function(response) {
+				if(response!="noexercises"){
+					var jsonData = JSON.parse(response);
+					var a = jsonData.map(node => ({ ...node, title: node.name }));
+					that.setState({treeData: getTreeFromFlatData({
+						flatData: a,
+						getKey: node => node.id, // resolve a node's key
+						getParentKey: node => node.parent, // resolve a node's parent's key
+						rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
+					})});
+					console.log(jsonData);
+					that.setState({showinfo: true});
+					that.setState({type: language[lng].theory});
+				}
+				else{
+					that.setState({showinfo: false});
+				}
+			}
+		};
+		$.ajax(settings);
+	};
+	
+	clickshowadvice = (name) =>{
+		this.setState({ name: name });
+		this.setState({ showadvice: true});
+	}
+	
+	handleCloseAdvice = () => {
+		this.setState({ showadvice: false});
+	}
+	
+	clickdeletecourse = (name) => {
+		var that = this;
+		var settings2 = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/delete_course.php',
+			success: function(response) {
+			}
+		};
+		$.ajax(settings2);
+		window.location.reload();
+	}
+	
+	clickdeletetopic = (name) => {
+		var that = this;
+		var settings2 = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/delete_topic.php',
+			success: function(response) {
+			}
+		};
+		$.ajax(settings2);
+		window.location.reload();
+	}
+	
+	clickdeleteexercise = (name) => {
+		var that = this;
+		var settings2 = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/delete_exercise.php',
+			success: function(response) {
+			}
+		};
+		$.ajax(settings2);
+		window.location.reload();
+	}
+	
+	clickdeletetheory = (name) => {
+		var that = this;
+		var settings2 = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/delete_theory.php',
+			success: function(response) {
+			}
+		};
+		$.ajax(settings2);
+		window.location.reload();
+	}
+	
+	clickcreatetopic= (name) => {
+		var that = this;
+		var settings2 = {
+			type: 'POST',
+			data: { 
+				'name': name, 
+			},
+			async:false,
+			url: 'php/add_topic.php',
+			success: function(response) {
+			}
+		};
+		$.ajax(settings2);
+		window.location.reload();
+	}
+	
+
 	/**
 	 * Renders the register page.
 	 */
 	render(){
-		var lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
+		lng = STORAGE.getLocalStorageItem("currentLanguage")|| this.appState("currentLanguage");
 		const {
+			treeData,
             searchString,
             searchFoundCount,
 			course_description,
         } = this.state;
 
+		
 		return (
 			<div>
 				<br/>
@@ -162,42 +294,186 @@ class UserCourses extends React.Component {
 				<Grid container>
 					<Grid item xs={1}>
 					</Grid>
+					
 					<Grid item xs={3}>
 						<br/>
-						<p className="orange size_20" style={{marginLeft:95}}>Load Users From Excel</p>
-						<hr/>
-						<br/>
-						<div id="formulari"></div>
-						<br/>
-						<a href="./public/Plantilla.xlsx" style={{color:"#0645AD",marginLeft:20}}>Download Template</a>
+						<Button
+							className="btn btn-1 white right_15"
+							onClick={() => 	this.createcourse()}
+						>
+							{language[lng].createcourse}
+						</Button>
+						<br/><br/>
+						<Button
+							className="btn btn-1 white right_15"
+							onClick={() => 	this.createtopic()}
+						>
+							{language[lng].createtopic}
+						</Button>
+						<br/><br/>
+						<Button
+							className="btn btn-1 white right_15"
+							onClick={() => 	this.createexercise()}
+						>
+							{language[lng].createnewexercise}
+						</Button>
+						<br/><br/>
+						<Button
+							className="btn btn-1 white right_15"
+							onClick={() => 	this.createtheory()}
+						>
+							{language[lng].createnewtheory}
+						</Button>
+						<br/><br/>
+						<Button
+							className="btn btn-4 white right_15"
+							onClick={() => 	this.enroll()}
+						>
+							{language[lng].enroll}
+						</Button>
+						<br/><br/>
+						<Button
+							className="btn btn-5 white right_15"
+							onClick={() => 	this.deletecourse()}
+						>
+							{language[lng].deletecourse}
+						</Button>
 						
 						<br/><br/>
+						<Button
+							className="btn btn-5 white right_15"
+							onClick={() => 	this.deletetopic()}
+						>
+							{language[lng].deletetopic}
+						</Button>
 						
-						<p style={{marginLeft:20}} className="size_15 ">Load xlsx file</p> 
-						<input style={{marginLeft:20}}type="file" id="input" onChange={(event)=> { this.clickshowexcel() }} />
 						<br/><br/>
+						<Button
+							className="btn btn-5 white right_15"
+							onClick={() => 	this.deleteexercise()}
+						>
+							{language[lng].deleteexercise}
+						</Button>
+						
+						<br/><br/>
+						<Button
+							className="btn btn-5 white right_15"
+							onClick={() => 	this.deletetheory()}
+						>
+							{language[lng].deletetheory}
+						</Button>
+						
 						
 					</Grid>
+					
 					<Grid item xs={2}>
-						
 					</Grid>
+					
 					<Grid item xs={4}>
 						{ this.state.showinfo ? 
-							<Card style={{width:700}}>
-								<br/>
-								<p className="orange size_20" style={{marginLeft:300}}>Students</p>
-								<hr/>
-								<br/>
-								<form id="formulari2"></form>
-								<br/>
-								<br/>
-								<Button onClick={() => this.clickenrollexcel()} className="btn btn-4 white" style={{width:250,marginLeft:230,marginBottom:10}}> Enroll Excel Students</Button>		
-							</Card>				
-							: null
-						}
-					</Grid>
-					<Grid item xs={2}>
 						
+							<Card className="topic_info_form margin2">
+								<CardContent className="orange size_30">
+								
+								{this.state.showcreatetopic ? language[lng].createtopic : language[lng].deletee+" "+this.state.type} 
+								<Button
+									className="btn btn-5 white left_60"
+									onClick={() =>this.setState({showinfo: false})}
+								>
+									<Icon className="fa fa-times" style={{ fontSize: 15 }}></Icon>
+									
+								</Button>
+								<hr/>
+								</CardContent>
+								{this.state.showcreatetopic ? 
+									<div>
+										<TextField
+											id="newtitle"
+											label={language[lng].entertopicname}
+											className="text_field "
+											style = {{width: 300}}
+											onChange={(event, newValue) =>
+												this.setState({
+													newtitle: newValue
+												})
+											}
+										/>
+										<br/><br/><br/><br/>
+										<Button
+											className="btn btn-1 white"
+											onClick={() => 	this.clickcreatetopic($("#newtitle").val())}
+										>
+											<Icon className="fa fa-save" style={{ fontSize: 15 }}></Icon>
+										</Button>
+									</div>
+								
+								:
+								 <SortableTree
+									style = {{height: 500}}
+									treeData={this.state.treeData}
+									onChange={treeData => this.setState({ treeData })}
+									canDrag={false}
+									searchQuery={searchString}
+									generateNodeProps={({ node, path }) => {
+											return {
+												style: {
+													color: "black",
+												},
+											buttons: [
+												<Button
+													className="btn btn-5 white right_15"
+													onClick={() => 	this.clickshowadvice(node.name)}
+												>
+													<Icon className="fa fa-trash" style={{ fontSize: 15 }}></Icon>
+												</Button>,
+											],
+										};
+									}}	
+								/>}
+							</Card>
+						: 
+						null 
+					}
+					</Grid>
+					
+					<Snackbar
+						  anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'left',
+						  }}
+						  open={this.state.showsnack}
+						  autoHideDuration={4000}
+						  onClose={this.handleClose}
+						  message={<span id="message-id">{this.state.snacktext}</span>}
+						  action={[
+							<IconButton
+							  key="close"
+							  aria-label="Close"
+							  color="inherit"
+							  onClick={this.handleClose}
+							>
+							<CloseIcon />
+							</IconButton>,
+						  ]}
+						/>
+						<Dialog
+						open={this.state.showadvice}
+						onClose={this.handleCloseAdvice}
+						>
+							<DialogTitle className="down_15">{language[lng].wannadelete+" "+this.state.name +" item?"}</DialogTitle>
+								{this.state.type == language[lng].courses ?
+									<Button className="btn btn-1 white" onClick={() => this.clickdeletecourse(this.state.name)}>{language[lng].deletee}</Button>
+								:this.state.type == language[lng].topics ?
+									<Button className="btn btn-1 white" onClick={() => this.clickdeletetopic(this.state.name)}>{language[lng].deletee}</Button>
+								: this.state.type == language[lng].exercises ?
+									<Button className="btn btn-1 white" onClick={() => this.clickdeleteexercise(this.state.name)}>{language[lng].deletee}</Button>
+								: this.state.type == language[lng].theory ?
+									<Button className="btn btn-1 white" onClick={() => this.clickdeletetheory(this.state.name)}>{language[lng].deletee}</Button>
+								: null
+								}
+							
+						</Dialog>	
+					<Grid item xs={2}>
 					</Grid>
 				</Grid>
 				

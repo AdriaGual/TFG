@@ -1,6 +1,16 @@
 const language = [ 
     // English 
     { 	
+		'entertopicname':'Enter topic name',
+		'createtopic':'Create Topic',
+		'theory':'Theory',
+		'wannadelete':'Wanna delete', 
+		'deletetheory':'Delete theory',
+		'deleteexercise':'Delete exercise',
+		'deletetopic':'Delete topic',
+		'createtopic':'Create topic',
+		'deletecourse':'Delete course',
+		'coursenotset':'Course not set',
 		'repeatyournewemail':'Repeat your New E-mail',
 		'enteryournewemail':'Enter your New E-mail',
 		'changeemail':'Change E-mail',
@@ -145,6 +155,16 @@ const language = [
     }, 
     // Catala
     {
+		'entertopicname':'Introduïu el nom del tema',
+		'createtopic':'Crear Topic',
+		'theory':'Teoria',
+		'wannadelete':'Vols eliminar', 
+		'deletetheory':'Eliminar teoria',
+		'deleteexercise':'Eliminar exercici',
+		'deletetopic':'Eliminar topic',
+		'createtopic':'Crear topic',
+		'deletecourse':'Eliminar curs',
+		'coursenotset':'Curs no existent',
 		'repeatyournewemail':'Repeteix correu electrònic',
 		'enteryournewemail':'Nou correu electrònic',
 		'changeemail':'Canviar e-mail',
@@ -289,6 +309,16 @@ const language = [
     }, 
     // Castellano
     { 
+		'entertopicname':'Ingrese el nombre del tema',
+		'createtopic':'Crear Tema',
+		'theory':'Teoría',
+		'wannadelete':'¿Quieres eliminar', 
+		'deletetheory':'Eliminar teoría',
+		'deleteexercise':'Eliminar ejercicio',
+		'deletetopic':'Eliminar tema',
+		'createtopic':'Crear tema',
+		'deletecourse':'Eliminar curso',
+		'coursenotset':'Curso no existente',
 		'repeatyournewemail':'Repite correo electrónico',
 		'enteryournewemail':'Ingrese correo electrónico',
 		'changeemail':'Cambiar e-mail',

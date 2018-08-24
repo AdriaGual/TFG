@@ -3,10 +3,10 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['files'])) {
         $errors = [];
-		if (!is_dir('C:/Users/walie/3D Objects/Desktop/web-app/build/models')){
-			mkdir('C:/Users/walie/3D Objects/Desktop/web-app/build/models',0777);
+		if (!is_dir('C:/Users/walie/Desktop/web-app/build/models')){
+			mkdir('C:/Users/walie/Desktop/web-app/build/models',0777);
 		}
-        $path = 'C:/Users/walie/3D Objects/Desktop/web-app/build/models/';
+        $path = 'C:/Users/walie/Desktop/web-app/build/models/';
         $extensions = ['json'];
 
         $all_files = count($_FILES['files']['tmp_name']);

@@ -14,10 +14,13 @@
 	$stmt->execute();
 	$row = $stmt->fetchObject();
 	
-	if ($row->user_type>0){
+	if ($row->user_type==1){
 		echo "is_teacher";
 	}
-	else{
+	else if ($row->user_type==0){
 		echo "is_student";
+	}
+	else if ($row->user_type==2){
+		echo "is_admin";
 	}
 ?>

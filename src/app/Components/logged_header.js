@@ -57,8 +57,13 @@ export default class LoggedHeader extends React.Component {
 				if (response=="is_teacher"){	
 					that.appState({is_student:false});
 				}
-				else{
+				else if (response=="is_student"){
 					that.appState({is_student:true});
+				}
+				else if (response=="is_admin"){
+					that.appState({is_admin:true});
+					that.appState({is_student:false});
+					that.appState({is_teacher:false});
 				}
 			}
 		};
@@ -73,6 +78,7 @@ export default class LoggedHeader extends React.Component {
 		this.setState({ anchorEl: null });
 		this.appState({is_teacher: false});
 		this.appState({is_student: false});
+		this.appState({is_admin: false});
 		this.appState({logged: false});
 		//PHP destroy
 		$.ajax({
@@ -98,8 +104,13 @@ export default class LoggedHeader extends React.Component {
 				if (response=="is_teacher"){	
 					that.appState({is_student:false});
 				}
-				else{
+				else if (response=="is_student"){
 					that.appState({is_student:true});
+				}
+				else if (response=="is_admin"){
+					that.appState({is_admin:true});
+					that.appState({is_student:false});
+					that.appState({is_teacher:false});
 				}
 			}
 		};
@@ -147,7 +158,13 @@ export default class LoggedHeader extends React.Component {
 									  onClose={this.handleCloseMenu}
 									>
 										<Link to="/user_profile"><MenuItem onClick={this.handleAccount}>{language[lng].profile}</MenuItem></Link>
-										{this.appState("is_student")?<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>{language[lng].courses}</MenuItem></Link>:<Link to="/teacher_courses"><MenuItem onClick={this.handleCourses}>{language[lng].courses}</MenuItem></Link>}
+										{this.appState("is_student")?
+											<Link to="/user_courses"><MenuItem onClick={this.handleCourses}>{language[lng].courses}</MenuItem></Link>
+										:this.appState("is_teacher")?
+											<Link to="/teacher_courses"><MenuItem onClick={this.handleCourses}>{language[lng].courses}</MenuItem></Link>
+										:
+											<Link to="/adm_params"><MenuItem onClick={this.handleCourses}>{language[lng].courses}</MenuItem></Link>
+										}
 										<Link to="/"><MenuItem onClick={this.handleClose}>{language[lng].logout}</MenuItem></Link>
 									</Menu>
 								</Grid>

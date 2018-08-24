@@ -443,8 +443,8 @@ class TeacherCourses extends React.Component {
 						open={this.state.showadvice}
 						onClose={this.handleCloseAdvice}
 					>
-						<DialogTitle className="down_15">{"Wanna delete '"+this.state.name +"' item?"}</DialogTitle>
-						<Button className="btn btn-1 white" onClick={() => this.clickdeletetopic(this.state.name)}>Delete</Button>
+						<DialogTitle className="down_15">{language[lng].wannadelete+" "+this.state.name +"' item?"}</DialogTitle>
+						<Button className="btn btn-1 white" onClick={() => this.clickdeletetopic(this.state.name)}>{language[lng].deletee}</Button>
 					</Dialog>	
 				</Grid>
 

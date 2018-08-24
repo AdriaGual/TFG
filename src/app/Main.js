@@ -40,9 +40,17 @@ import TeacherEnroll from './Pages/teacher_enroll.js';
 import TeacherAssignExercise from './Pages/teacher_assign_exercise.js';
 import TeacherQualifications from './Pages/teacher_qualifications.js';
 import AdmParams from './Pages/adm_params.js';
-
-
-
+import AdminEnroll from './Pages/admin_enroll.js';
+import AdminEditCourse from './Pages/admin_edit_course.js';
+import AdminCreateTheory from './Pages/admin_create_theory.js';
+import AdminChooseExercise from './Pages/admin_choose_exercise.js';
+import AdminEditExerciseAnimation from './Pages/admin_edit_exercise_animation.js';
+import AdminEditExerciseSelection from './Pages/admin_edit_exercise_selection.js';
+import AdminEditExerciseLabelling from './Pages/admin_edit_exercise_labelling.js';
+import AdminEditExerciseLocation2D from './Pages/admin_edit_exercise_location2d.js';
+import AdminEditExerciseLocation3D from './Pages/admin_edit_exercise_location3d.js';
+import AdminEditExerciseTest2D from './Pages/admin_edit_exercise_test2d.js';
+import AdminEditExerciseMPR from './Pages/admin_edit_exercise_mpr.js';
 
 // Pages imports
 
@@ -100,6 +108,17 @@ export default class Main extends React.Component {
 			<Route path='/teacher_create_theory' render={() => (<div><div><TeacherCreateTheory appState={this.appState}></TeacherCreateTheory></div><div className="bot_margin"></div></div>)} />
 			<Route path='/teacher_preview_theory' render={() => (<div><div><TeacherPreviewTheory appState={this.appState}></TeacherPreviewTheory></div><div className="bot_margin"></div></div>)} />
 			<Route path='/adm_params' render={() => (<div><div><AdmParams appState={this.appState}></AdmParams></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_enroll' render={() => (<div><div><AdminEnroll appState={this.appState}></AdminEnroll></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_course' render={() => (<div><div><AdminEditCourse appState={this.appState}></AdminEditCourse></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_create_theory' render={() => (<div><div><AdminCreateTheory appState={this.appState}></AdminCreateTheory></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_choose_exercise' render={() => (<div><div><AdminChooseExercise appState={this.appState}></AdminChooseExercise></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_exercise_animation' render={() => (<div><div><AdminEditExerciseAnimation appState={this.appState}></AdminEditExerciseAnimation></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_exercise_selection' render={() => (<div><div><AdminEditExerciseSelection appState={this.appState}></AdminEditExerciseSelection></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_exercise_labelling' render={() => (<div><div><AdminEditExerciseLabelling appState={this.appState}></AdminEditExerciseLabelling></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_exercise_location2d' render={() => (<div><div><AdminEditExerciseLocation2D appState={this.appState}></AdminEditExerciseLocation2D></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_exercise_location3d' render={() => (<div><div><AdminEditExerciseLocation3D appState={this.appState}></AdminEditExerciseLocation3D></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_exercise_test2d' render={() => (<div><div><AdminEditExerciseTest2D appState={this.appState}></AdminEditExerciseTest2D></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_edit_exercise_mpr' render={() => (<div><div><AdminEditExerciseMPR appState={this.appState}></AdminEditExerciseMPR></div><div className="bot_margin"></div></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

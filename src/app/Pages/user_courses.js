@@ -21,8 +21,8 @@ import language from "../Utils/language.js";
  * @extends React.Component
  */
  
- var initialData = [];
-  var initialDataTopic = [];
+var initialData = [];
+var initialDataTopic = [];
 class UserCourses extends React.Component {
 
 	constructor(props){
