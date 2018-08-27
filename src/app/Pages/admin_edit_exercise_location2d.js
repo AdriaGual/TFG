@@ -161,7 +161,7 @@ class TeacherEditExerciceLocation2d extends React.Component {
 							url: 'php/save_exercise_location2d.php',
 							success: function(response) {
 								if (response=="OK"){
-									that.props.history.push("/teacher_courses");
+									that.props.history.push("/adm_params");
 								}
 							}
 						};

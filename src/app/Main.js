@@ -51,6 +51,7 @@ import AdminEditExerciseLocation2D from './Pages/admin_edit_exercise_location2d.
 import AdminEditExerciseLocation3D from './Pages/admin_edit_exercise_location3d.js';
 import AdminEditExerciseTest2D from './Pages/admin_edit_exercise_test2d.js';
 import AdminEditExerciseMPR from './Pages/admin_edit_exercise_mpr.js';
+import AdminTheoryPreview from './Pages/admin_preview_theory.js';
 
 // Pages imports
 
@@ -119,6 +120,7 @@ export default class Main extends React.Component {
 			<Route path='/admin_edit_exercise_location3d' render={() => (<div><div><AdminEditExerciseLocation3D appState={this.appState}></AdminEditExerciseLocation3D></div><div className="bot_margin"></div></div>)} />
 			<Route path='/admin_edit_exercise_test2d' render={() => (<div><div><AdminEditExerciseTest2D appState={this.appState}></AdminEditExerciseTest2D></div><div className="bot_margin"></div></div>)} />
 			<Route path='/admin_edit_exercise_mpr' render={() => (<div><div><AdminEditExerciseMPR appState={this.appState}></AdminEditExerciseMPR></div><div className="bot_margin"></div></div>)} />
+			<Route path='/admin_preview_theory' render={() => (<div><div><AdminTheoryPreview appState={this.appState}></AdminTheoryPreview></div><div className="bot_margin"></div></div>)} />
 			<Redirect to='/' from='/test2 ' />
 		</Switch></main>
 		);

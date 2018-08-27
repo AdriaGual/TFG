@@ -63,7 +63,9 @@ class Theory extends React.Component {
 					  
 					  
 					}
-					drawMap(that.appState("theory_image"));
+					setTimeout(() => {
+					 drawMap(that.appState("theory_image"));
+					}, 200);
 				}
 			};
 			$.ajax(settings);

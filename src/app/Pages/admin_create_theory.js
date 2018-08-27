@@ -63,7 +63,10 @@ class Theory extends React.Component {
 					  
 					  
 					}
-					drawMap(that.appState("theory_image"));
+					setTimeout(() => {
+					 drawMap(that.appState("theory_image"));
+					}, 200);
+					
 				}
 			};
 			$.ajax(settings);
@@ -116,7 +119,7 @@ class Theory extends React.Component {
 		this.appState({theory_subtitle: $("#newsubtitle").val()});
 		this.appState({theory_content: $("#content_text").val()});
 		this.appState({theory_url: $("#url_text").val()});
-		this.props.history.push("/teacher_preview_theory");
+		this.props.history.push("/admin_preview_theory");
 	}
 	
 	clickback = () =>{
@@ -146,7 +149,7 @@ class Theory extends React.Component {
 			url: 'php/save_theory.php',
 			success: function(response) {
 				if (response=="OK"){
-					that.props.history.push("/teacher_courses");
+					that.props.history.push("/adm_params");
 				}
 			}
 		};

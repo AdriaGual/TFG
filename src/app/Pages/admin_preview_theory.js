@@ -65,6 +65,7 @@ class Theory extends React.Component {
 				setTimeout(() => {
 					 drawMap(that.appState("theory_image"));
 				}, 200);
+				
 			}
 		};
 		$.ajax(settings);
@@ -72,7 +73,7 @@ class Theory extends React.Component {
 	}
 	
 	click = () =>{
-		this.props.history.push("/teacher_create_theory");
+		this.props.history.push("/admin_create_theory");
 	}
 	
 	/**
@@ -90,8 +91,8 @@ class Theory extends React.Component {
 				<br/>
 				<div className="left_30 down_20 orange size_30"><p>{this.state.theory_title}</p></div>
 				<hr/>
-				<Link to={"/teacher_courses"} className="blue" style={{marginLeft:20}}>{language[lng].courses} ></Link>
-				<Link to={"/teacher_create_theory"} className="blue" style={{marginLeft:20}}>{language[lng].createtheory}</Link>
+				<Link to={"/adm_params"} className="blue" style={{marginLeft:20}}>{language[lng].courses} ></Link>
+				<Link to={"/admin_create_theory"} className="blue" style={{marginLeft:20}}>{language[lng].createtheory}</Link>
 				<Grid container>
 					<Grid item xs={2}>
 					</Grid>

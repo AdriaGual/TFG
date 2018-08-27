@@ -136,7 +136,7 @@ class TeacherEditExerciceTest2d extends React.Component {
 							url: 'php/save_exercise_test.php',
 							success: function(response) {
 								if (response=="OK"){
-									that.props.history.push("/teacher_courses");
+									that.props.history.push("/adm_params");
 								}
 							}
 						};
