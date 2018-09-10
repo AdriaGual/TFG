@@ -61,6 +61,8 @@ class TeacherEditCourse extends React.Component {
 			type: 'POST',
 			data: { 
 				'coursename': $("#newtitle").val(),
+				'description': $("#description").val(), 
+				'prerequisits': $("#prerequisits").val(), 
 				'topics' : flatData
 			},
 			url: 'php/add_course.php',
@@ -90,6 +92,10 @@ class TeacherEditCourse extends React.Component {
 		  }).treeData,
 		}));
 		
+	};
+	
+	handleChange = name => event => {
+		this.setState({ [name]: event.target.checked });
 	};
 	
 	
@@ -219,21 +225,13 @@ class TeacherEditCourse extends React.Component {
 						<Grid item xs={12}> 
 							<a className="orange size_30">{language[lng].description}</a>
 						</Grid>
-						<Card className="course_description_form down_30">
-							<TextField
-								id="desc"
-								className="text_field"
-							/>
-						</Card>
+						
+						<textarea value={this.state.value} id="description" onChange={this.handleChange} style={{height:100,width:400}}/>
+						
 						<Grid item xs={12}> 
 							<a className="orange size_30">{language[lng].prerequisits}</a>
 						</Grid>
-						<Card className="course_description_form down_30">
-							<TextField
-								id="prerequisists"
-								className="text_field"
-							/>
-						</Card>
+						<textarea value={this.state.value} id="prerequisits" onChange={this.handleChange} style={{height:100,width:400}}/>
 						<Grid item xs={12}> 
 							<Select native className="down_30 "> 
 								<option value="">{language[lng].coursetype}</option>

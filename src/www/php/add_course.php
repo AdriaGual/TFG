@@ -2,6 +2,8 @@
 	session_start(); 
 
 	$coursename = $_POST["coursename"];
+	$description = $_POST["description"];
+	$prerequisits = $_POST["prerequisits"];
 	$topics = $_POST["topics"];
 	
 	if (!isset($coursename) || empty($coursename)){
@@ -18,8 +20,10 @@
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		//Insert Course
-		$stmt = $conn->prepare("INSERT INTO course (name) VALUES (:name)");
+		$stmt = $conn->prepare("INSERT INTO course (name,description,prerequisits) VALUES (:name,:description,:prerequisits)");
 		$stmt->bindParam(':name', $coursename, PDO::PARAM_STR);
+		$stmt->bindParam(':description', $description, PDO::PARAM_STR);
+		$stmt->bindParam(':prerequisits', $prerequisits, PDO::PARAM_STR);
 		$stmt->execute();
 		
 		$last_course_id = $conn->lastInsertId();

@@ -21,7 +21,7 @@
 		$stmt = $conn->prepare("SELECT exercice_content.id, exercice_content.statement, t.name FROM course as C 
 			INNER JOIN course_topic as ct ON c.id = ct.id_course 
 			INNER JOIN topic AS t ON t.id = ct.id_topic
-			INNER JOIN topic_exercice as te ON ct.id = te.id_topic
+			INNER JOIN topic_exercice as te ON ct.id_topic = te.id_topic
 			INNER JOIN exercice_content ON te.id_exercice_content = exercice_content.id
 			WHERE c.id = :idcurs 
 			ORDER BY t.name"

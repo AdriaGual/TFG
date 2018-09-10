@@ -27,11 +27,13 @@
 				while ($row2 = $stmt2->fetchObject()) {
 					$trobat = false;
 					for ($i = 0; $i <count($points); $i++) {
-						$x = $points[$i]["x"] * 1.8;
-						$y = $points[$i]["y"] * 1.2;
+						$x = $points[$i]["x"] * 0.58465047804;
+						$y = $points[$i]["y"]*0.60721489971;
+						/*echo "x: ",$x, "\n";
+						echo "y: ",$y, "\n";*/
 						$d = sqrt( pow(abs(($x-$row2->x)),2)+pow(abs(($y-$row2->y)),2));
-						
-						/*echo "points[i][x]: ",$points[$i]["x"], "\n";
+						/*
+						echo "points[i][x]: ",$points[$i]["x"], "\n";
 						echo "points[i][y]: ",$points[$i]["y"], "\n";
 						echo "row2->x: ",$row2->x, "\n";
 						echo "row2->y: ",$row2->y, "\n";

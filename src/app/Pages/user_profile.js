@@ -40,27 +40,6 @@ class UserCourses extends React.Component {
 		};
 	}
 	appState = this.props.appState;
-
-	componentDidMount() {
-		var that = this;
-
-		var settings = {
-			type: 'GET',
-			url: 'php/load_courses.php',
-			success: function(response) {
-				var jsonData = JSON.parse(response);
-				var a = jsonData.map(node => ({ ...node, title: node.name }));
-				that.setState({treeData: getTreeFromFlatData({
-					flatData: a,
-					getKey: node => node.id, // resolve a node's key
-					getParentKey: node => node.parent, // resolve a node's parent's key
-					rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
-				})});
-				console.log(jsonData);
-			}
-		};
-		$.ajax(settings);
-	}
 	
 	clickusername = () => {
 		var that = this;

@@ -17,7 +17,7 @@
 		
 		for ($i = 1; $i < sizeof($jsonexcel); $i++){
 			
-			$stmt = $conn->prepare("SELECT email FROM user WHERE email = :email");
+			$stmt = $conn->prepare("SELECT id, email FROM user WHERE email = :email");
 			$stmt->bindParam(':email', $jsonexcel[$i][4], PDO::PARAM_STR);
 			$stmt->execute();
 			
